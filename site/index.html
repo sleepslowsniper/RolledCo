@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RolledCo</title>
+<meta name="description" content="RolledCo handles intake, document chasing, and first drafts of client-facing work in your first 180 days after close. Your team reviews and approves every output.">
+<meta property="og:title" content="RolledCo">
+<meta property="og:description" content="A working back office for the business you bought.">
+<meta name="theme-color" content="#8B1A1A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #8B1A1A;
+    --white: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--crimson); }
+  body {
+    background: var(--crimson);
+    color: var(--white);
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    flex: 1;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 24px 96px;
+  }
+  header { margin-bottom: 96px; }
+  .wordmark { display: block; height: 40px; width: auto; }
+  h1 {
+    font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+    font-weight: 700;
+    font-size: clamp(44px, 8vw, 72px);
+    line-height: 1.02;
+    letter-spacing: 0.005em;
+    max-width: 640px;
+  }
+  .sub {
+    margin-top: 28px;
+    font-size: 20px;
+    max-width: 600px;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 80px 0;
+  }
+  .blocks { display: grid; gap: 48px; }
+  h2 {
+    font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .blocks p { max-width: 560px; }
+  .cta { margin-top: 88px; }
+  .button {
+    display: inline-block;
+    background: var(--white);
+    color: var(--crimson);
+    font-family: "Inter", Arial, sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 18px 32px;
+    border-radius: 4px;
+    line-height: 1;
+  }
+  .button:hover, .button:focus-visible { background: #f3e6e6; outline: none; }
+  .button:focus-visible { box-shadow: 0 0 0 3px var(--crimson), 0 0 0 5px var(--white); }
+  footer {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+    font-size: 16px;
+  }
+  footer a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 600px) {
+    main { padding: 40px 20px 72px; }
+    header { margin-bottom: 64px; }
+    .wordmark { height: 32px; }
+    hr { margin: 56px 0; }
+    .blocks { gap: 36px; }
+    .cta { margin-top: 64px; }
+    .button { display: block; text-align: center; }
+    footer { padding: 0 20px 40px; }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <header>
+      <img class="wordmark" src="wordmark.png" alt="RolledCo" width="2172" height="724">
+    </header>
+
+    <h1>A working back office for the business you bought.</h1>
+    <p class="sub">RolledCo handles intake, document chasing, and first drafts of client-facing work in your first 180 days after close. Your team reviews and approves every output.</p>
+
+    <hr>
+
+    <section class="blocks">
+      <div>
+        <h2>Stop chasing paperwork</h2>
+        <p>Agents gather intake details and follow up on missing documents, so your team spends less time sending reminders.</p>
+      </div>
+      <div>
+        <h2>Start with a draft</h2>
+        <p>Give your team a first draft of client-facing work to review, not another blank page.</p>
+      </div>
+      <div>
+        <h2>Repeat across acquisitions</h2>
+        <p>Establish a consistent process for intake, follow-up, drafting, and approval across the businesses you own.</p>
+      </div>
+    </section>
+
+    <div class="cta">
+      <a class="button" href="https://calendly.com/mitch-w-jones-4/30min">Book a 20-minute call</a>
+    </div>
+  </main>
+
+  <footer>
+    <a href="mailto:mitch.w.jones.4@gmail.com">mitch.w.jones.4@gmail.com</a>
+  </footer>
+</body>
+</html>
