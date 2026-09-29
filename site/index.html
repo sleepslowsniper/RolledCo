@@ -3,143 +3,306 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RolledCo</title>
-<meta name="description" content="RolledCo handles intake, document chasing, and first drafts of client-facing work in your first 180 days after close. Your team reviews and approves every output.">
-<meta property="og:title" content="RolledCo">
-<meta property="og:description" content="A working back office for the business you bought.">
+<title>RolledCo | Built for the work after close</title>
+<meta name="description" content="RolledCo is being built to help new owners of service businesses capture how the business runs before the seller steps away. In development. Book a 20-minute conversation with the founder.">
 <meta name="theme-color" content="#8B1A1A">
+<link rel="canonical" href="https://rolledco.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RolledCo">
+<meta property="og:title" content="RolledCo | Built for the work after close">
+<meta property="og:description" content="Turn the seller's know-how into repeatable workflows. In development and talking to buyers about what breaks after close.">
+<meta property="og:url" content="https://rolledco.com/">
+<meta property="og:image" content="https://rolledco.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="RolledCo. Built for the work after close.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RolledCo | Built for the work after close">
+<meta name="twitter:description" content="Turn the seller's know-how into repeatable workflows. In development and talking to buyers about what breaks after close.">
+<meta name="twitter:image" content="https://rolledco.com/og-image.png">
+
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta property="og:image" content="https://rolledco.com/icon-512.png">
-<meta property="og:url" content="https://rolledco.com/">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
   :root {
     --crimson: #8B1A1A;
     --white: #FFFFFF;
+    --warm: #F7F5F0;
+    --ink: #1A1A1A;
+    --slate: #555555;
+    --stone: #DDD6CE;
+    --col: 700px;
+    --pad: 22px;
+    --heading: "Manrope", "Helvetica Neue", Arial, sans-serif;
+    --body: "Inter", "Helvetica Neue", Arial, sans-serif;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { background: var(--crimson); }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; background: var(--crimson); }
   body {
     background: var(--crimson);
-    color: var(--white);
-    font-family: "Inter", Arial, sans-serif;
-    font-size: 18px;
-    line-height: 1.6;
+    color: var(--ink);
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
-  main {
-    flex: 1;
+  a { color: inherit; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
     width: 100%;
-    max-width: 760px;
+    max-width: calc(var(--col) + 2 * var(--pad));
     margin: 0 auto;
-    padding: 64px 24px 96px;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
   }
-  header { margin-bottom: 96px; }
-  .wordmark { display: block; height: 40px; width: auto; }
+
+  /* Header */
+  .site-header { background: var(--crimson); color: var(--white); }
+  .site-header .wrap { padding-top: 24px; padding-bottom: 8px; }
+  .wordmark {
+    display: inline-block;
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .wordmark:focus-visible { outline: 2px solid var(--white); outline-offset: 6px; }
+
+  /* Sections */
+  section { padding: 56px 0; }
+  .on-crimson { background: var(--crimson); color: var(--white); }
+  .on-warm { background: var(--warm); color: var(--ink); }
+
+  .eyebrow, .label {
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .on-crimson .eyebrow { color: rgba(255, 255, 255, 0.85); }
+  .on-warm .label { color: var(--slate); }
+
+  h1, h2, h3 { font-family: var(--heading); font-weight: 700; }
   h1 {
-    font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
-    font-weight: 700;
-    font-size: clamp(44px, 8vw, 72px);
-    line-height: 1.02;
-    letter-spacing: 0.005em;
-    max-width: 640px;
-  }
-  .sub {
-    margin-top: 28px;
-    font-size: 20px;
-    max-width: 600px;
-  }
-  hr {
-    border: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    margin: 80px 0;
-  }
-  .blocks { display: grid; gap: 48px; }
-  h2 {
-    font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
-    font-weight: 700;
-    font-size: 32px;
+    font-size: 38px;
     line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-top: 14px;
+    text-wrap: pretty;
+  }
+  h2 {
+    font-size: 32px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: pretty;
+  }
+  h3 {
+    font-size: 20px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+  .lede { margin-top: 20px; font-size: 18px; max-width: 34em; }
+  .on-crimson .lede { color: rgba(255, 255, 255, 0.92); }
+
+  /* Buttons */
+  .button {
+    display: block;
+    width: 100%;
+    min-height: 52px;
+    padding: 15px 28px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 120ms ease, color 120ms ease;
+  }
+  .button-light { background: var(--white); color: var(--crimson); border-color: var(--white); }
+  .button-light:hover { background: #F3ECE6; border-color: #F3ECE6; }
+  .button-light:focus-visible { outline: 3px solid var(--white); outline-offset: 4px; }
+  .cta { margin-top: 28px; }
+  .fine {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .on-crimson .fine { color: rgba(255, 255, 255, 0.85); }
+  .fine a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .fine a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+  /* Hero */
+  .hero { padding-top: 40px; padding-bottom: 56px; }
+
+  /* What we're building */
+  .building .items {
+    list-style: none;
+    counter-reset: item;
+    margin-top: 24px;
+    border-top: 1px solid var(--stone);
+  }
+  .building .items li {
+    counter-increment: item;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--stone);
+  }
+  .building .items li::before {
+    content: "0" counter(item);
+    display: block;
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--crimson);
     margin-bottom: 10px;
   }
-  .blocks p { max-width: 560px; }
-  .cta { margin-top: 88px; }
-  .button {
-    display: inline-block;
-    background: var(--white);
-    color: var(--crimson);
-    font-family: "Inter", Arial, sans-serif;
-    font-weight: 500;
-    font-size: 18px;
-    text-decoration: none;
-    padding: 18px 32px;
-    border-radius: 4px;
-    line-height: 1;
+  .building .items p { margin-top: 8px; color: var(--slate); }
+
+  /* Who it's for */
+  .who { padding-top: 0; }
+  .who .wrap > p { margin-top: 16px; max-width: 36em; }
+
+  /* Closing */
+  .closing .lede { margin-top: 16px; }
+  .closing .fine { margin-top: 20px; }
+
+  /* Footer */
+  .site-footer { background: var(--crimson); color: rgba(255, 255, 255, 0.85); }
+  .site-footer .wrap {
+    padding-top: 22px;
+    padding-bottom: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    font-size: 14px;
   }
-  .button:hover, .button:focus-visible { background: #f3e6e6; outline: none; }
-  .button:focus-visible { box-shadow: 0 0 0 3px var(--crimson), 0 0 0 5px var(--white); }
-  footer {
-    width: 100%;
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 0 24px 48px;
-    font-size: 16px;
+
+  /* Tablet and up */
+  @media (min-width: 600px) {
+    :root { --pad: 32px; }
+    .button { display: inline-block; width: auto; }
+    .hero { padding-top: 56px; padding-bottom: 72px; }
+    section { padding: 72px 0; }
+    .who { padding-top: 0; }
   }
-  footer a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
-  @media (max-width: 600px) {
-    main { padding: 40px 20px 72px; }
-    header { margin-bottom: 64px; }
-    .wordmark { height: 32px; }
-    hr { margin: 56px 0; }
-    .blocks { gap: 36px; }
-    .cta { margin-top: 64px; }
-    .button { display: block; text-align: center; }
-    footer { padding: 0 20px 40px; }
+
+  /* Desktop */
+  @media (min-width: 960px) {
+    body { font-size: 18px; }
+    .site-header .wrap { padding-top: 32px; }
+    .wordmark { font-size: 30px; }
+    h1 { font-size: 56px; line-height: 1.06; margin-top: 18px; }
+    h2 { font-size: 40px; }
+    .lede { margin-top: 24px; }
+    .cta { margin-top: 32px; }
+    .hero { padding-top: 72px; padding-bottom: 96px; }
+    section { padding: 88px 0; }
+    .who { padding-top: 0; }
+    .building .items {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0 32px;
+      border-top: 0;
+      margin-top: 32px;
+    }
+    .building .items li {
+      padding: 24px 0 0;
+      border-bottom: 0;
+      border-top: 1px solid var(--stone);
+    }
+    .building .items p { font-size: 17px; }
+    .site-footer .wrap { padding-top: 26px; padding-bottom: 40px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .button { transition: none; }
   }
 </style>
 </head>
 <body>
-  <main>
-    <header>
-      <img class="wordmark" src="wordmark.png" alt="RolledCo" width="720" height="240">
-    </header>
 
-    <h1>A working back office for the business you bought.</h1>
-    <p class="sub">RolledCo handles intake, document chasing, and first drafts of client-facing work in your first 180 days after close. Your team reviews and approves every output.</p>
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="/" aria-label="RolledCo home">RolledCo</a>
+  </div>
+</header>
 
-    <hr>
-
-    <section class="blocks">
-      <div>
-        <h2>Stop chasing paperwork</h2>
-        <p>Agents gather intake details and follow up on missing documents, so your team spends less time sending reminders.</p>
+<main>
+  <section class="hero on-crimson" aria-labelledby="hero-title">
+    <div class="wrap">
+      <p class="eyebrow">For service-business buyers</p>
+      <h1 id="hero-title">Turn the seller&rsquo;s know&#8209;how into repeatable workflows.</h1>
+      <p class="lede">We&rsquo;re building RolledCo to help new owners capture how the business runs before the seller steps away. We&rsquo;re in development and talking to buyers about what breaks after close.</p>
+      <div class="cta">
+        <a class="button button-light" href="https://calendly.com/mitch-w-jones-4/30min">Book a 20-minute conversation</a>
       </div>
-      <div>
-        <h2>Start with a draft</h2>
-        <p>Give your team a first draft of client-facing work to review, not another blank page.</p>
-      </div>
-      <div>
-        <h2>Repeat across acquisitions</h2>
-        <p>Establish a consistent process for intake, follow-up, drafting, and approval across the businesses you own.</p>
-      </div>
-    </section>
-
-    <div class="cta">
-      <a class="button" href="https://calendly.com/mitch-w-jones-4/30min">Book a 20-minute call</a>
+      <p class="fine">Mickey Jones, founder &middot; Previously J.P.&nbsp;Morgan and Harvest&nbsp;Partners &middot; Entrepreneur-in-residence at Entrepreneurs&nbsp;First</p>
     </div>
-  </main>
+  </section>
 
-  <footer>
-    <a href="mailto:mitch.w.jones.4@gmail.com">mitch.w.jones.4@gmail.com</a>
-  </footer>
+  <section class="building on-warm" aria-labelledby="building-title">
+    <div class="wrap">
+      <h2 class="label" id="building-title">What we&rsquo;re building</h2>
+      <ol class="items">
+        <li>
+          <h3>Capture how the business actually&nbsp;runs</h3>
+          <p>Turn the seller&rsquo;s files and explanations into documented steps your team can follow.</p>
+        </li>
+        <li>
+          <h3>Cut the document&nbsp;chasing</h3>
+          <p>Collect intake details, flag what&rsquo;s missing, and prepare follow-ups for your team to approve.</p>
+        </li>
+        <li>
+          <h3>Prepare the work for&nbsp;review</h3>
+          <p>Draft customer communications from what&rsquo;s been collected. Your team approves every output before it goes out.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="who on-warm" aria-labelledby="who-title">
+    <div class="wrap">
+      <h2 class="label" id="who-title">Who it&rsquo;s for</h2>
+      <p>Searchers preparing to take over a service business, recent buyers getting the back office in order, and holdcos integrating their next acquisition. Initial focus: service businesses in the $500K to $5M&nbsp;range.</p>
+    </div>
+  </section>
+
+  <section class="closing on-crimson" aria-labelledby="closing-title">
+    <div class="wrap">
+      <h2 id="closing-title">What got messy after&nbsp;close?</h2>
+      <p class="lede">I&rsquo;d like to hear what you inherited, what took longer than expected, and what your team still handles manually.</p>
+      <div class="cta">
+        <a class="button button-light" href="https://calendly.com/mitch-w-jones-4/30min">Book a 20-minute conversation</a>
+      </div>
+      <p class="fine">Teach or advise on acquisitions? I&rsquo;d value your perspective too. <a href="mailto:mickey@rolledco.com">mickey@rolledco.com</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">Built for the work after close.</div>
+</footer>
+
 </body>
 </html>
