@@ -1,0 +1,41 @@
+HARBOR BOOKKEEPING LLC - INTERNAL PAYROLL SUMMARY
+Prepared for buyer due diligence - September 22, 2026
+Payroll provider: Gusto (company account, admin login: ruth@harborbookkeeping.com)
+Pay frequency: Semi-monthly (15th and last day of month)
+Next pay date: September 30, 2026 (already submitted)
+Following pay date: October 15, 2026 - MUST BE SUBMITTED IN GUSTO BY OCT 13, 3PM ET
+
+EMPLOYEES (6)
+-------------------------------------------------------------------------------
+Name                Title                    Type      Rate          Start      Notes
+-------------------------------------------------------------------------------
+Ruth Callahan       Owner / Reviewer         Salary    $ 96,000/yr   03/2011    Leaving at close;
+                                                                                30-day transition
+Marcus Tran         Senior Bookkeeper        Salary    $ 68,500/yr   06/2019    Leads Northgate,
+                                                                                Orchard St, Beacon Hill
+Priya Natarajan     Bookkeeper               Salary    $ 54,000/yr   09/2022    Leads Saltmarsh,
+                                                                                Thistle & Pine, Marlowe
+Tom Bellweather     Bookkeeper (part-time)   Hourly    $ 31.00/hr    01/2024    ~24 hrs/wk; Cascade,
+                                                                                Redwood
+Jess Lindqvist      Admin / AP-AR            Hourly    $ 24.50/hr    04/2023    Firm invoicing, Orchard
+                                                                                St AP, phones
+Danielle Okafor     Payroll Specialist       Salary    $ 58,000/yr   11/2020    Runs Cascade + Orchard
+                                                                                payroll; on parental
+                                                                                leave 9/8 - 12/1/2026
+-------------------------------------------------------------------------------
+
+PAYROLL TAX / COMPLIANCE CALENDAR (firm's own)
+- Federal 941 deposits: semi-weekly depositor schedule (Gusto auto-remits)
+- Form 941 Q3 2026: due October 31, 2026 (Gusto files; verify)
+- NH Employment Security quarterly report Q3: due October 31, 2026
+- Forms W-2/W-3 for 2026: January 31, 2027
+- Workers' comp policy (Acadia): renews November 15, 2026 - audit worksheet due
+- 401(k) SIMPLE IRA: employer match 3%, contributions remitted each pay date
+- Health insurance (Anthem NH small group): renews January 1, 2027; open
+  enrollment materials due to employees by December 1
+
+OPEN ITEMS
+- Danielle's leave: Cascade and Orchard payroll being covered by Marcus "for now"
+- Tom asked about a raise in July; nothing decided
+- PTO accrual balances as of 9/15: Ruth 0, Marcus 11.5 days, Priya 6 days,
+  Tom 3 days, Jess 8.5 days, Danielle 14 days (paid out at leave start? unclear)

@@ -1,0 +1,20 @@
+HARBOR BOOKKEEPING LLC
+INVOICE INV-2026-0731
+Invoice date: July 31, 2026        Terms: Net 30        Due: August 30, 2026
+
+Client: Cascade Plumbing & Heating, Inc.
+        Attn: Dennis Kowalczyk, 77 Industrial Drive, Portsmouth NH 03801
+
+LINE  DESCRIPTION                                          QTY    RATE      AMOUNT
+1     Monthly bookkeeping - July 2026                       1   850.00      850.00
+2     Payroll processing - 7/3/2026 (11 employees)          1    95.00       95.00
+3     Per-employee payroll fee - 7/3/2026                  11     6.00       66.00
+4     Payroll processing - 7/17/2026 (12 employees)         1    95.00       95.00
+5     Per-employee payroll fee - 7/17/2026                 12     6.00       72.00
+6     Payroll processing - 7/31/2026 (12 employees)         1    95.00       95.00
+7     Per-employee payroll fee - 7/31/2026                 12     6.00       72.00
+8     Q2 2026 Form 941 and NHES filing                      1     0.00        0.00
+                                                                         ---------
+                                                                TOTAL    1,345.00
+
+Status: OPEN. Reminder sent 9/2/2026. Dennis says check is "in the mail."

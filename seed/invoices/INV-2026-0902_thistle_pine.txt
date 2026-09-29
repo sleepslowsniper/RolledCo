@@ -1,0 +1,9 @@
+Harbor Bookkeeping LLC - Invoice INV-2026-0902
+Date: 09/01/2026     Auto-draft scheduled: 09/03/2026
+
+Thistle & Pine Cafe (Mira Sandoval)
+
+Monthly bookkeeping & M&R tax prep - September 2026 ..... $750.00
+
+Total: $750.00
+Auto-draft FAILED 09/03/2026 (NSF). Retry 09/10/2026 - paid.

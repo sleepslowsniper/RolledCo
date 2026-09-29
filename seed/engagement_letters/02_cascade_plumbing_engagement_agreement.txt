@@ -1,0 +1,50 @@
+BOOKKEEPING AND PAYROLL SERVICES AGREEMENT
+
+This Agreement is entered into as of March 1, 2024 between HARBOR BOOKKEEPING LLC,
+a New Hampshire limited liability company ("Provider"), and CASCADE PLUMBING &
+HEATING, INC., a New Hampshire corporation ("Client").
+
+RECITALS
+Client operates a residential and commercial plumbing business with approximately
+11 employees. Client wishes to engage Provider for bookkeeping and payroll
+administration.
+
+ARTICLE I - SERVICES
+1.1 Bookkeeping. Provider shall maintain Client's general ledger in QuickBooks
+    Online, reconcile all bank and credit accounts monthly, and deliver monthly
+    financial statements no later than the 20th day of the following month.
+1.2 Payroll. Provider shall process Client's payroll on a BI-WEEKLY basis
+    (every other Friday) through Gusto. Client shall submit approved timesheets
+    no later than 12:00 noon on the Wednesday preceding each pay date. Provider
+    shall remit federal and state payroll tax deposits and file Forms 941, NH
+    unemployment (NHES) quarterly reports, and annual Forms W-2/W-3.
+1.3 Job Costing. Provider shall maintain class tracking by job for jobs
+    exceeding $5,000 in contract value.
+1.4 Year-End. Provider shall prepare Forms 1099-NEC for subcontractors and
+    deliver a year-end package to Client's tax preparer by February 15.
+1.5 Workers' Compensation Audit. Provider shall prepare payroll summaries for
+    Client's annual workers' compensation audit (policy year ends June 30).
+
+ARTICLE II - COMPENSATION
+2.1 Bookkeeping fee: $850.00 per month.
+2.2 Payroll fee: $95.00 per payroll run plus $6.00 per employee per run.
+2.3 Year-end 1099 preparation: $15.00 per form, minimum $75.00.
+2.4 Invoices are issued on the last business day of each month and are due
+    within 30 days.
+
+ARTICLE III - TERM AND TERMINATION
+3.1 Initial term of twelve (12) months from the Effective Date, automatically
+    renewing for successive twelve-month terms unless either party gives sixty
+    (60) days' written notice prior to the end of the then-current term.
+
+ARTICLE IV - MISCELLANEOUS
+4.1 Provider is not responsible for penalties arising from late submission of
+    timesheets or client-caused delays.
+4.2 This Agreement is governed by the laws of the State of New Hampshire.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement.
+
+HARBOR BOOKKEEPING LLC                 CASCADE PLUMBING & HEATING, INC.
+By: Ruth Callahan                      By: Dennis Kowalczyk
+Title: Owner                           Title: President
+Date: 2/26/2024                        Date: 3/1/2024

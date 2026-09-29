@@ -1,0 +1,16 @@
+HARBOR BOOKKEEPING LLC
+INVOICE INV-2026-0831
+Invoice date: August 31, 2026      Terms: Net 30        Due: September 30, 2026
+
+Client: Cascade Plumbing & Heating, Inc.
+
+LINE  DESCRIPTION                                          QTY    RATE      AMOUNT
+1     Monthly bookkeeping - August 2026                     1   850.00      850.00
+2     Payroll processing - 8/14/2026 (12 employees)         1    95.00       95.00
+3     Per-employee payroll fee - 8/14/2026                 12     6.00       72.00
+4     Payroll processing - 8/28/2026 (12 employees)         1    95.00       95.00
+5     Per-employee payroll fee - 8/28/2026                 12     6.00       72.00
+6     Workers' comp audit payroll summary (PY 7/1/25-6/30/26)  1  0.00        0.00
+                                                                         ---------
+                                                                TOTAL    1,184.00
+Status: OPEN

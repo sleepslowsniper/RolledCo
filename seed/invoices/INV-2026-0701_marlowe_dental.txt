@@ -1,0 +1,19 @@
+Harbor Bookkeeping LLC                                   INVOICE
+14 Bow Street, Suite 2B, Portsmouth NH 03801
+                                              Invoice #:  INV-2026-0701
+                                              Date:       07/01/2026
+                                              Due:        07/16/2026 (Net 15)
+Bill To:
+Marlowe Family Dental, PLLC
+88 Lafayette Road, Portsmouth NH 03801
+
+Description                                                 Amount
+----------------------------------------------------------------------
+Monthly bookkeeping services - July 2026                  $1,200.00
+  (Includes reconciliation of Citizens x4471, x4489,
+   Chase Ink x9920; monthly financial package)
+----------------------------------------------------------------------
+                                              Subtotal     $1,200.00
+                                              Total Due    $1,200.00
+
+Paid 07/14/2026 - ACH                         Balance         $0.00
