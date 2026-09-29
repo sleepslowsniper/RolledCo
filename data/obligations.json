@@ -1,0 +1,1610 @@
+{
+  "generated_at": "2026-09-29",
+  "model": "claude-sonnet-4-6",
+  "mode": "cached",
+  "note": "Pre-generated output committed so the demo runs without an API key. Run `python extract.py` with ANTHROPIC_API_KEY set to regenerate live.",
+  "document_summaries": {
+    "engagement_letters/01_marlowe_dental_engagement_letter.txt": "Formal engagement letter, $1,200/month fixed fee, monthly package by the 15th, annual 1099s. Clean.",
+    "engagement_letters/02_cascade_plumbing_engagement_agreement.txt": "Legal-style services agreement: bookkeeping + bi-weekly payroll + year-end. Auto-renews each March with 60-day notice.",
+    "engagement_letters/03_thistle_and_pine_cafe_engagement.txt": "Engagement by email thread, $600/month. Informal; tip pool scope left open. Fee no longer matches invoices.",
+    "engagement_letters/04_northgate_physical_therapy_engagement.txt": "Engagement letter with monthly/quarterly/annual grid. Quarterly MA sales tax, superseded by 2026 email.",
+    "engagement_letters/04b_northgate_amendment_email_2026.txt": "Client email moving MA sales tax to monthly and adding a bank account. Promised fee letter never sent.",
+    "engagement_letters/05_redwood_property_management_engagement.txt": "24-month engagement with statutory trust reconciliation and an annual budget deliverable that has never been performed or billed.",
+    "engagement_letters/06_beacon_hill_law_engagement_2024.txt": "Engagement EXPIRED 12/31/2025. IOLTA trust work continues without a current letter.",
+    "engagement_letters/07_saltmarsh_landscaping_engagement.txt": "Informal hourly services summary. Seasonal client, quarterly filings, fuel tax refund.",
+    "engagement_letters/08_orchard_street_veterinary_engagement.txt": "Full-service agreement with detailed deadline grid, payroll for 14 employees, controlled substance reconciliation.",
+    "how_we_do_things_ruth.txt": "Seller's informal handoff note. Names a staff member (Kevin) not on payroll, a client (Pinecrest) with no paperwork, and lists five known gaps.",
+    "payroll_summary_2026-09.txt": "Firm payroll for 6 employees; payroll specialist on leave until 12/1; several firm compliance dates.",
+    "lease_office_14_bow_street.txt": "Office lease through 3/31/2027. Renewal notice due 12/31/2026. Change of control requires landlord consent, not yet requested.",
+    "software_subscriptions.txt": "Subscription inventory with two cards in the seller's personal name, an unexplained charge, and a possible unbilled QBO pass-through."
+  },
+  "missing_paperwork": [
+    "Pinecrest Auto Body: mentioned in seller's note ($400/month, Tom), no engagement letter or invoice in the folder.",
+    "Beacon Hill Law Group: engagement letter expired 12/31/2025; no 2026 letter.",
+    "Thistle & Pine Cafe: $750/month rate has no written basis; only the 2023 email at $600.",
+    "Northgate Physical Therapy: monthly MA sales tax and extra bank account billed without an updated fee letter.",
+    "Staff member 'Kevin' is assigned sales tax filings in the seller's note but is not on the payroll summary.",
+    "Full 22-page lease is not in the folder (summary only)."
+  ],
+  "obligations": [
+    {
+      "client": "Cascade Plumbing & Heating",
+      "deliverable": "Collect past-due invoice INV-2026-0731 ($1,345, due 8/30) and INV-2026-0831 ($1,184, due 9/30)",
+      "category": "billing",
+      "cadence": "one-time",
+      "cadence_detail": "Net 30; reminder already sent 9/2",
+      "next_due_date": "2026-09-30",
+      "owner": "Jess Lindqvist",
+      "fee": "$2,529.00 open",
+      "source_excerpt": "Status: OPEN. Reminder sent 9/2/2026. Dennis says check is \"in the mail.\"",
+      "confidence": 0.9,
+      "notes": "Seller's note: 'Cascade always pays late.'",
+      "source_document": "invoices/INV-2026-0731_cascade_plumbing.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [
+        {
+          "id": "OB-018-src",
+          "source_document": "invoices/INV-2026-0831_cascade_plumbing.txt",
+          "fee": "$1,184.00",
+          "cadence_detail": "Net 30, due 9/30/2026"
+        }
+      ],
+      "id": "OB-018"
+    },
+    {
+      "client": "Beacon Hill Law Group",
+      "deliverable": "Export approved time from Clio and generate client invoices for firm review",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "Export on the 1st; invoices by the 3rd",
+      "next_due_date": "2026-10-01",
+      "owner": "Marcus Tran",
+      "fee": "Included in $1,350/month",
+      "source_excerpt": "We will export approved time from Clio on the 1st of each month and generate client invoices for your review by the 3rd.",
+      "confidence": 0.85,
+      "notes": "Engagement letter expired 12/31/2025; service continues on a verbal month-to-month basis.",
+      "source_document": "engagement_letters/06_beacon_hill_law_engagement_2024.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-050"
+    },
+    {
+      "client": "Beacon Hill Law Group",
+      "deliverable": "Monthly fee invoicing under an expired engagement",
+      "category": "billing",
+      "cadence": "monthly",
+      "cadence_detail": "Invoiced 1st, due on receipt",
+      "next_due_date": "2026-10-01",
+      "owner": "Jess Lindqvist",
+      "fee": "$1,350/month + $125/hour annual items",
+      "source_excerpt": "Monthly bookkeeping, IOLTA reconciliation, and Clio billing support - September 2026 $1,350.00",
+      "confidence": 0.55,
+      "notes": null,
+      "source_document": "invoices/INV-2026-0905_beacon_hill_law.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "The only engagement letter (Jan 2024) expired December 31, 2025 and states 'Continuation of services beyond that date requires a new engagement letter.' Invoices continue through September 2026. The seller's note says 'We're month-to-month now, I never got around to the 2026 letter.' The firm is doing IOLTA trust work for a law firm with no current written engagement."
+      },
+      "merged_from": [],
+      "id": "OB-051"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Pay October office rent ($2,850 base + $410 CAM estimate) by ACH",
+      "category": "firm_admin",
+      "cadence": "monthly",
+      "cadence_detail": "Due on the 1st; late after the 5th, 5% late fee",
+      "next_due_date": "2026-10-01",
+      "owner": null,
+      "fee": "$3,260.00/month",
+      "source_excerpt": "Base rent Year 3 (4/1/26-3/31/27): $2,850.00/month. Due on the 1st of each month. Late after the 5th; late fee 5%.",
+      "confidence": 0.95,
+      "notes": "Paid from Kennebunk Savings operating account. Confirm ACH is still authorized after ownership change.",
+      "source_document": "lease_office_14_bow_street.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-001"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Send monthly firm invoices to all clients",
+      "category": "billing",
+      "cadence": "monthly",
+      "cadence_detail": "1st of each month",
+      "next_due_date": "2026-10-01",
+      "owner": "Jess Lindqvist",
+      "fee": null,
+      "source_excerpt": "Firm invoices go out on the 1st. Jess does it. Cascade always pays late.",
+      "confidence": 0.9,
+      "notes": "Saltmarsh is billed hourly in arrears around the 10th instead.",
+      "source_document": "how_we_do_things_ruth.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-002"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Notify landlord of change of control and obtain written consent to deemed assignment of lease",
+      "category": "contract",
+      "cadence": "one-time",
+      "cadence_detail": "Triggered by the sale; no explicit deadline",
+      "next_due_date": "2026-10-01",
+      "owner": null,
+      "fee": null,
+      "source_excerpt": "A change of control of Tenant (sale of more than 50% of membership interests) is deemed an assignment. --> NOTE FROM RUTH: I have not told the landlord about the sale yet.",
+      "confidence": 0.75,
+      "notes": "No date in the lease. Set to next month as a placeholder because the sale has already closed and consent has not been requested.",
+      "source_document": "lease_office_14_bow_street.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Lease requires landlord's prior written consent for a change of control. The seller's note in the lease summary and in 'How we do things' confirms the landlord has not been told about the sale."
+      },
+      "merged_from": [],
+      "id": "OB-011"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Semi-monthly AP payment run",
+      "category": "client_deliverable",
+      "cadence": "semi-monthly",
+      "cadence_detail": "1st and 16th",
+      "next_due_date": "2026-10-01",
+      "owner": "Jess Lindqvist",
+      "fee": "Included in $2,400/month",
+      "source_excerpt": "Accounts payable - payment run | Semi-monthly | 1st and 16th",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-064"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Agreement auto-renews for 12 months on 10/1/2026 (60-day notice window has passed)",
+      "category": "contract",
+      "cadence": "annually",
+      "cadence_detail": "October 1",
+      "next_due_date": "2026-10-01",
+      "owner": null,
+      "fee": "$2,400/month",
+      "source_excerpt": "Twelve months from the Effective Date, renewing automatically unless terminated with 60 days' written notice.",
+      "confidence": 0.8,
+      "notes": "Renewal is automatic. Fee increase notice for 10/1/2026 was not sent (seller's note), so the 5% increase waits until 10/1/2027; notice would be due by ~8/2/2027.",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-065"
+    },
+    {
+      "client": "Thistle & Pine Cafe",
+      "deliverable": "Monthly fee auto-draft on the 1st",
+      "category": "billing",
+      "cadence": "monthly",
+      "cadence_detail": "Billed the 1st, ACH auto-draft ~3rd",
+      "next_due_date": "2026-10-01",
+      "owner": "Jess Lindqvist",
+      "fee": "$600/month (letter) vs $750/month (invoices)",
+      "source_excerpt": "Fee: $600/month, billed the 1st, auto-draft from the account you gave us. We'll revisit after 12 months.",
+      "confidence": 0.55,
+      "notes": "September auto-draft bounced (NSF) and was retried 9/10.",
+      "source_document": "engagement_letters/03_thistle_and_pine_cafe_engagement.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "The only written engagement (Aug 2023 email) sets the fee at $600/month. Invoices INV-2026-0802 and INV-2026-0902 bill $750/month 'per phone conversation with Mira 12/2025.' The seller's note confirms the increase was verbal and no updated letter exists."
+      },
+      "merged_from": [
+        {
+          "id": "OB-026-src",
+          "source_document": "invoices/INV-2026-0802_thistle_pine.txt",
+          "fee": "$750.00",
+          "cadence_detail": "Monthly, auto-draft 3rd"
+        },
+        {
+          "id": "OB-026-src",
+          "source_document": "invoices/INV-2026-0902_thistle_pine.txt",
+          "fee": "$750.00",
+          "cadence_detail": "Monthly, auto-draft 3rd"
+        }
+      ],
+      "id": "OB-026"
+    },
+    {
+      "client": "Northgate Physical Therapy",
+      "deliverable": "Weekly vendor bill entry (AP)",
+      "category": "client_deliverable",
+      "cadence": "weekly",
+      "cadence_detail": "Weekly; Mondays per seller's note",
+      "next_due_date": "2026-10-05",
+      "owner": "Marcus Tran",
+      "fee": "Included",
+      "source_excerpt": "Accounts payable: enter vendor bills weekly",
+      "confidence": 0.85,
+      "notes": "Runs through Bill.com; admin ownership unclear per subscription list.",
+      "source_document": "engagement_letters/04_northgate_physical_therapy_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-033"
+    },
+    {
+      "client": "Redwood Property Management",
+      "deliverable": "Rent roll review and late-fee accrual check (14 properties)",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 5th",
+      "next_due_date": "2026-10-05",
+      "owner": "Tom Bellweather",
+      "fee": "Included in $1,500/month",
+      "source_excerpt": "A4 Rent roll review and late-fee accrual check | Monthly, by the 5th",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/05_redwood_property_management_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-041"
+    },
+    {
+      "client": "Thistle & Pine Cafe",
+      "deliverable": "Weekly bank reconciliation (TD Bank checking + Square)",
+      "category": "client_deliverable",
+      "cadence": "weekly",
+      "cadence_detail": "Every Monday for the prior week",
+      "next_due_date": "2026-10-05",
+      "owner": "Priya Natarajan",
+      "fee": "Included",
+      "source_excerpt": "Weekly bank reconciliation (we'll do this every Monday for the prior week - TD Bank checking + the Square account)",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/03_thistle_and_pine_cafe_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-027"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Weekly AP bill entry",
+      "category": "client_deliverable",
+      "cadence": "weekly",
+      "cadence_detail": "Every Tuesday",
+      "next_due_date": "2026-10-06",
+      "owner": "Jess Lindqvist",
+      "fee": "Included in $2,400/month",
+      "source_excerpt": "Accounts payable - bill entry | Weekly | Every Tuesday",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-066"
+    },
+    {
+      "client": "Saltmarsh Landscaping & Snow",
+      "deliverable": "Monthly hourly catch-up bookkeeping for prior month",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "First week of the month",
+      "next_due_date": "2026-10-07",
+      "owner": "Priya Natarajan",
+      "fee": "$95/hour, 4-6 hrs in season",
+      "source_excerpt": "We'll catch up your books monthly, usually the first week of the month for the prior month.",
+      "confidence": 0.8,
+      "notes": "Cash jobs must be recorded; Rick texts Priya. No monthly package, 'Rick just wants to know if he has money.'",
+      "source_document": "engagement_letters/07_saltmarsh_landscaping_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-058"
+    },
+    {
+      "client": "Northgate Physical Therapy",
+      "deliverable": "Bi-weekly AP payment batch for client approval",
+      "category": "client_deliverable",
+      "cadence": "biweekly",
+      "cadence_detail": "Every other Thursday (letter) / Wednesday (seller's note)",
+      "next_due_date": "2026-10-08",
+      "owner": "Marcus Tran",
+      "fee": "Included",
+      "source_excerpt": "prepare a payment batch for your approval every other Thursday",
+      "confidence": 0.7,
+      "notes": null,
+      "source_document": "engagement_letters/04_northgate_physical_therapy_engagement.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Engagement letter says the payment batch goes to Sam every other Thursday; the seller's weekly schedule says 'Wednesday: Northgate AP payment batch goes to Sam every other week.'"
+      },
+      "merged_from": [],
+      "id": "OB-034"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Bank and credit card reconciliation (5 accounts)",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 8th",
+      "next_due_date": "2026-10-08",
+      "owner": "Marcus Tran",
+      "fee": "Included in $2,400/month",
+      "source_excerpt": "Bank/credit card reconciliation (5 accounts) | Monthly | By the 8th",
+      "confidence": 0.95,
+      "notes": "",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-067"
+    },
+    {
+      "client": "Redwood Property Management",
+      "deliverable": "Owner statements for 14 managed properties (from AppFolio) to property owners",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 8th",
+      "next_due_date": "2026-10-08",
+      "owner": "Tom Bellweather",
+      "fee": "Included in $1,500/month",
+      "source_excerpt": "Statements for each of the 14 managed properties generated from AppFolio and reviewed by us, sent to property owners by the 8th",
+      "confidence": 0.95,
+      "notes": "",
+      "source_document": "engagement_letters/05_redwood_property_management_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-042"
+    },
+    {
+      "client": "Cascade Plumbing & Heating",
+      "deliverable": "Bi-weekly payroll for ~12 employees via Gusto, plus federal/NH tax deposits",
+      "category": "payroll",
+      "cadence": "biweekly",
+      "cadence_detail": "Every other Friday; timesheets due Wednesday noon",
+      "next_due_date": "2026-10-09",
+      "owner": "Marcus Tran (covering for Danielle Okafor)",
+      "fee": "$95/run + $6/employee",
+      "source_excerpt": "Provider shall process Client's payroll on a BI-WEEKLY basis (every other Friday) through Gusto. Client shall submit approved timesheets no later than 12:00 noon on the Wednesday preceding each pay date.",
+      "confidence": 0.85,
+      "notes": "Last runs on invoices: 8/14, 8/28, so 9/11, 9/25, next 10/9. Danielle normally runs this; on leave until 12/1.",
+      "source_document": "engagement_letters/02_cascade_plumbing_engagement_agreement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-019"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Bi-weekly payroll for 14 employees via Gusto, plus tax deposits",
+      "category": "payroll",
+      "cadence": "biweekly",
+      "cadence_detail": "Every other Friday; timesheets due Tuesday",
+      "next_due_date": "2026-10-09",
+      "owner": "Marcus Tran (covering for Danielle Okafor)",
+      "fee": "Included in $2,400/month",
+      "source_excerpt": "Payroll processing (14 employees, Gusto) | Bi-weekly | Every other Friday, timesheets due Tues",
+      "confidence": 0.85,
+      "notes": "Same cycle as Cascade per seller's note. Danielle normally runs it; Marcus 'is stretched.'",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-068"
+    },
+    {
+      "client": "Beacon Hill Law Group",
+      "deliverable": "IOLTA trust account three-way reconciliation (NH Supreme Court Rule 50), signed by Managing Partner",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "Report to Managing Partner for signature by the 10th; discrepancies reported same day",
+      "next_due_date": "2026-10-10",
+      "owner": "Marcus Tran",
+      "fee": "Included in $1,350/month",
+      "source_excerpt": "Monthly three-way reconciliation of the firm's IOLTA account ... delivered to the Managing Partner for signature by the 10th of the following month",
+      "confidence": 0.9,
+      "notes": "KEEP THE SIGNED COPIES (seller). Expired engagement letter; see billing conflict.",
+      "source_document": "engagement_letters/06_beacon_hill_law_engagement_2024.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-052"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Pharmacy inventory count reconciliation",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 10th",
+      "next_due_date": "2026-10-10",
+      "owner": "Marcus Tran",
+      "fee": "Included in $2,400/month",
+      "source_excerpt": "Inventory count reconciliation (pharmacy) | Monthly | By the 10th",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-069"
+    },
+    {
+      "client": "Redwood Property Management",
+      "deliverable": "Tenant security deposit trust account three-way reconciliation (NH RSA 540-A), report signed and returned",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "Report signed and returned by the 10th; seller's internal target is the 5th",
+      "next_due_date": "2026-10-10",
+      "owner": "Tom Bellweather",
+      "fee": "Included in $1,500/month",
+      "source_excerpt": "Three-way reconciliation (bank / ledger / tenant list) per NH RSA 540-A requirements - Reconciliation report signed and returned by the 10th",
+      "confidence": 0.95,
+      "notes": "Seller: 'THE TRUST REC IS NOT OPTIONAL.' Statutory. Keep copies 3 years. Written procedures do not exist; Marcus knows how.",
+      "source_document": "engagement_letters/05_redwood_property_management_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-043"
+    },
+    {
+      "client": "Saltmarsh Landscaping & Snow",
+      "deliverable": "Invoice client for prior month's hours (billed in arrears)",
+      "category": "billing",
+      "cadence": "monthly",
+      "cadence_detail": "Around the 10th, due 15 days",
+      "next_due_date": "2026-10-10",
+      "owner": "Jess Lindqvist",
+      "fee": "$95/hour",
+      "source_excerpt": "#INV-2026-0810 Date 8/10/2026 Due 8/25/2026",
+      "confidence": 0.75,
+      "notes": "Client pays by Venmo; ask him to use the ACH link.",
+      "source_document": "invoices/INV-2026-0810_saltmarsh_landscaping.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-059"
+    },
+    {
+      "client": "Thistle & Pine Cafe",
+      "deliverable": "Monthly P&L and balance sheet to client",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 10th of the following month (letter) / 20th (seller's note)",
+      "next_due_date": "2026-10-10",
+      "owner": "Priya Natarajan",
+      "fee": "Included",
+      "source_excerpt": "Monthly P&L and balance sheet, to you by the 10th of the following month",
+      "confidence": 0.6,
+      "notes": "Square reports arrive late, which is why the practice slipped to the 20th.",
+      "source_document": "engagement_letters/03_thistle_and_pine_cafe_engagement.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Engagement email promises the P&L by the 10th. The seller's note says 'Thistle 20th' and 'Their P&L goes out by the 20th because Square reports are always late.' The client-facing commitment is the 10th."
+      },
+      "merged_from": [],
+      "id": "OB-028"
+    },
+    {
+      "client": "Thistle & Pine Cafe",
+      "deliverable": "Monthly tips reporting summary for client's payroll company (ADP)",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "Monthly; no specific day stated",
+      "next_due_date": "2026-10-10",
+      "owner": "Priya Natarajan",
+      "fee": "Included",
+      "source_excerpt": "Tips reporting summary each month for your payroll company",
+      "confidence": 0.7,
+      "notes": "Date is inferred to match the monthly package.",
+      "source_document": "engagement_letters/03_thistle_and_pine_cafe_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-030"
+    },
+    {
+      "client": "Thistle & Pine Cafe",
+      "deliverable": "Tip pool spreadsheet maintenance",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "Unclear",
+      "next_due_date": "2026-10-10",
+      "owner": "Priya Natarajan",
+      "fee": "Not charged",
+      "source_excerpt": "Tip pool spreadsheet maintenance ......................... included",
+      "confidence": 0.4,
+      "notes": null,
+      "source_document": "invoices/INV-2026-0802_thistle_pine.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Invoice lists tip pool spreadsheet maintenance as 'included' and the seller's note says 'we sort of do it but it's not in the letter and we don't charge for it.' The engagement email only says 'we can talk about it.' Scope is undocumented."
+      },
+      "merged_from": [],
+      "id": "OB-031"
+    },
+    {
+      "client": "Northgate Physical Therapy",
+      "deliverable": "Monthly bookkeeping, EOB/insurance remittance reconciliation, and financial statements",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 12th of the following month",
+      "next_due_date": "2026-10-12",
+      "owner": "Marcus Tran",
+      "fee": "$975/month",
+      "source_excerpt": "Financial statements delivered by the 12th of the following month",
+      "confidence": 0.95,
+      "notes": "Second BofA checking (x7702) added Jan 2026 for the Newburyport location and billed at $40/month extra.",
+      "source_document": "engagement_letters/04_northgate_physical_therapy_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [
+        {
+          "id": "OB-035-src",
+          "source_document": "invoices/INV-2026-0803_northgate_pt.txt",
+          "fee": "$975.00 + $40.00",
+          "cadence_detail": "Monthly, invoiced 1st"
+        },
+        {
+          "id": "OB-035-src",
+          "source_document": "invoices/INV-2026-0903_northgate_pt.txt",
+          "fee": "$975.00 + $40.00",
+          "cadence_detail": "Monthly, invoiced 1st"
+        }
+      ],
+      "id": "OB-035"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Monthly financial statements and KPI dashboard",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 12th",
+      "next_due_date": "2026-10-12",
+      "owner": "Marcus Tran",
+      "fee": "$2,400/month, due on the 10th",
+      "source_excerpt": "Financial statements + KPI dashboard | Monthly | By the 12th",
+      "confidence": 0.95,
+      "notes": null,
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [
+        {
+          "id": "OB-070-src",
+          "source_document": "invoices/INV-2026-0901_orchard_street_vet.txt",
+          "fee": "$2,400.00",
+          "cadence_detail": "Monthly, invoiced 1st, due 10th"
+        }
+      ],
+      "id": "OB-070"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Submit October 15 payroll in Gusto (6 employees)",
+      "category": "payroll",
+      "cadence": "semi-monthly",
+      "cadence_detail": "15th and last day of month; submit 2 business days prior by 3pm ET",
+      "next_due_date": "2026-10-13",
+      "owner": null,
+      "fee": "$151/month Gusto fee",
+      "source_excerpt": "Following pay date: October 15, 2026 - MUST BE SUBMITTED IN GUSTO BY OCT 13, 3PM ET",
+      "confidence": 0.95,
+      "notes": "Gusto admin login is ruth@harborbookkeeping.com. Transfer admin before Ruth's 30-day transition ends.",
+      "source_document": "payroll_summary_2026-09.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-003"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Confirm QuickBooks Online wholesale subscriptions are being re-billed to all 6 clients",
+      "category": "billing",
+      "cadence": "monthly",
+      "cadence_detail": "Charged to firm Amex on the 14th",
+      "next_due_date": "2026-10-14",
+      "owner": "Jess Lindqvist",
+      "fee": "$612/month",
+      "source_excerpt": "(Are we re-billing Redwood? I can't find it on their invoice)",
+      "confidence": 0.45,
+      "notes": "Redwood's August and September invoices show no QBO pass-through line.",
+      "source_document": "software_subscriptions.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Subscription list says 6 client QBO subscriptions ($612/mo) are re-billed to clients, but the Redwood invoices in the folder carry no QBO line and Jess flags that she can't find it."
+      },
+      "merged_from": [],
+      "id": "OB-013"
+    },
+    {
+      "client": "Beacon Hill Law Group",
+      "deliverable": "Operating account bookkeeping and financial statements",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 15th of the following month",
+      "next_due_date": "2026-10-15",
+      "owner": "Marcus Tran",
+      "fee": "Included in $1,350/month",
+      "source_excerpt": "Monthly bookkeeping and reconciliation of the firm's operating account at Bank of New Hampshire, with financial statements delivered by the 15th of the following month.",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/06_beacon_hill_law_engagement_2024.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-053"
+    },
+    {
+      "client": "Marlowe Family Dental",
+      "deliverable": "Monthly bookkeeping and financial package (Balance Sheet, P&L, A/R aging)",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 15th of the following month",
+      "next_due_date": "2026-10-15",
+      "owner": "Priya Natarajan",
+      "fee": "$1,200/month, net 15",
+      "source_excerpt": "Monthly financial package (Balance Sheet, Profit & Loss, A/R aging) delivered by the 15th of the following month.",
+      "confidence": 0.95,
+      "notes": "Three accounts: Citizens x4471, x4489, Chase Ink x9920. Contact is office manager Bev.",
+      "source_document": "engagement_letters/01_marlowe_dental_engagement_letter.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [
+        {
+          "id": "OB-014-src",
+          "source_document": "invoices/INV-2026-0701_marlowe_dental.txt",
+          "fee": "$1,200.00",
+          "cadence_detail": "Monthly, invoiced 1st"
+        },
+        {
+          "id": "OB-014-src",
+          "source_document": "invoices/INV-2026-0806_marlowe_dental.txt",
+          "fee": "$1,200.00",
+          "cadence_detail": "Monthly, invoiced 1st"
+        }
+      ],
+      "id": "OB-014"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Q3 controlled substance log reconciliation to purchases (DEA support)",
+      "category": "client_deliverable",
+      "cadence": "quarterly",
+      "cadence_detail": "15th of the month after quarter end",
+      "next_due_date": "2026-10-15",
+      "owner": "Marcus Tran",
+      "fee": "Included in $2,400/month",
+      "source_excerpt": "Controlled substance log reconciliation to purchases (DEA support) | Quarterly | 15th after quarter end",
+      "confidence": 0.9,
+      "notes": "Goes in the locked/restricted folder. Only assigned staff may access.",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-071"
+    },
+    {
+      "client": "Redwood Property Management",
+      "deliverable": "Operating account bookkeeping and monthly statements",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 15th",
+      "next_due_date": "2026-10-15",
+      "owner": "Tom Bellweather",
+      "fee": "$1,500/month, net 10",
+      "source_excerpt": "A1 Operating account bookkeeping - Reconcile Kennebunk Savings operating (x3310) - Statements delivered by the 15th",
+      "confidence": 0.95,
+      "notes": null,
+      "source_document": "engagement_letters/05_redwood_property_management_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [
+        {
+          "id": "OB-044-src",
+          "source_document": "invoices/INV-2026-0804_redwood_property.txt",
+          "fee": "$1,500.00",
+          "cadence_detail": "Monthly, net 10"
+        },
+        {
+          "id": "OB-044-src",
+          "source_document": "invoices/INV-2026-0904_redwood_property.txt",
+          "fee": "$1,500.00",
+          "cadence_detail": "Monthly, net 10"
+        }
+      ],
+      "id": "OB-044"
+    },
+    {
+      "client": "Thistle & Pine Cafe",
+      "deliverable": "Prepare NH Meals & Rooms tax return and remind client (client files/pays via NH DRA)",
+      "category": "tax_filing",
+      "cadence": "monthly",
+      "cadence_detail": "Due the 15th",
+      "next_due_date": "2026-10-15",
+      "owner": "Kevin (per seller's note; not on staff list)",
+      "fee": "Included",
+      "source_excerpt": "we'll prepare the M&R return and remind you, it's due the 15th. You still file/pay it yourself through the NH DRA portal.",
+      "confidence": 0.55,
+      "notes": null,
+      "source_document": "engagement_letters/03_thistle_and_pine_cafe_engagement.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Seller's note assigns the M&R filing to 'Kevin', who does not appear on the payroll summary of 6 employees. No one currently on staff is documented as owning this filing."
+      },
+      "merged_from": [],
+      "id": "OB-029"
+    },
+    {
+      "client": "Cascade Plumbing & Heating",
+      "deliverable": "Monthly bookkeeping with financial statements",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "By the 20th of the following month",
+      "next_due_date": "2026-10-20",
+      "owner": "Tom Bellweather",
+      "fee": "$850/month, net 30",
+      "source_excerpt": "deliver monthly financial statements no later than the 20th day of the following month",
+      "confidence": 0.9,
+      "notes": "Class tracking by job for jobs over $5,000.",
+      "source_document": "engagement_letters/02_cascade_plumbing_engagement_agreement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [
+        {
+          "id": "OB-020-src",
+          "source_document": "invoices/INV-2026-0731_cascade_plumbing.txt",
+          "fee": "$850.00",
+          "cadence_detail": "Monthly, invoiced last business day"
+        },
+        {
+          "id": "OB-020-src",
+          "source_document": "invoices/INV-2026-0831_cascade_plumbing.txt",
+          "fee": "$850.00",
+          "cadence_detail": "Monthly, invoiced last business day"
+        }
+      ],
+      "id": "OB-020"
+    },
+    {
+      "client": "Northgate Physical Therapy",
+      "deliverable": "Massachusetts sales/use tax return for Newburyport office",
+      "category": "tax_filing",
+      "cadence": "monthly",
+      "cadence_detail": "Monthly since March 2026 period; due date 20th vs 30th unconfirmed",
+      "next_due_date": "2026-10-20",
+      "owner": "Kevin (per seller's note; not on staff list)",
+      "fee": "$85/month on invoices",
+      "source_excerpt": "they're moving us to MONTHLY sales tax filing starting with the March 2026 period. Due the 30th of the following month apparently (not the 20th?)",
+      "confidence": 0.5,
+      "notes": "Engagement letter has it quarterly (Form ST-9, due 20th after quarter end). Client email Feb 2026 moved it to monthly. Invoices confirm monthly at $85.",
+      "source_document": "engagement_letters/04b_northgate_amendment_email_2026.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Three documents disagree: the 2024 engagement letter says quarterly ST-9; the client's Feb 2026 email says monthly starting March 2026 (due date uncertain); August and September invoices bill a monthly return; the seller's note still says 'Quarterly MA sales tax (ST-9).' No DOR notice scan or updated fee letter is in the folder. Owner 'Kevin' is not on staff."
+      },
+      "merged_from": [],
+      "id": "OB-036"
+    },
+    {
+      "client": "Cascade Plumbing & Heating",
+      "deliverable": "File Form 941 and NHES quarterly report (Q3 2026)",
+      "category": "tax_filing",
+      "cadence": "quarterly",
+      "cadence_detail": "Last day of the month after quarter end",
+      "next_due_date": "2026-10-31",
+      "owner": "Marcus Tran (covering for Danielle Okafor)",
+      "fee": "Included in payroll fee",
+      "source_excerpt": "file Forms 941, NH unemployment (NHES) quarterly reports, and annual Forms W-2/W-3",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/02_cascade_plumbing_engagement_agreement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-021"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Replace Adobe Acrobat payment card (Ruth's personal Visa expires 10/2026)",
+      "category": "firm_admin",
+      "cadence": "one-time",
+      "cadence_detail": "Before card expiry",
+      "next_due_date": "2026-10-31",
+      "owner": "Jess Lindqvist",
+      "fee": "$47.98/month",
+      "source_excerpt": "Adobe Acrobat Pro | 2 users | $47.98 | Monthly | Card on file expires 10/2026 (Ruth's personal Visa!)",
+      "confidence": 0.85,
+      "notes": "Firm Amex is also in Ruth's name personally and needs to be replaced.",
+      "source_document": "software_subscriptions.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-004"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "File Form 941 (Q3 2026) and NH Employment Security quarterly report for the firm",
+      "category": "tax_filing",
+      "cadence": "quarterly",
+      "cadence_detail": "Last day of the month after quarter end",
+      "next_due_date": "2026-10-31",
+      "owner": null,
+      "fee": null,
+      "source_excerpt": "Form 941 Q3 2026: due October 31, 2026 (Gusto files; verify) / NH Employment Security quarterly report Q3: due October 31, 2026",
+      "confidence": 0.9,
+      "notes": "Gusto files automatically; someone needs to verify the filing confirmation.",
+      "source_document": "payroll_summary_2026-09.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-006"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "File Form 941 and NHES quarterly report (Q3 2026)",
+      "category": "tax_filing",
+      "cadence": "quarterly",
+      "cadence_detail": "Last day of month after quarter end",
+      "next_due_date": "2026-10-31",
+      "owner": "Marcus Tran (covering for Danielle Okafor)",
+      "fee": "Included in $2,400/month",
+      "source_excerpt": "Form 941 / NHES quarterly | Quarterly | Last day of month after quarter end",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-072"
+    },
+    {
+      "client": "Redwood Property Management",
+      "deliverable": "Draft 2027 operating budgets for all 14 properties (drafts by Oct 31, finals by Nov 30)",
+      "category": "client_deliverable",
+      "cadence": "annually",
+      "cadence_detail": "Drafts October 31, finals November 30",
+      "next_due_date": "2026-10-31",
+      "owner": null,
+      "fee": "$2,000 billed on delivery of finals",
+      "source_excerpt": "Draft 2027 operating budgets for all 14 properties for owner approval; drafts due to Client by October 31, 2026; finals by November 30, 2026",
+      "confidence": 0.7,
+      "notes": "Section C3: the budget fee survives early termination once drafts are delivered.",
+      "source_document": "engagement_letters/05_redwood_property_management_engagement.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Engagement letter Section A5 commits Harbor to annual budgets with a $2,000 fee (B2). No budget work appears on any Redwood invoice in the folder, and the seller's note says 'we've never actually done them, Gloria's assistant did them last year, but it's in the letter and she may ask this year.'"
+      },
+      "merged_from": [],
+      "id": "OB-045"
+    },
+    {
+      "client": "Saltmarsh Landscaping & Snow",
+      "deliverable": "Q3 NHES unemployment report (seasonal crew)",
+      "category": "tax_filing",
+      "cadence": "quarterly",
+      "cadence_detail": "End of month after quarter end",
+      "next_due_date": "2026-10-31",
+      "owner": "Priya Natarajan",
+      "fee": "~1 hour @ $95",
+      "source_excerpt": "Quarterly: NHES unemployment report ... Due end of month after quarter end.",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/07_saltmarsh_landscaping_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-060"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Decide on Dext annual renewal before auto-renew ($2,268 annual contract)",
+      "category": "firm_admin",
+      "cadence": "annually",
+      "cadence_detail": "Auto-renews 11/1 each year",
+      "next_due_date": "2026-11-01",
+      "owner": null,
+      "fee": "$2,268/year",
+      "source_excerpt": "Dext (receipt capture) | 10 client accounts | $189.00 | Monthly | Auto-renews annually 11/1/2026 (annual contract, $2,268 due)",
+      "confidence": 0.85,
+      "notes": "",
+      "source_document": "software_subscriptions.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-005"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Workers' comp policy renewal (Acadia) and audit worksheet",
+      "category": "firm_admin",
+      "cadence": "annually",
+      "cadence_detail": "Renews November 15",
+      "next_due_date": "2026-11-15",
+      "owner": null,
+      "fee": null,
+      "source_excerpt": "Workers' comp policy (Acadia): renews November 15, 2026 - audit worksheet due",
+      "confidence": 0.8,
+      "notes": "",
+      "source_document": "payroll_summary_2026-09.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-007"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Distribute health insurance open enrollment materials to employees",
+      "category": "firm_admin",
+      "cadence": "annually",
+      "cadence_detail": "By December 1 for January 1 renewal",
+      "next_due_date": "2026-12-01",
+      "owner": null,
+      "fee": null,
+      "source_excerpt": "Health insurance (Anthem NH small group): renews January 1, 2027; open enrollment materials due to employees by December 1",
+      "confidence": 0.85,
+      "notes": "",
+      "source_document": "payroll_summary_2026-09.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-008"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Plan for Danielle Okafor's return from parental leave and reassign Cascade/Orchard payroll coverage",
+      "category": "firm_admin",
+      "cadence": "one-time",
+      "cadence_detail": "Leave ends 12/1/2026",
+      "next_due_date": "2026-12-01",
+      "owner": null,
+      "fee": null,
+      "source_excerpt": "Danielle's leave: Cascade and Orchard payroll being covered by Marcus \"for now\"",
+      "confidence": 0.7,
+      "notes": "Seller's note says Marcus is stretched. PTO payout at leave start is marked 'unclear'.",
+      "source_document": "payroll_summary_2026-09.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-009"
+    },
+    {
+      "client": "Marlowe Family Dental",
+      "deliverable": "Quarterly NH BPT/BET estimated payment reminder to client",
+      "category": "tax_filing",
+      "cadence": "quarterly",
+      "cadence_detail": "NH estimates due Apr 15 / Jun 15 / Sep 15 / Dec 15",
+      "next_due_date": "2026-12-15",
+      "owner": "Priya Natarajan",
+      "fee": "Included",
+      "source_excerpt": "Quarterly New Hampshire Business Profits Tax / Business Enterprise Tax estimate reminders (we do not prepare the return; your CPA, Fitzgerald & Lowe, does).",
+      "confidence": 0.8,
+      "notes": "Reminder only; the CPA prepares the return.",
+      "source_document": "engagement_letters/01_marlowe_dental_engagement_letter.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-015"
+    },
+    {
+      "client": "Northgate Physical Therapy",
+      "deliverable": "Quarterly NH BET/BPT estimated payment reminder",
+      "category": "tax_filing",
+      "cadence": "quarterly",
+      "cadence_detail": "Dec 15 next",
+      "next_due_date": "2026-12-15",
+      "owner": "Marcus Tran",
+      "fee": "Included",
+      "source_excerpt": "NH BET/BPT estimated payment reminder",
+      "confidence": 0.8,
+      "notes": "",
+      "source_document": "engagement_letters/04_northgate_physical_therapy_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-038"
+    },
+    {
+      "client": "Saltmarsh Landscaping & Snow",
+      "deliverable": "Quarterly NH BET/BPT estimate prep",
+      "category": "tax_filing",
+      "cadence": "quarterly",
+      "cadence_detail": "Apr 15, Jun 15, Sep 15, Dec 15",
+      "next_due_date": "2026-12-15",
+      "owner": "Priya Natarajan",
+      "fee": "~1 hour @ $95",
+      "source_excerpt": "Quarterly: NH BET/BPT estimates (we prep, you pay) - due Apr 15, Jun 15, Sep 15, Dec 15.",
+      "confidence": 0.85,
+      "notes": "",
+      "source_document": "engagement_letters/07_saltmarsh_landscaping_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-061"
+    },
+    {
+      "client": "Cascade Plumbing & Heating",
+      "deliverable": "Send or decide on 60-day non-renewal notice before agreement auto-renews 3/1/2027",
+      "category": "contract",
+      "cadence": "annually",
+      "cadence_detail": "60 days before end of 12-month term (3/1)",
+      "next_due_date": "2026-12-31",
+      "owner": null,
+      "fee": null,
+      "source_excerpt": "automatically renewing for successive twelve-month terms unless either party gives sixty (60) days' written notice prior to the end of the then-current term",
+      "confidence": 0.85,
+      "notes": "Seller's note: 'I've never sent a notice.' Only matters if you want to change terms or pricing.",
+      "source_document": "engagement_letters/02_cascade_plumbing_engagement_agreement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-022"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Give written notice to landlord to exercise 36-month lease renewal option (or lease goes month-to-month at 125% rent)",
+      "category": "contract",
+      "cadence": "one-time",
+      "cadence_detail": "No later than 90 days before 3/31/2027 expiration",
+      "next_due_date": "2026-12-31",
+      "owner": null,
+      "fee": "Fair market rent",
+      "source_excerpt": "exercisable by WRITTEN NOTICE TO LANDLORD NO LATER THAN 90 DAYS BEFORE EXPIRATION (i.e., by December 31, 2026)",
+      "confidence": 0.95,
+      "notes": "",
+      "source_document": "lease_office_14_bow_street.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-010"
+    },
+    {
+      "client": "Redwood Property Management",
+      "deliverable": "Renew or replace engagement before the 24-month period ends 12/31/2026",
+      "category": "contract",
+      "cadence": "one-time",
+      "cadence_detail": "Period ends December 31, 2026; 60 days' notice to terminate",
+      "next_due_date": "2026-12-31",
+      "owner": null,
+      "fee": null,
+      "source_excerpt": "PERIOD: January 1, 2025 - December 31, 2026 (24 months)",
+      "confidence": 0.85,
+      "notes": "No auto-renewal clause. A new letter is needed for 2027 or the relationship continues without terms.",
+      "source_document": "engagement_letters/05_redwood_property_management_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-047"
+    },
+    {
+      "client": "Beacon Hill Law Group",
+      "deliverable": "Prepare Forms 1099-NEC and 1099-MISC",
+      "category": "tax_filing",
+      "cadence": "annually",
+      "cadence_detail": "January 31",
+      "next_due_date": "2027-01-31",
+      "owner": "Marcus Tran",
+      "fee": "$125/hour",
+      "source_excerpt": "Preparation of the firm's 1099-NEC and 1099-MISC forms by January 31",
+      "confidence": 0.85,
+      "notes": "",
+      "source_document": "engagement_letters/06_beacon_hill_law_engagement_2024.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-055"
+    },
+    {
+      "client": "Cascade Plumbing & Heating",
+      "deliverable": "Prepare Forms W-2/W-3 and ~20 Forms 1099-NEC for subcontractors",
+      "category": "tax_filing",
+      "cadence": "annually",
+      "cadence_detail": "January 31",
+      "next_due_date": "2027-01-31",
+      "owner": "Marcus Tran (covering for Danielle Okafor)",
+      "fee": "$15/form, $75 minimum",
+      "source_excerpt": "Provider shall prepare Forms 1099-NEC for subcontractors",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/02_cascade_plumbing_engagement_agreement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-023"
+    },
+    {
+      "client": "Marlowe Family Dental",
+      "deliverable": "Prepare and file Forms 1099-NEC; collect W-9s from client by Jan 10",
+      "category": "tax_filing",
+      "cadence": "annually",
+      "cadence_detail": "January 31",
+      "next_due_date": "2027-01-31",
+      "owner": "Priya Natarajan",
+      "fee": "Included",
+      "source_excerpt": "Annual preparation and filing of Forms 1099-NEC for contractors, due January 31 each year. Client to provide W-9s by January 10.",
+      "confidence": 0.95,
+      "notes": "",
+      "source_document": "engagement_letters/01_marlowe_dental_engagement_letter.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-016"
+    },
+    {
+      "client": "Northgate Physical Therapy",
+      "deliverable": "Prepare Forms 1099-NEC",
+      "category": "tax_filing",
+      "cadence": "annually",
+      "cadence_detail": "January 31",
+      "next_due_date": "2027-01-31",
+      "owner": "Marcus Tran",
+      "fee": "Included",
+      "source_excerpt": "1099-NEC preparation (due Jan 31)",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/04_northgate_physical_therapy_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-039"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Forms W-2/W-3 (14 employees) and 1099-NEC",
+      "category": "tax_filing",
+      "cadence": "annually",
+      "cadence_detail": "January 31",
+      "next_due_date": "2027-01-31",
+      "owner": "Marcus Tran",
+      "fee": "$10/form",
+      "source_excerpt": "Forms W-2/W-3, 1099-NEC | Annually | January 31",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-073"
+    },
+    {
+      "client": "Redwood Property Management",
+      "deliverable": "Prepare 1099-MISC (rents to property owners) and 1099-NEC (vendors)",
+      "category": "tax_filing",
+      "cadence": "annually",
+      "cadence_detail": "January 31",
+      "next_due_date": "2027-01-31",
+      "owner": "Tom Bellweather",
+      "fee": "$12/form",
+      "source_excerpt": "A6 Annual 1099-MISC (rents, to property owners) and 1099-NEC (vendors) | Annually, Jan 31",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/05_redwood_property_management_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-048"
+    },
+    {
+      "client": "Saltmarsh Landscaping & Snow",
+      "deliverable": "1099s for snow removal subcontractors",
+      "category": "tax_filing",
+      "cadence": "annually",
+      "cadence_detail": "January",
+      "next_due_date": "2027-01-31",
+      "owner": "Priya Natarajan",
+      "fee": "$95/hour",
+      "source_excerpt": "1099s for the snow subs, January.",
+      "confidence": 0.85,
+      "notes": "",
+      "source_document": "engagement_letters/07_saltmarsh_landscaping_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-062"
+    },
+    {
+      "client": "Harbor Bookkeeping (firm)",
+      "deliverable": "Karbon practice-management annual contract renewal (5 seats, one is Ruth's)",
+      "category": "firm_admin",
+      "cadence": "annually",
+      "cadence_detail": "Renews 2/1",
+      "next_due_date": "2027-02-01",
+      "owner": null,
+      "fee": "$295/month",
+      "source_excerpt": "Karbon (practice mgmt) | 5 users | $295.00 | Monthly | Annual contract renews 2/1/2027. Ruth is one of the 5 seats.",
+      "confidence": 0.8,
+      "notes": "Reduce to 4 seats or reassign Ruth's seat before renewal. Passwords vault lives in Karbon.",
+      "source_document": "software_subscriptions.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-012"
+    },
+    {
+      "client": "Cascade Plumbing & Heating",
+      "deliverable": "Deliver year-end package to client's tax preparer",
+      "category": "client_deliverable",
+      "cadence": "annually",
+      "cadence_detail": "By February 15",
+      "next_due_date": "2027-02-15",
+      "owner": "Tom Bellweather",
+      "fee": "Included",
+      "source_excerpt": "deliver a year-end package to Client's tax preparer by February 15",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/02_cascade_plumbing_engagement_agreement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-024"
+    },
+    {
+      "client": "Orchard Street Veterinary Hospital",
+      "deliverable": "Year-end tax package and fixed asset / Section 179 schedule to CPA (Fitzgerald & Lowe)",
+      "category": "client_deliverable",
+      "cadence": "annually",
+      "cadence_detail": "By February 15",
+      "next_due_date": "2027-02-15",
+      "owner": "Marcus Tran",
+      "fee": "Included in $2,400/month",
+      "source_excerpt": "Year-end tax package to CPA (Fitzgerald & Lowe) | Annually | February 15 / Fixed asset / Section 179 schedule | Annually | February 15",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/08_orchard_street_veterinary_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-074"
+    },
+    {
+      "client": "Northgate Physical Therapy",
+      "deliverable": "Fixed asset schedule update for client's CPA",
+      "category": "client_deliverable",
+      "cadence": "annually",
+      "cadence_detail": "By February 28",
+      "next_due_date": "2027-02-28",
+      "owner": "Marcus Tran",
+      "fee": "Included",
+      "source_excerpt": "Fixed asset schedule update for your CPA (by Feb 28)",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/04_northgate_physical_therapy_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-040"
+    },
+    {
+      "client": "Thistle & Pine Cafe",
+      "deliverable": "Year-end package to client's tax preparer",
+      "category": "client_deliverable",
+      "cadence": "annually",
+      "cadence_detail": "By end of February",
+      "next_due_date": "2027-02-28",
+      "owner": "Priya Natarajan",
+      "fee": "Included",
+      "source_excerpt": "Year end: we'll get everything to your tax preparer by end of Feb",
+      "confidence": 0.85,
+      "notes": "",
+      "source_document": "engagement_letters/03_thistle_and_pine_cafe_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-032"
+    },
+    {
+      "client": "Beacon Hill Law Group",
+      "deliverable": "Year-end package to client's CPA",
+      "category": "client_deliverable",
+      "cadence": "annually",
+      "cadence_detail": "By March 1",
+      "next_due_date": "2027-03-01",
+      "owner": "Marcus Tran",
+      "fee": "$125/hour",
+      "source_excerpt": "a year-end package to your CPA by March 1",
+      "confidence": 0.85,
+      "notes": "",
+      "source_document": "engagement_letters/06_beacon_hill_law_engagement_2024.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-056"
+    },
+    {
+      "client": "Redwood Property Management",
+      "deliverable": "CAM reconciliation for Islington Plaza and Mill Pond Commons",
+      "category": "client_deliverable",
+      "cadence": "annually",
+      "cadence_detail": "By March 31",
+      "next_due_date": "2027-03-31",
+      "owner": "Tom Bellweather",
+      "fee": "$450 per property",
+      "source_excerpt": "A7 CAM reconciliation for the two commercial properties (Islington Plaza, Mill Pond Commons) | Annually, by March 31",
+      "confidence": 0.9,
+      "notes": "",
+      "source_document": "engagement_letters/05_redwood_property_management_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-049"
+    },
+    {
+      "client": "Saltmarsh Landscaping & Snow",
+      "deliverable": "Off-road diesel fuel tax refund claim (NH DOT)",
+      "category": "tax_filing",
+      "cadence": "annually",
+      "cadence_detail": "Due June 30",
+      "next_due_date": "2027-06-30",
+      "owner": "Priya Natarajan",
+      "fee": "$95/hour",
+      "source_excerpt": "Fuel tax refund claim (off-road diesel for the equipment) - we'll file the NH DOT form annually, due June 30.",
+      "confidence": 0.85,
+      "notes": "",
+      "source_document": "engagement_letters/07_saltmarsh_landscaping_engagement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-063"
+    },
+    {
+      "client": "Cascade Plumbing & Heating",
+      "deliverable": "Payroll summaries for annual workers' compensation audit",
+      "category": "client_deliverable",
+      "cadence": "annually",
+      "cadence_detail": "After policy year ends June 30; audit typically in summer",
+      "next_due_date": "2027-07-15",
+      "owner": "Marcus Tran (covering for Danielle Okafor)",
+      "fee": "$0 on 8/2026 invoice",
+      "source_excerpt": "Provider shall prepare payroll summaries for Client's annual workers' compensation audit (policy year ends June 30).",
+      "confidence": 0.6,
+      "notes": "Exact audit date depends on the carrier. Was done at no charge in August 2026.",
+      "source_document": "engagement_letters/02_cascade_plumbing_engagement_agreement.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-025"
+    },
+    {
+      "client": "Beacon Hill Law Group",
+      "deliverable": "Prepare annual Rule 50 trust account certification data",
+      "category": "client_deliverable",
+      "cadence": "annually",
+      "cadence_detail": "By August 1",
+      "next_due_date": "2027-08-01",
+      "owner": "Marcus Tran",
+      "fee": "$125/hour (3.5 hrs in 2026)",
+      "source_excerpt": "prepare the annual NH Supreme Court Rule 50 trust account certification data by the August 1 deadline",
+      "confidence": 0.85,
+      "notes": "",
+      "source_document": "engagement_letters/06_beacon_hill_law_engagement_2024.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-057"
+    },
+    {
+      "client": "Beacon Hill Law Group",
+      "deliverable": "Execute a new engagement letter for 2026 onward",
+      "category": "contract",
+      "cadence": "one-time",
+      "cadence_detail": "Overdue since 1/1/2026",
+      "next_due_date": null,
+      "owner": "Ruth Callahan",
+      "fee": null,
+      "source_excerpt": "This engagement expires on December 31, 2025. Continuation of services beyond that date requires a new engagement letter.",
+      "confidence": 0.6,
+      "notes": null,
+      "source_document": "engagement_letters/06_beacon_hill_law_engagement_2024.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Expired contract. Listed first under the seller's 'things I never got to.' Nine months of work and billing have occurred without a written engagement."
+      },
+      "merged_from": [],
+      "id": "OB-054"
+    },
+    {
+      "client": "Marlowe Family Dental",
+      "deliverable": "Follow up on Maine sales tax nexus question for possible Kittery second location",
+      "category": "tax_filing",
+      "cadence": "one-time",
+      "cadence_detail": "No deadline; research billed 7/2026, no conclusion recorded",
+      "next_due_date": null,
+      "owner": "Priya Natarajan",
+      "fee": "$125/hour",
+      "source_excerpt": "Additional: sales tax nexus research (Maine) 1.5 hrs $187.50 @ $125/hr - per Dr. Marlowe's request 7/22",
+      "confidence": 0.4,
+      "notes": "Seller's note: 'nobody has looked at this.' Research was billed but no memo or outcome is in the folder. Not in the engagement letter scope.",
+      "source_document": "invoices/INV-2026-0806_marlowe_dental.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-017"
+    },
+    {
+      "client": "Northgate Physical Therapy",
+      "deliverable": "Issue updated engagement/fee letter covering monthly MA filing and second bank account",
+      "category": "contract",
+      "cadence": "one-time",
+      "cadence_detail": "Promised Feb 2026; never sent",
+      "next_due_date": null,
+      "owner": "Ruth Callahan",
+      "fee": "$125/month currently billed without agreement",
+      "source_excerpt": "[No updated fee letter found in the client folder as of handoff. -R.C.]",
+      "confidence": 0.6,
+      "notes": null,
+      "source_document": "engagement_letters/04b_northgate_amendment_email_2026.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "Marcus promised 'Ruth will send an updated fee letter' on 2/9/2026. Invoices have billed $85 + $40 per month above the signed $975 fee since then with no written agreement. The seller's 'things I never got to' list confirms it."
+      },
+      "merged_from": [],
+      "id": "OB-037"
+    },
+    {
+      "client": "Pinecrest Auto Body",
+      "deliverable": "Monthly bookkeeping (no engagement letter in folder)",
+      "category": "client_deliverable",
+      "cadence": "monthly",
+      "cadence_detail": "Unknown",
+      "next_due_date": null,
+      "owner": "Tom Bellweather",
+      "fee": "$400/month (per seller's note)",
+      "source_excerpt": "Pinecrest Auto Body: small client, $400/mo, Tom does it. I don't think I gave you their letter. Ask Tom.",
+      "confidence": 0.35,
+      "notes": null,
+      "source_document": "how_we_do_things_ruth.txt",
+      "conflict": {
+        "flag": true,
+        "reason": "This client appears only in the seller's note. There is no engagement letter, no invoice, and no description of deliverables or deadlines anywhere in the handoff folder."
+      },
+      "merged_from": [],
+      "id": "OB-075"
+    },
+    {
+      "client": "Redwood Property Management",
+      "deliverable": "Resolve disputed $22.50 late fee on INV-2026-0904",
+      "category": "billing",
+      "cadence": "one-time",
+      "cadence_detail": "Open balance",
+      "next_due_date": null,
+      "owner": "Jess Lindqvist",
+      "fee": "$22.50",
+      "source_excerpt": "Paid 9/10/2026 ($1,500.00 - late fee disputed by Gloria, left open) Balance: $22.50",
+      "confidence": 0.7,
+      "notes": "Seller's note: 'She disputes late fees, just waive them.'",
+      "source_document": "invoices/INV-2026-0904_redwood_property.txt",
+      "conflict": {
+        "flag": false,
+        "reason": null
+      },
+      "merged_from": [],
+      "id": "OB-046"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RolledCo — Harbor Bookkeeping</title>
+<style>
+  :root { --accent: #8B1A1A; --ink: #111; --muted: #666; --line: #ddd; --soft: #f6f6f6; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--ink); font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  header { padding: 18px 24px 0; border-bottom: 1px solid var(--line); }
+  header h1 { margin: 0 0 2px; font-size: 20px; }
+  header h1 span { color: var(--accent); }
+  header .sub { color: var(--muted); font-size: 13px; }
+  .tabs { display: flex; gap: 4px; margin-top: 14px; }
+  .tab { padding: 8px 14px; border: 1px solid var(--line); border-bottom: none; background: var(--soft); cursor: pointer; border-radius: 4px 4px 0 0; }
+  .tab.active { background: #fff; font-weight: 600; border-color: var(--line); margin-bottom: -1px; }
+  .tab .n { color: var(--muted); font-weight: normal; margin-left: 4px; }
+  .toolbar { display: flex; gap: 12px; align-items: center; padding: 12px 24px; flex-wrap: wrap; border-bottom: 1px solid var(--line); background: var(--soft); }
+  .toolbar label { color: var(--muted); font-size: 13px; }
+  .toolbar input[type=text], .toolbar select { padding: 5px 8px; border: 1px solid var(--line); border-radius: 3px; font: inherit; }
+  .stats { margin-left: auto; color: var(--muted); font-size: 13px; }
+  .stats b { color: var(--ink); }
+  main { padding: 0 24px 60px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); padding: 8px 8px; border-bottom: 2px solid var(--line); white-space: nowrap; }
+  td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr.rejected td { color: #999; text-decoration: line-through; }
+  tr.rejected td.actions, tr.rejected td.flagcell { text-decoration: none; }
+  td.due { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.due.overdue { color: var(--accent); font-weight: 600; }
+  td.due .rel { display: block; color: var(--muted); font-size: 12px; font-weight: normal; }
+  .client { font-weight: 600; }
+  .task .detail { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .flag { display: inline-block; color: var(--accent); font-weight: 700; cursor: pointer; border: 1px solid var(--accent); border-radius: 3px; padding: 0 6px; font-size: 12px; white-space: nowrap; }
+  .flag.low { background: #fff; }
+  .reason { margin-top: 6px; padding: 8px 10px; border-left: 3px solid var(--accent); background: #fbf3f3; font-size: 12px; }
+  .reason b { color: var(--accent); }
+  .conf { font-variant-numeric: tabular-nums; }
+  .bar { display: inline-block; width: 46px; height: 6px; background: #e6e6e6; vertical-align: middle; margin-right: 6px; border-radius: 3px; overflow: hidden; }
+  .bar i { display: block; height: 100%; background: #444; }
+  .bar.low i { background: var(--accent); }
+  a.src { color: var(--ink); text-decoration: underline; font-size: 12px; word-break: break-all; }
+  .srcextra { color: var(--muted); font-size: 11px; }
+  .status { font-size: 12px; text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; }
+  .status.approved { color: #1a6b2a; font-weight: 700; }
+  .status.rejected { color: #999; }
+  .status.pending { color: var(--muted); }
+  button { font: inherit; font-size: 13px; padding: 5px 10px; border-radius: 3px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+  button.secondary { background: #fff; color: var(--accent); }
+  button.ghost { background: #fff; color: var(--muted); border-color: var(--line); }
+  button:disabled { opacity: .5; cursor: default; }
+  td.actions { white-space: nowrap; }
+  td.actions button { margin-right: 4px; }
+  .editrow td { background: var(--soft); }
+  .editform { display: grid; grid-template-columns: 1fr 160px 200px 220px auto; gap: 8px; align-items: end; }
+  .editform label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; }
+  .editform input { width: 100%; padding: 5px 8px; border: 1px solid var(--line); border-radius: 3px; font: inherit; }
+  .empty { padding: 40px; text-align: center; color: var(--muted); }
+  /* drawer */
+  .drawer { position: fixed; top: 0; right: 0; width: 560px; max-width: 100%; height: 100%; background: #fff; border-left: 1px solid var(--line); box-shadow: -4px 0 16px rgba(0,0,0,.08); padding: 20px 24px; overflow: auto; display: none; z-index: 10; }
+  .drawer.open { display: block; }
+  .drawer h2 { margin: 0 0 4px; font-size: 16px; }
+  .drawer .meta { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+  .drawer label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; margin-top: 10px; }
+  .drawer input, .drawer textarea, .drawer select { width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 3px; font: inherit; }
+  .drawer textarea { min-height: 260px; resize: vertical; }
+  .drawer .row { display: flex; gap: 8px; margin-top: 14px; align-items: center; }
+  .drawer .close { position: absolute; top: 12px; right: 14px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
+  .banner { margin-top: 10px; padding: 8px 10px; background: #f1f7f2; border: 1px solid #cfe5d3; color: #1a6b2a; font-size: 13px; }
+  .warn { margin-top: 10px; padding: 8px 10px; background: #fbf3f3; border: 1px solid #ecd0d0; color: var(--accent); font-size: 13px; }
+  .docview pre { white-space: pre-wrap; font: 12px/1.5 ui-monospace, Menlo, Consolas, monospace; background: var(--soft); padding: 12px; border: 1px solid var(--line); }
+  .tag { display: inline-block; font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 3px; padding: 0 5px; margin-left: 4px; }
+  .paperwork { margin: 14px 0 0; padding: 10px 14px; border: 1px solid var(--line); background: var(--soft); font-size: 13px; }
+  .paperwork summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+  .paperwork li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1><span>RolledCo</span> · Harbor Bookkeeping LLC</h1>
+  <div class="sub" id="subline">Loading…</div>
+  <div class="tabs">
+    <div class="tab active" data-tab="review">Review queue <span class="n" id="n-review"></span></div>
+    <div class="tab" data-tab="live">Live worklist <span class="n" id="n-live"></span></div>
+    <div class="tab" data-tab="rejected">Rejected <span class="n" id="n-rejected"></span></div>
+    <div class="tab" data-tab="docs">Source documents</div>
+  </div>
+</header>
+
+<div class="toolbar" id="toolbar">
+  <label>Client <select id="f-client"><option value="">All</option></select></label>
+  <label><input type="checkbox" id="f-flags"> Flags only</label>
+  <label>Search <input type="text" id="f-q" placeholder="task, owner, source…"></label>
+  <span class="stats" id="stats"></span>
+  <button class="ghost" id="reset">Reset demo</button>
+</div>
+
+<main>
+  <details class="paperwork" id="paperwork" style="display:none"><summary>Missing paperwork found during extraction</summary><ul id="paperwork-list"></ul></details>
+  <div id="view"></div>
+</main>
+
+<div class="drawer" id="drawer"><button class="close" onclick="closeDrawer()">×</button><div id="drawer-body"></div></div>
+
+<script>
+const ACCENT = '#8B1A1A';
+let DATA = null, TAB = 'review', EDITING = null, DRAWER = null;
+
+const $ = s => document.querySelector(s);
+const esc = s => (s ?? '').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}) : '—';
+function relDays(d) {
+  if (!d) return '';
+  const t = new Date(DATA.today + 'T00:00:00'), x = new Date(d + 'T00:00:00');
+  const n = Math.round((x - t) / 86400000);
+  if (n < 0) return `${-n}d overdue`; if (n === 0) return 'today'; if (n === 1) return 'tomorrow'; return `in ${n}d`;
+}
+const isLow = o => o.confidence < 0.6;
+const isFlagged = o => o.conflict?.flag || isLow(o);
+
+async function load() {
+  DATA = await (await fetch('/api/obligations')).json();
+  const O = DATA.obligations;
+  $('#subline').textContent = `${O.length} obligations extracted from ${Object.keys(DATA.document_summaries).length} handoff documents · ${DATA.model} · extraction mode: ${DATA.mode} · drafting: ${DATA.live_api ? 'live Claude' : 'template (no API key)'} · today ${fmtDate(DATA.today)}`;
+  const sel = $('#f-client'); const cur = sel.value; sel.innerHTML = '<option value="">All</option>';
+  [...new Set(O.map(o => o.client))].sort().forEach(c => sel.insertAdjacentHTML('beforeend', `<option ${c===cur?'selected':''}>${esc(c)}</option>`));
+  if (DATA.missing_paperwork?.length) { $('#paperwork').style.display = ''; $('#paperwork-list').innerHTML = DATA.missing_paperwork.map(m => `<li>${esc(m)}</li>`).join(''); }
+  render();
+}
+
+function filtered() {
+  const c = $('#f-client').value, fl = $('#f-flags').checked, q = $('#f-q').value.toLowerCase();
+  return DATA.obligations.filter(o => {
+    if (TAB === 'review' && o.status !== 'pending') return false;
+    if (TAB === 'live' && o.status !== 'approved') return false;
+    if (TAB === 'rejected' && o.status !== 'rejected') return false;
+    if (c && o.client !== c) return false;
+    if (fl && !isFlagged(o)) return false;
+    if (q && !`${o.client} ${o.deliverable} ${o.owner||''} ${o.source_document} ${o.notes||''}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+function render() {
+  const O = DATA.obligations;
+  const cnt = s => O.filter(o => o.status === s).length;
+  $('#n-review').textContent = cnt('pending'); $('#n-live').textContent = cnt('approved'); $('#n-rejected').textContent = cnt('rejected');
+  $('#stats').innerHTML = `<b>${O.filter(o=>o.conflict?.flag).length}</b> conflicts · <b>${O.filter(isLow).length}</b> low confidence · <b>${cnt('approved')}</b> approved`;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === TAB));
+  $('#toolbar').style.display = TAB === 'docs' ? 'none' : '';
+  $('#paperwork').style.display = (TAB === 'review' && DATA.missing_paperwork?.length) ? '' : 'none';
+  if (TAB === 'docs') return renderDocs();
+  const rows = filtered();
+  if (!rows.length) { $('#view').innerHTML = `<div class="empty">${TAB === 'live' ? 'Nothing approved yet. Approve items in the review queue to build the live worklist.' : 'No items.'}</div>`; return; }
+  $('#view').innerHTML = `<table><thead><tr>
+    <th>Client</th><th>Task</th><th>Due</th><th>Owner</th><th>Source</th><th>Confidence</th><th>Status</th><th></th>
+  </tr></thead><tbody>${rows.map(rowHtml).join('')}</tbody></table>`;
+}
+
+function rowHtml(o) {
+  const overdue = o.next_due_date && o.next_due_date < DATA.today;
+  const flag = o.conflict?.flag ? `<span class="flag" title="Click for reason" onclick="toggleReason('${o.id}')">⚑ CONFLICT</span>`
+             : isLow(o) ? `<span class="flag low" title="Click for reason" onclick="toggleReason('${o.id}')">⚑ LOW CONFIDENCE</span>` : '';
+  const reason = o.conflict?.flag ? o.conflict.reason : (isLow(o) ? (o.notes || 'Extraction confidence below 60%: cadence, date, or scope is ambiguous in the source.') : '');
+  const edited = JSON.stringify(o.original) !== JSON.stringify({deliverable:o.deliverable,next_due_date:o.next_due_date,owner:o.owner,cadence_detail:o.cadence_detail});
+  const extra = (o.merged_from||[]).map(m => `<div class="srcextra">also: <a class="src" href="#" onclick="openDoc('${esc(m.source_document)}');return false">${esc(m.source_document.split('/').pop())}</a></div>`).join('');
+  let actions = '';
+  if (TAB === 'review') actions = `<button onclick="decide('${o.id}','approved')">Approve</button><button class="secondary" onclick="edit('${o.id}')">Edit</button><button class="ghost" onclick="decide('${o.id}','rejected')">Reject</button>`;
+  else if (TAB === 'live') actions = `<button onclick="openDraft('${o.id}')">${o.draft ? (o.draft.status === 'approved' ? 'View approved draft' : 'View draft') : 'Draft client email'}</button><button class="ghost" onclick="decide('${o.id}','pending')">Undo</button>`;
+  else actions = `<button class="ghost" onclick="decide('${o.id}','pending')">Restore</button>`;
+  return `<tr class="${o.status}" id="row-${o.id}">
+    <td class="client">${esc(o.client)}</td>
+    <td class="task">${esc(o.deliverable)} ${edited ? '<span class="tag">edited</span>' : ''} ${flag}
+      <div class="detail">${esc(o.cadence_detail || o.cadence)}${o.fee ? ' · ' + esc(o.fee) : ''}${o.notes && !isLow(o) ? ' · ' + esc(o.notes) : ''}</div>
+      ${reason ? `<div class="reason" id="reason-${o.id}" style="display:none"><b>Why it's flagged:</b> ${esc(reason)}</div>` : ''}
+    </td>
+    <td class="due ${overdue ? 'overdue' : ''}">${fmtDate(o.next_due_date)}<span class="rel">${relDays(o.next_due_date)}</span></td>
+    <td>${esc(o.owner || '—')}</td>
+    <td><a class="src" href="#" onclick="openDoc('${esc(o.source_document)}', '${o.id}');return false">${esc(o.source_document.split('/').pop())}</a>${extra}</td>
+    <td class="conf"><span class="bar ${isLow(o)?'low':''}"><i style="width:${Math.round(o.confidence*100)}%"></i></span>${Math.round(o.confidence*100)}%</td>
+    <td><span class="status ${o.status}">${o.status}${o.draft ? (o.draft.status === 'approved' ? ' · draft ✓' : ' · draft') : ''}</span></td>
+    <td class="actions">${actions}</td>
+  </tr>${EDITING === o.id ? editRow(o) : ''}`;
+}
+
+function editRow(o) {
+  return `<tr class="editrow"><td colspan="8"><form class="editform" onsubmit="saveEdit(event,'${o.id}')">
+    <div><label>Task</label><input name="deliverable" value="${esc(o.deliverable)}"></div>
+    <div><label>Next due</label><input name="next_due_date" type="date" value="${esc(o.next_due_date||'')}"></div>
+    <div><label>Owner</label><input name="owner" value="${esc(o.owner||'')}"></div>
+    <div><label>Cadence</label><input name="cadence_detail" value="${esc(o.cadence_detail||'')}"></div>
+    <div><button type="submit">Save</button> <button type="button" class="ghost" onclick="EDITING=null;render()">Cancel</button></div>
+  </form></td></tr>`;
+}
+
+function toggleReason(id) { const el = document.getElementById('reason-' + id); if (el) el.style.display = el.style.display === 'none' ? '' : 'none'; }
+function edit(id) { EDITING = id; render(); document.querySelector('.editform input')?.focus(); }
+async function saveEdit(e, id) {
+  e.preventDefault();
+  const f = new FormData(e.target); const body = {};
+  for (const k of ['deliverable','next_due_date','owner','cadence_detail']) body[k] = f.get(k) ?? '';
+  await fetch('/api/obligations/' + id, {method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
+  EDITING = null; await load();
+}
+async function decide(id, status) {
+  await fetch('/api/obligations/' + id, {method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({status})});
+  await load();
+}
+
+// ---- documents
+function renderDocs() {
+  const docs = Object.entries(DATA.document_summaries);
+  $('#view').innerHTML = `<table><thead><tr><th>Document</th><th>What it is</th><th>Obligations</th></tr></thead><tbody>` +
+    docs.map(([p, s]) => `<tr><td><a class="src" href="#" onclick="openDoc('${esc(p)}');return false">${esc(p)}</a></td><td>${esc(s)}</td><td>${DATA.obligations.filter(o => o.source_document === p).length}</td></tr>`).join('') + `</tbody></table>`;
+}
+async function openDoc(path, oid) {
+  const text = await (await fetch('/seed/' + path)).text();
+  const o = oid ? DATA.obligations.find(x => x.id === oid) : null;
+  let html = `<h2>${esc(path)}</h2><div class="meta">${esc(DATA.document_summaries[path] || '')}</div>`;
+  if (o) html += `<div class="reason"><b>Supporting excerpt:</b> “${esc(o.source_excerpt)}”</div>`;
+  html += `<div class="docview"><pre>${highlight(text, o?.source_excerpt)}</pre></div>`;
+  showDrawer(html);
+}
+function highlight(text, excerpt) {
+  let h = esc(text);
+  if (excerpt) { const first = esc(excerpt.split(' ... ')[0].split(' / ')[0].slice(0, 60)); const i = h.indexOf(first); if (i >= 0) h = h.slice(0, i) + `<mark style="background:#f5dada">` + h.slice(i, i + first.length) + `</mark>` + h.slice(i + first.length); }
+  return h;
+}
+
+// ---- draft email
+async function openDraft(id) {
+  const o = DATA.obligations.find(x => x.id === id);
+  DRAWER = id;
+  if (!o.draft) {
+    showDrawer(`<h2>Draft client email</h2><div class="meta">${esc(o.client)} · ${esc(o.deliverable)}</div>
+      <label>Type</label><select id="kind"><option value="auto">Auto (pick from context)</option><option value="reminder">Deliverable reminder</option><option value="request">Missing document request</option></select>
+      <div class="row"><button onclick="genDraft('${id}')">Generate draft</button><span class="meta" style="margin:0">Reads the source document. Nothing is sent.</span></div>`);
+    return;
+  }
+  renderDraft(o);
+}
+async function genDraft(id) {
+  const kind = $('#kind')?.value || 'auto';
+  $('#drawer-body').insertAdjacentHTML('beforeend', '<div class="meta">Generating…</div>');
+  await fetch(`/api/obligations/${id}/draft`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({kind})});
+  await load(); renderDraft(DATA.obligations.find(x => x.id === id));
+}
+function renderDraft(o) {
+  const d = o.draft; const approved = d.status === 'approved';
+  showDrawer(`<h2>Draft client email ${approved ? '<span class="tag">approved · not sent</span>' : '<span class="tag">' + esc(d.kind) + '</span>'}</h2>
+    <div class="meta">${esc(o.client)} · ${esc(o.deliverable)} · generated by ${esc(d.generated_by)} from <a class="src" href="#" onclick="openDoc('${esc(o.source_document)}','${o.id}');return false">${esc(o.source_document.split('/').pop())}</a></div>
+    ${d.warning ? `<div class="warn">${esc(d.warning)}</div>` : ''}
+    <label>To</label><input value="${esc(d.to)}" disabled>
+    <label>Subject</label><input id="d-subject" value="${esc(d.subject)}" ${approved?'disabled':''}>
+    <label>Body</label><textarea id="d-body" ${approved?'disabled':''}>${esc(d.body)}</textarea>
+    ${approved ? `<div class="banner">Approved. This is the end state for the demo: the draft is stored, nothing is sent.</div>
+      <div class="row"><button class="ghost" onclick="draftStatus('${o.id}','draft')">Reopen for editing</button></div>`
+    : `<div class="row"><button onclick="approveDraft('${o.id}')">Approve draft</button><button class="secondary" onclick="saveDraft('${o.id}')">Save edits</button><button class="ghost" onclick="regen('${o.id}')">Regenerate</button></div>`}`);
+}
+async function saveDraft(id, status) {
+  const body = {subject: $('#d-subject').value, body: $('#d-body').value}; if (status) body.status = status;
+  await fetch(`/api/obligations/${id}/draft`, {method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
+  await load(); renderDraft(DATA.obligations.find(x => x.id === id));
+}
+const approveDraft = id => saveDraft(id, 'approved');
+async function draftStatus(id, status) {
+  await fetch(`/api/obligations/${id}/draft`, {method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({status})});
+  await load(); renderDraft(DATA.obligations.find(x => x.id === id));
+}
+async function regen(id) {
+  showDrawer(`<h2>Draft client email</h2><label>Type</label><select id="kind"><option value="auto">Auto</option><option value="reminder">Deliverable reminder</option><option value="request">Missing document request</option></select><div class="row"><button onclick="genDraft('${id}')">Generate</button></div>`);
+}
+
+function showDrawer(html) { $('#drawer-body').innerHTML = html; $('#drawer').classList.add('open'); }
+function closeDrawer() { $('#drawer').classList.remove('open'); DRAWER = null; }
+
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => { TAB = t.dataset.tab; EDITING = null; render(); });
+['#f-client', '#f-flags', '#f-q'].forEach(s => $(s).addEventListener('input', render));
+$('#reset').onclick = async () => { if (confirm('Clear all approvals, edits, and drafts?')) { await fetch('/api/reset', {method:'POST'}); EDITING = null; closeDrawer(); await load(); } };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+load();
+</script>
+</body>
+</html>
