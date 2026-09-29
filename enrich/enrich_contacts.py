@@ -234,9 +234,12 @@ class AIArk:
 
     def search_person(self, name, company):
         """People search by full name + company name. 0.5 credit per returned result; ask for 3."""
+        # Filter shape per https://docs.ai-ark.com/reference/people-search-1:
+        # {"any": {"include": {"mode": ..., "content": [...]}}}. The old flat
+        # {"mode", "include"} shape was silently ignored and returned the whole DB.
         body = {
-            "contact": {"fullName": {"mode": "SMART", "include": [name]}},
-            "account": {"name": {"mode": "SMART", "include": [company]}},
+            "contact": {"fullName": {"any": {"include": {"mode": "STRICT", "content": [name]}}}},
+            "account": {"name": {"any": {"include": {"mode": "SMART", "content": [company]}}}},
             "page": 0, "size": 3,
         }
         return self.post("/v1/people", body)
