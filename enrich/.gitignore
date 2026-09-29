@@ -1,2 +1,4 @@
 .aiark_cache.json
 contacts_enriched.csv
+contacts_enriched.xlsx
+contacts_merged.*

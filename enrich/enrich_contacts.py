@@ -2,7 +2,7 @@
 """
 enrich_contacts.py - merge Perplexity people exports, enrich via AI Ark, write CSV.
 
-    pip install requests
+    pip install requests openpyxl
     AIARK_API_KEY=... python enrich_contacts.py                 # CSVs in ./input
     python enrich_contacts.py --input path/to/csvs --dry-run   # merge/dedupe only
 
@@ -11,7 +11,8 @@ Steps
      name, title, company, linkedin_url, source_variant, dedupe on name+company.
   2. Enrich each row with AI Ark (LinkedIn URL first, name+company fallback).
      Rate-limited, retries on 429/5xx, responses cached in .aiark_cache.json.
-  3. Write contacts_enriched.csv with email, email_confidence, phone, enrichment_status.
+  3. Write contacts_enriched.csv and contacts_enriched.xlsx with email,
+     email_confidence, phone, enrichment_status.
   4. Print a summary.
 
 Nothing is sent to anyone. Only AI Ark is called, and only when a key is set.
@@ -34,7 +35,7 @@ except ImportError:
     sys.exit("pip install requests")
 
 BASE_URL = os.environ.get("AIARK_BASE_URL", "https://api.ai-ark.com/api/developer-portal")
-API_KEY = os.environ.get("AIARK_API_KEY", "")
+API_KEY = os.environ.get("AIARK_API_KEY") or os.environ.get("ClaudeCode_ArkAI_API") or os.environ.get("AIARK_API_KEY2") or ""
 CACHE_FILE = Path(".aiark_cache.json")
 OUT_FILE = Path("contacts_enriched.csv")
 
@@ -372,6 +373,86 @@ def write_csv(rows, path):
             w.writerow({k: r.get(k, "") for k in FIELDS})
 
 
+def write_xlsx(rows, path, dry_run):
+    """Excel deliverable: Contacts sheet with hyperlinks, plus a Summary sheet (snapshot counts)."""
+    try:
+        from openpyxl import Workbook
+        from openpyxl.styles import Font, PatternFill, Alignment
+        from openpyxl.utils import get_column_letter
+    except ImportError:
+        print("openpyxl not installed; skipping .xlsx (pip install openpyxl)", file=sys.stderr)
+        return
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Contacts"
+    headers = ["Name", "Title", "Company", "LinkedIn URL", "Source Variant", "Email", "Email Confidence", "Phone", "Enrichment Status"]
+    bold = Font(name="Arial", bold=True, color="FFFFFF")
+    ws.append(headers)
+    for c in range(1, len(headers) + 1):
+        cell = ws.cell(row=1, column=c)
+        cell.font = bold
+        cell.fill = PatternFill("solid", fgColor="8B1A1A")
+        cell.alignment = Alignment(vertical="center")
+    link = Font(name="Arial", color="0563C1", underline="single")
+    plain = Font(name="Arial")
+    for r in rows:
+        ws.append([r.get(k, "") for k in FIELDS])
+        i = ws.max_row
+        for c in range(1, len(headers) + 1):
+            ws.cell(row=i, column=c).font = plain
+        if r.get("linkedin_url"):
+            ws.cell(row=i, column=4).hyperlink = r["linkedin_url"]
+            ws.cell(row=i, column=4).font = link
+        if r.get("email"):
+            ws.cell(row=i, column=6).hyperlink = "mailto:" + r["email"]
+            ws.cell(row=i, column=6).font = link
+    widths = [26, 34, 44, 44, 10, 32, 12, 16, 22]
+    for c, w in enumerate(widths, 1):
+        ws.column_dimensions[get_column_letter(c)].width = w
+    ws.freeze_panes = "A2"
+    ws.auto_filter.ref = f"A1:{get_column_letter(len(headers))}{ws.max_row}"
+
+    n = ws.max_row
+    s = wb.create_sheet("Summary")
+    s["A1"], s["A1"].font = "Enrichment summary", Font(name="Arial", bold=True, size=12)
+    with_email = sum(1 for r in rows if r.get("email"))
+    lines = [
+        ("Total contacts", len(rows)),
+        ("With LinkedIn URL", sum(1 for r in rows if r.get("linkedin_url"))),
+        ("With email", with_email),
+        ("Without email", len(rows) - with_email),
+        ("With phone", sum(1 for r in rows if r.get("phone"))),
+    ]
+    for i, (label, formula) in enumerate(lines, start=3):
+        s.cell(row=i, column=1, value=label).font = plain
+        s.cell(row=i, column=2, value=formula).font = plain
+    row = len(lines) + 4
+    s.cell(row=row, column=1, value="Per source variant").font = Font(name="Arial", bold=True)
+    s.cell(row=row, column=2, value="Contacts").font = Font(name="Arial", bold=True)
+    s.cell(row=row, column=3, value="With email").font = Font(name="Arial", bold=True)
+    variants = sorted({v for r in rows for v in r["source_variant"].split("+")})
+    for j, v in enumerate(variants, start=row + 1):
+        s.cell(row=j, column=1, value=v).font = plain
+        sub = [r for r in rows if v in r["source_variant"].split("+")]
+        s.cell(row=j, column=2, value=len(sub)).font = plain
+        s.cell(row=j, column=3, value=sum(1 for r in sub if r.get("email"))).font = plain
+    note_row = row + len(variants) + 2
+    notes = [
+        "Source Variant = input file (A-D by sorted filename); A+B means the person appeared in both and was merged.",
+        "Enrichment Status: email+phone / email_only / phone_only (matched by linkedin or name_company), not_found, insufficient_input, error_<http status>.",
+        "Email Confidence: high = verified VALID, medium = catch-all domain, low = unverified/risky.",
+        f"Summary counts are a snapshot computed when this file was generated ({TODAY}).",
+    ]
+    if dry_run:
+        notes.insert(0, "DRY RUN: AI Ark was not called (no AIARK_API_KEY). Email and phone columns are empty. Re-run with the key to fill them.")
+    for k, t in enumerate(notes, start=note_row):
+        s.cell(row=k, column=1, value=t).font = Font(name="Arial", italic=True, color="555555")
+    s.column_dimensions["A"].width = 24
+    s.column_dimensions["B"].width = 14
+    s.column_dimensions["C"].width = 14
+    wb.save(path)
+
+
 def summary(rows, per_file, api_calls, dry_run):
     print("\n=== Input files")
     for variant, name, n_in, n_kept, missing, cols in per_file:
@@ -428,8 +509,10 @@ def main():
             r.update({"email": "", "email_confidence": "", "phone": "", "enrichment_status": "not_run"})
 
     write_csv(rows, args.out)
+    xlsx_path = str(Path(args.out).with_suffix(".xlsx"))
+    write_xlsx(rows, xlsx_path, dry)
     summary(rows, per_file, api_calls, dry)
-    print(f"\nWrote {args.out}")
+    print(f"\nWrote {args.out} and {xlsx_path}")
 
 
 if __name__ == "__main__":
