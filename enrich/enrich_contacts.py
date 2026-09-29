@@ -27,6 +27,7 @@ import re
 import sys
 import time
 import unicodedata
+from datetime import date
 from pathlib import Path
 
 try:
@@ -38,6 +39,7 @@ BASE_URL = os.environ.get("AIARK_BASE_URL", "https://api.ai-ark.com/api/develope
 API_KEY = os.environ.get("AIARK_API_KEY") or os.environ.get("ClaudeCode_ArkAI_API") or os.environ.get("AIARK_API_KEY2") or ""
 CACHE_FILE = Path(".aiark_cache.json")
 OUT_FILE = Path("contacts_enriched.csv")
+TODAY = date.today().isoformat()
 
 # AI Ark default limit is 5 req/s per key. Stay well under it.
 MIN_SECONDS_BETWEEN_CALLS = 0.35
