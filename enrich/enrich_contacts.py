@@ -94,6 +94,13 @@ def clean_company(s):
     return re.sub(r"\s+", " ", s)
 
 
+def search_company(s):
+    """Company string as sent to AI Ark: drop location parentheticals and keep the first of 'A / B'."""
+    s = re.sub(r"\s*\([^)]*\)", "", s or "")
+    s = re.split(r"\s+/\s+|\s+plus\s+", s)[0]
+    return re.sub(r"\s+", " ", s).strip(" ,")
+
+
 def clean_linkedin(s):
     s = (s or "").strip()
     m = re.search(r"(https?://)?(www\.)?linkedin\.com/in/[A-Za-z0-9\-_%\.]+/?", s)
@@ -238,8 +245,8 @@ class AIArk:
         # {"any": {"include": {"mode": ..., "content": [...]}}}. The old flat
         # {"mode", "include"} shape was silently ignored and returned the whole DB.
         body = {
-            "contact": {"fullName": {"any": {"include": {"mode": "STRICT", "content": [name]}}}},
-            "account": {"name": {"any": {"include": {"mode": "SMART", "content": [company]}}}},
+            "contact": {"fullName": {"any": {"include": {"mode": "SMART", "content": [name]}}}},
+            "account": {"name": {"any": {"include": {"mode": "SMART", "content": [search_company(company)]}}}},
             "page": 0, "size": 3,
         }
         return self.post("/v1/people", body)
@@ -308,13 +315,20 @@ def enrich_row(api, row, want_phone=True):
             row["enrichment_status"] = f"error_{status}"
 
     if not person and row["name"] and row["company"]:
-        status, data = api.search_person(row["name"], row["company"])
         hits = []
-        if status == 200:
-            body = unwrap(data) or data
-            hits = body.get("results") or body.get("data") or body.get("content") or body.get("people") or []
-            if isinstance(hits, dict):
-                hits = hits.get("results") or hits.get("content") or []
+        first, rest = row["name"].split()[0], row["name"].split()[1:]
+        names_to_try = [row["name"]]
+        if first.lower() in NICKNAMES and rest:          # "Rob Brooks" -> also try "Robert Brooks"
+            names_to_try.append(" ".join([NICKNAMES[first.lower()].title()] + rest))
+        for try_name in names_to_try:
+            status, data = api.search_person(try_name, row["company"])
+            if status == 200:
+                body = unwrap(data) or data
+                hits = body.get("results") or body.get("data") or body.get("content") or body.get("people") or []
+                if isinstance(hits, dict):
+                    hits = hits.get("results") or hits.get("content") or []
+            if hits:
+                break
         for h in hits:
             if isinstance(h, dict) and person_matches(h, row["name"], row["company"]):
                 pid = h.get("id")
