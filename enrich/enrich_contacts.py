@@ -294,7 +294,7 @@ def person_matches(person, name, company):
     if last not in full:
         return False
     if company:
-        names = [g.get("company", {}).get("name", "") for g in person.get("position_groups", []) if isinstance(g, dict)]
+        names = [(g.get("company") or {}).get("name", "") for g in (person.get("position_groups") or []) if isinstance(g, dict)]
         names.append((person.get("company") or {}).get("name", "") if isinstance(person.get("company"), dict) else "")
         ckey = dedupe_key("", company)[1].split()[0] if dedupe_key("", company)[1] else ""
         if ckey and not any(ckey in dedupe_key("", n)[1] for n in names if n):
