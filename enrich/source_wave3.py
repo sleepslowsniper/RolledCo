@@ -108,7 +108,7 @@ SIZE = {"type": "RANGE", "range": [{"start": 2, "end": 1000}]}
 
 EXCL_SBA = r"clos(ing|er)|processor|underwrit|analyst|assistant|coordinator|servic(ing|er)|documentation|compliance|operations|intern\b|packag|admin|paralegal|credit|marketing|recruit|talent|specialist|human resources|\bIT\b|engineer|product|customer experience|asset based|investment advisor|wine|beverage|middle market|emerging markets|counsel|legal|accountant|treasur|data"
 EXCL_SEARCH = r"job search|executive search|title search|talent|recruit|staffing|placement|headhunt|search engine|\bSEO\b|paid search|research|marketing|estimated|search consultant|retained search|analyst|intern\b|patent|medical|library|writer|associate\b|assistant|coordinator|student|title company|first american|abstract"
-EXCL_LEADER = r"regional|market area|division|area president|general manager|branch|vice president|\bvp\b|sales|marketing|assistant|associate|analyst|intern\b|payroll|\bhr\b|human resources|recruit|controller|specialist|coordinator|account executive|manager\b|product owner|counsel|legal|engineer|technician|homeowner|business owner\b.*(?:realtor|agent)"
+EXCL_LEADER = r"regional|market area|market president|division|area president|broker|realtor|general manager|branch|vice president|\bvp\b|sales|marketing|assistant|associate|analyst|intern\b|payroll|\bhr\b|human resources|recruit|controller|specialist|coordinator|account executive|manager\b|product owner|counsel|legal|engineer|technician|homeowner|business owner\b.*(?:realtor|agent)"
 LEADER_RE = r"\b(founder|co-founder|ceo|chief executive|operating partner|managing partner|owner|principal|chairman|president)\b"
 TRADES_RE = r"home service|hvac|heating|air conditioning|plumb|pest|landscap|lawn|tree care|accounting|\bcpa\b|bookkeep|\btax\b|electrical|roofing|restoration|cleaning|garage door|irrigation|pool service"
 
@@ -144,11 +144,21 @@ def employees(p):
     return n if isinstance(n, int) else 0
 
 
+ACQ_RE = r"acqui|roll[- ]?up|platform|holding compan|holdco|consolidat|family of (?:brands|businesses|companies)|group of (?:home service|companies|businesses)|portfolio compan|partner(?:s|ing)? with (?:owners|founders|operators)|buy(?:s|ing)? (?:and|&) (?:grow|operate|build)|multi[- ]brand|operating compan|succession"
+EXCL_CO = r"real estate|realty|broker|home warranty|\bapp\b|on-demand|marketing|digital agency|lead generation|health ?care|hospice|in-home care|home care|senior care|nursing|staffing|distribut|software|saas|franchise sales|insurance|mortgage|construction materials|manufactur|wholesale"
+
+
 def keep_holdco(p):
     t = cur_title(p)
     if employees(p) > 1000:
         return False
-    return bool(re.search(LEADER_RE, t, re.I) and not re.search(EXCL_LEADER, t, re.I) and re.search(TRADES_RE, company_text(p), re.I))
+    ct = company_text(p)
+    if re.search(EXCL_CO, ct, re.I) and not re.search(r"acqui|roll[- ]?up|holding compan", ct, re.I):
+        return False
+    if re.search(r"real estate|realty|home warranty|health ?care|hospice|home care|senior care|software|saas|distribut|manufactur", ct, re.I):
+        return False
+    return bool(re.search(LEADER_RE, t, re.I) and not re.search(EXCL_LEADER, t, re.I)
+                and re.search(TRADES_RE, ct, re.I) and re.search(ACQ_RE, ct, re.I))
 
 
 SEGMENTS = [
@@ -173,6 +183,8 @@ SEGMENTS = [
             {"label": "searchfund-company",
              "body": {"contact": {**title_any(LEADER_TITLES + ["Searcher"]), **US},
                       "account": {"keyword": kw("NAME", ["search fund", "search capital", "acquisition partners", "succession partners", "legacy partners"], "WORD")}}},
+            {"label": "searcher-headline",
+             "body": {"contact": {"keyword": kw("HEADLINE", ["search fund", "self-funded searcher", "acquisition entrepreneur", "ETA searcher", "searching to acquire"], "WORD"), **US}}},
             {"label": "ceo-of-searchfund-acquired",
              "body": {"contact": {**title_any(["CEO", "President", "Chief Executive Officer"]), **US},
                       "account": {"keyword": kw("DESCRIPTION", ["search fund", "entrepreneurship through acquisition"], "WORD"), "employeeSize": SIZE}}},
