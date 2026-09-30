@@ -140,23 +140,16 @@
   .hero-photo picture { display: contents; }
   .hero-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
   .hero-photo .ph-ops img { object-position: 45% 50%; }
-  @media (max-height: 799px) { .hero-photo { display: none; } }
-  @media (max-width: 599px) and (max-height: 999px) { .hero-photo { display: none; } }
+  @media (min-width: 600px) and (max-height: 799px) { .hero-photo { display: none; } }
+  @media (max-width: 599px) and (max-height: 720px) { .hero-photo { display: none; } }
 
   /* Steps + audience on warm white */
-  .steps { flex: none; padding: 10px 0 10px; }
-  .steps-grid { display: grid; gap: 8px; margin-top: 6px; }
-  .steps .label { margin-bottom: 4px; }
-  .steps ol { list-style: none; counter-reset: step; display: grid; gap: 4px; }
-  .steps li { counter-increment: step; display: grid; grid-template-columns: 26px 1fr; gap: 4px; align-items: baseline; }
-  .steps .num { font-family: var(--heading); font-weight: 700; font-size: 11.5px; letter-spacing: 0.06em; color: var(--crimson); }
-  .steps .num::before { content: "0" counter(step); }
-  .steps li h3 { color: var(--ink); display: inline; }
-  .steps li p { color: var(--slate); font-size: 12.5px; line-height: 1.36; margin-top: 1px; }
-  .steps li .body { grid-column: 2; }
-  .audience .label { margin-bottom: 3px; }
-  .audience p { font-size: 12.5px; line-height: 1.36; color: var(--ink); }
-  .audience .focus { margin-top: 3px; color: var(--slate); }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .steps { flex: none; padding: 14px 0 14px; }
+  .steps ol { list-style: none; display: grid; gap: 8px; }
+  .steps li h3 { color: var(--ink); }
+  .steps li p { color: var(--slate); font-size: 12.5px; line-height: 1.36; margin-top: 2px; }
+  .audience { margin-top: 12px; font-size: 12.5px; line-height: 1.38; color: var(--slate); max-width: 62em; }
 
   /* Closing */
   .closing { flex: none; padding: 10px 0 10px; }
@@ -175,11 +168,9 @@
     .button { display: inline-block; width: auto; }
     h1 { font-size: 40px; }
     .lede { font-size: 15px; }
-    .steps-grid { grid-template-columns: 2fr 1fr; gap: 28px; }
-    .steps ol { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .steps li { display: block; }
-    .steps .num { display: block; margin-bottom: 4px; }
-    .steps li h3 { display: block; }
+    .steps { padding: 20px 0 20px; }
+    .steps ol { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .audience { margin-top: 16px; font-size: 13.5px; }
     .closing-grid { grid-template-columns: 1fr auto; align-items: center; gap: 12px 32px; }
     .closing .cta { margin-top: 0; grid-column: 2; grid-row: 1; }
     .closing .fine { grid-column: 2; grid-row: 2; margin-top: 0; max-width: 22em; text-align: right; }
@@ -200,17 +191,11 @@
     .hero { padding: 6px 0 20px; }
     .hero-photo { margin-top: 18px; min-height: 180px; grid-template-columns: 1.6fr 1fr; gap: 16px; }
     .hero-photo .ph-ops { display: block; }
-    .steps { padding: 14px 0 14px; }
-    .steps-grid { grid-template-columns: 2.6fr 1.4fr; gap: 40px; margin-top: 10px; }
-    .steps .label { margin-bottom: 10px; }
-    .audience .label { margin-bottom: 10px; }
-    .steps ol { gap: 28px; }
-    .steps .num { font-size: 12.5px; margin-bottom: 8px; }
-    .steps li p { font-size: 14.5px; margin-top: 4px; }
-    .audience .label { margin-bottom: 8px; }
-    .audience p { font-size: 14.5px; }
-    .audience .focus { margin-top: 6px; }
-    .closing { padding: 14px 0 14px; }
+    .steps { padding: 26px 0 26px; }
+    .steps ol { gap: 48px; }
+    .steps li p { font-size: 15px; margin-top: 6px; }
+    .audience { margin-top: 22px; font-size: 14.5px; }
+    .closing { padding: 22px 0 22px; }
     .closing .lede { font-size: 16px; margin-top: 6px; }
     .closing .fine { font-size: 13px; }
   }
@@ -224,9 +209,10 @@
     .cta { margin-top: 18px; }
     .hero { padding: 10px 0 26px; }
     .hero-photo { margin-top: 24px; }
-    .steps { padding: 22px 0 22px; }
-    .steps li p, .audience p { font-size: 16px; }
-    .closing { padding: 22px 0 22px; }
+    .steps { padding: 32px 0 32px; }
+    .steps li p { font-size: 16px; }
+    .audience { font-size: 15px; margin-top: 26px; }
+    .closing { padding: 30px 0 30px; }
   }
   @media (min-width: 960px) and (min-height: 1140px) {
     .logo img { height: 60px; }
@@ -234,8 +220,9 @@
     .lede { font-size: 19px; }
     h2 { font-size: 36px; }
     h3 { font-size: 20px; }
-    .steps li p, .audience p { font-size: 17px; }
-    .steps { padding: 28px 0 28px; }
+    .steps li p { font-size: 17px; }
+    .audience { font-size: 16px; }
+    .steps { padding: 40px 0 40px; }
     .closing { padding: 28px 0 28px; }
     .hero { padding: 14px 0 32px; }
   }
@@ -280,33 +267,22 @@
 
   <section class="steps on-warm" aria-labelledby="steps-title">
     <div class="wrap">
-      <div class="steps-grid">
-        <div>
-          <h2 class="label" id="steps-title">What we&rsquo;re building</h2>
-          <ol>
-            <li>
-              <span class="num" aria-hidden="true"></span>
-              <h3>Capture the&nbsp;process</h3>
-              <p class="body">Turn the seller&rsquo;s files and explanations into steps your team can&nbsp;follow.</p>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true"></span>
-              <h3>Find what&rsquo;s&nbsp;missing</h3>
-              <p class="body">Collect intake details and prepare follow&#8209;ups for missing&nbsp;information.</p>
-            </li>
-            <li>
-              <span class="num" aria-hidden="true"></span>
-              <h3>Prepare work for&nbsp;review</h3>
-              <p class="body">Draft customer communications using the business&rsquo;s existing&nbsp;records.</p>
-            </li>
-          </ol>
-            </div>
-        <div class="audience">
-          <h2 class="label" id="audience-title">Who it&rsquo;s for</h2>
-          <p>Searchers preparing to take over a service business, recent buyers getting the back office in order, and HoldCos integrating their next acquisition.</p>
-          <p class="focus">Initial focus: service businesses in the $500K to $5M&nbsp;range.</p>
-        </div>
-      </div>
+      <h2 class="visually-hidden" id="steps-title">What we&rsquo;re building</h2>
+      <ol>
+        <li>
+          <h3>Capture the&nbsp;process</h3>
+          <p class="body">Turn the seller&rsquo;s files and explanations into steps your team can&nbsp;follow.</p>
+        </li>
+        <li>
+          <h3>Find what&rsquo;s&nbsp;missing</h3>
+          <p class="body">Collect intake details and prepare follow&#8209;ups for missing&nbsp;information.</p>
+        </li>
+        <li>
+          <h3>Prepare work for&nbsp;review</h3>
+          <p class="body">Draft customer communications using the business&rsquo;s existing&nbsp;records.</p>
+        </li>
+      </ol>
+      <p class="audience">For searchers preparing to take over a service business, recent buyers getting the back office in order, and HoldCos integrating their next acquisition. Initial focus: service businesses in the $500K to $5M&nbsp;range.</p>
     </div>
   </section>
 
