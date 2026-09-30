@@ -40,9 +40,9 @@
     --ink: #1A1A1A;
     --slate: #555555;
     --stone: #DDD6CE;
-    --muted: rgba(255, 255, 255, 0.86);
-    --rule: rgba(221, 214, 206, 0.38);
-    --pad: 22px;
+    --on-crimson-muted: rgba(255, 255, 255, 0.86);
+    --col: 1120px;
+    --pad: 24px;
     --heading: "Manrope", "Helvetica Neue", Arial, sans-serif;
     --body: "Inter", "Helvetica Neue", Arial, sans-serif;
   }
@@ -50,16 +50,12 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; background: var(--crimson); }
   body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
     background: var(--crimson);
-    color: var(--white);
+    color: var(--ink);
     font-family: var(--body);
     font-weight: 400;
-    font-size: 15px;
-    line-height: 1.45;
+    font-size: 17px;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -69,54 +65,52 @@
 
   .wrap {
     width: 100%;
-    max-width: 1200px;
+    max-width: calc(var(--col) + 2 * var(--pad));
     margin: 0 auto;
     padding-left: var(--pad);
     padding-right: var(--pad);
   }
 
+  .on-crimson { background: var(--crimson); color: var(--white); }
+  .on-warm { background: var(--warm); color: var(--ink); }
+
   /* Header */
-  .site-header .wrap { padding-top: 12px; padding-bottom: 2px; }
+  .site-header .wrap { padding-top: 22px; padding-bottom: 6px; }
   .logo { display: inline-block; line-height: 0; }
-  .logo img { height: 26px; width: auto; }
+  .logo img { height: 30px; width: auto; }
   .logo:focus-visible { outline: 2px solid var(--white); outline-offset: 6px; }
 
-  /* Main fills the screen; sections share the remaining space */
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    gap: clamp(6px, 1.2vh, 16px);
-    padding: 2px 0 4px;
-  }
-
+  /* Type */
   .eyebrow, .label {
     font-weight: 500;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.3;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--muted);
   }
+  .on-crimson .eyebrow, .on-crimson .label { color: var(--on-crimson-muted); }
+  .on-warm .label { color: var(--slate); }
 
-  h1, h2 { font-family: var(--heading); font-weight: 700; letter-spacing: -0.02em; text-wrap: pretty; }
-  h1 { font-size: 29px; line-height: 1.08; margin-top: 6px; }
-  h2 { font-size: 20px; line-height: 1.25; }
-  .lede { margin-top: 8px; font-size: 14px; line-height: 1.42; max-width: 32em; color: var(--muted); }
+  h1, h2, h3 { font-family: var(--heading); font-weight: 700; letter-spacing: -0.02em; text-wrap: pretty; }
+  h1 { font-size: 37px; line-height: 1.08; margin-top: 14px; }
+  h2 { font-size: 32px; line-height: 1.12; }
+  h3 { font-size: 20px; line-height: 1.3; letter-spacing: -0.01em; }
+  .lede { margin-top: 18px; font-size: 17px; max-width: 34em; }
+  .on-crimson .lede { color: var(--on-crimson-muted); }
 
+  /* Buttons */
   .button {
     display: block;
     width: 100%;
-    min-height: 48px;
-    padding: 13px 26px;
+    min-height: 52px;
+    padding: 15px 30px;
     border: 2px solid var(--white);
     border-radius: 6px;
     background: var(--white);
     color: var(--crimson);
     font-family: var(--body);
     font-weight: 500;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.2;
     text-align: center;
     text-decoration: none;
@@ -124,136 +118,114 @@
   }
   .button:hover { background: #F3ECE6; border-color: #F3ECE6; }
   .button:focus-visible { outline: 3px solid var(--white); outline-offset: 4px; }
-  .cta { margin-top: 12px; }
-
-  /* Hero */
-  .hero-grid { display: grid; gap: 20px; }
-  .hero-media { display: none; }
-  .hero-media img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
-
-  /* Pillars: white cards */
-  .items {
-    list-style: none;
-    counter-reset: item;
-    margin-top: 8px;
-    display: grid;
-    gap: 6px;
-  }
-  .items li {
-    counter-increment: item;
-    background: var(--white);
-    color: var(--ink);
-    border-radius: 10px;
-    padding: 9px 12px 9px 11px;
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 4px;
-    font-size: 13.5px;
-    line-height: 1.4;
-  }
-  .items li .num {
-    font-family: var(--heading);
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: var(--crimson);
-    padding-top: 3px;
-  }
-  .items li .num::before { content: "0" counter(item); }
-  .items li .pic { display: none; }
-  .items li .pic img { width: 100%; height: auto; border-radius: 6px; }
-
-  /* Who + closing */
-  .bottom-grid { display: grid; gap: 10px; }
-  .who p { margin-top: 4px; font-size: 14px; line-height: 1.4; color: var(--muted); }
-  .who .focus { margin-top: 4px; color: var(--white); }
-  .closing .lede { margin-top: 4px; font-size: 14px; }
-  .closing .fine { margin-top: 6px; font-size: 13px; line-height: 1.4; color: var(--muted); }
+  .cta { margin-top: 26px; }
+  .founder { margin-top: 14px; font-size: 14px; line-height: 1.5; color: var(--on-crimson-muted); }
+  .fine { font-size: 14px; line-height: 1.5; color: var(--on-crimson-muted); }
   .fine a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
   .fine a:hover { text-decoration-thickness: 2px; }
   .fine a:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
 
+  /* Hero */
+  .hero { padding: 36px 0 56px; }
+  .hero-photo { margin-top: 40px; }
+  .hero-photo img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  .hero-photo .wide { display: none; }
+
+  /* Steps */
+  .steps { padding: 64px 0 56px; }
+  .steps ol {
+    list-style: none;
+    counter-reset: step;
+    margin-top: 28px;
+    display: grid;
+    gap: 28px;
+  }
+  .steps li { counter-increment: step; }
+  .steps .num {
+    display: block;
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: var(--crimson);
+    margin-bottom: 10px;
+  }
+  .steps .num::before { content: "0" counter(step); }
+  .steps h3 { color: var(--ink); }
+  .steps li p { margin-top: 8px; color: var(--slate); }
+  .approval {
+    margin-top: 32px;
+    padding-top: 22px;
+    border-top: 1px solid var(--stone);
+  }
+  .approval p { font-weight: 500; color: var(--ink); max-width: 40em; }
+
+  /* Audience */
+  .audience { padding: 8px 0 72px; }
+  .audience-grid { display: grid; gap: 28px; }
+  .audience p { margin-top: 12px; color: var(--ink); max-width: 34em; }
+  .audience .focus { margin-top: 10px; color: var(--slate); }
+  .audience-photo img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px; }
+
+  /* Closing */
+  .closing { padding: 64px 0 56px; }
+  .closing h2 { max-width: 14em; }
+  .closing .lede { margin-top: 14px; }
+  .closing .fine { margin-top: 28px; max-width: 40em; }
+
   /* Footer */
   .site-footer .wrap {
-    padding-top: 6px;
-    padding-bottom: 6px;
-    border-top: 1px solid var(--rule);
-    font-size: 12.5px;
-    color: var(--muted);
+    padding-top: 22px;
+    padding-bottom: 30px;
+    border-top: 1px solid rgba(221, 214, 206, 0.3);
+    font-size: 14px;
+    color: var(--on-crimson-muted);
   }
 
   /* Tablet */
   @media (min-width: 600px) {
     :root { --pad: 32px; }
-    body { font-size: 16px; }
-    .logo img { height: 40px; }
+    .logo img { height: 36px; }
     .button { display: inline-block; width: auto; }
-    h1 { font-size: 40px; }
-    .lede { font-size: 16px; }
-    .items { grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
-    .items li { display: block; padding: 16px 18px 18px; font-size: 15px; }
-    .items li .num { display: block; margin-bottom: 8px; padding-top: 0; }
-    .bottom-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .who p, .closing .lede { font-size: 15px; }
+    h1 { font-size: 48px; }
+    .hero-photo img { aspect-ratio: 16 / 9; }
+    .steps ol { grid-template-columns: repeat(3, 1fr); gap: 36px; }
+    .audience-grid { grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
   }
 
   /* Desktop */
   @media (min-width: 960px) {
-    :root { --pad: 48px; }
-    body { font-size: 17px; }
-    .site-header .wrap { padding-top: 26px; padding-bottom: 6px; }
-    .logo img { height: 52px; }
-    main { gap: clamp(14px, 2.6vh, 34px); padding: 10px 0 14px; }
-    .hero-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); align-items: center; gap: 56px; }
-    .hero-media { display: block; }
+    :root { --pad: 40px; }
+    body { font-size: 18px; }
+    .site-header .wrap { padding-top: 32px; padding-bottom: 8px; }
+    .logo img { height: 48px; }
     .eyebrow, .label { font-size: 13px; }
-    h1 { font-size: 48px; line-height: 1.06; margin-top: 14px; }
-    .lede { margin-top: 18px; font-size: 18px; line-height: 1.5; }
-    .cta { margin-top: 24px; }
-    .button { font-size: 17px; padding: 14px 30px; min-height: 52px; }
-    .items { gap: 20px; margin-top: 16px; }
-    .items li { font-size: 16px; line-height: 1.45; padding: 18px 20px 20px; }
-    .items li .num { font-size: 13px; }
-    h2 { font-size: 24px; }
-    .who p, .closing .lede { font-size: 16px; }
-    .closing .fine { font-size: 14px; }
-    .bottom-grid { gap: 48px; }
-    .site-footer .wrap { padding-top: 12px; padding-bottom: 14px; font-size: 13.5px; }
-  }
-
-  /* Tall desktop screens: show card photos and give everything more room */
-  /* Short laptops: keep it on one screen */
-  @media (min-width: 960px) and (max-height: 799px) {
-    .site-header .wrap { padding-top: 18px; }
-    .logo img { height: 44px; }
-    main { gap: clamp(10px, 1.8vh, 18px); padding: 6px 0 8px; }
-    h1 { font-size: 44px; margin-top: 10px; }
-    .lede { margin-top: 14px; font-size: 17px; line-height: 1.45; }
-    .cta { margin-top: 18px; }
-    .items { margin-top: 12px; gap: 16px; }
-    .items li { padding: 14px 18px 16px; font-size: 15.5px; }
-    .site-footer .wrap { padding-top: 10px; padding-bottom: 10px; }
-  }
-
-  /* Tall screens: more room and a bigger logo */
-  @media (min-width: 960px) and (min-height: 820px) {
-    .site-header .wrap { padding-top: 32px; }
-    .logo img { height: 60px; }
-    main { gap: clamp(22px, 3.4vh, 44px); padding: 16px 0 20px; }
-    h1 { font-size: 50px; }
-    .site-footer .wrap { padding-bottom: 22px; }
-  }
-
-  /* Very tall screens: card photos */
-  @media (min-width: 960px) and (min-height: 1000px) {
-    .logo img { height: 72px; }
-    .lede { font-size: 19px; }
-    .items li { padding: 0 0 20px; overflow: hidden; font-size: 17px; }
-    .site-header .wrap { padding-top: 26px; }
-    .items li .pic { display: block; margin-bottom: 10px; }
-    .items li .pic img { border-radius: 10px 10px 0 0; aspect-ratio: 2 / 1; object-fit: cover; }
-    .items li .num, .items li .text { padding-left: 20px; padding-right: 20px; }
-    .who p, .closing .lede { font-size: 17px; }
+    h1 { font-size: 60px; line-height: 1.04; margin-top: 18px; max-width: 12.5em; }
+    h2 { font-size: 44px; }
+    h3 { font-size: 22px; }
+    .lede { margin-top: 22px; font-size: 19px; }
+    .cta { margin-top: 30px; }
+    .founder { margin-top: 16px; }
+    .hero { padding: 48px 0 88px; }
+    .hero-photo { margin-top: 56px; }
+    .hero-photo img { aspect-ratio: 8 / 3; }
+    .hero-photo .wide { display: block; }
+    .hero-photo .tall { display: none; }
+    .steps { padding: 96px 0 80px; }
+    .steps ol { gap: 48px; margin-top: 36px; }
+    .steps .num { margin-bottom: 14px; }
+    .approval { margin-top: 48px; padding-top: 28px; }
+    .audience { padding: 8px 0 96px; }
+    .audience-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; }
+    .closing { padding: 96px 0 88px; }
+    .closing .lede { font-size: 20px; }
+    .closing .fine { margin-top: 36px; }
+    .site-footer .wrap { padding-top: 26px; padding-bottom: 40px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -263,7 +235,7 @@
 </head>
 <body>
 
-<header class="site-header">
+<header class="site-header on-crimson">
   <div class="wrap">
     <a class="logo" href="/" aria-label="RolledCo home">
       <img src="/logo-white.png" alt="RolledCo" width="1918" height="679">
@@ -272,62 +244,72 @@
 </header>
 
 <main>
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">For service-business buyers</p>
-        <h1 id="hero-title">Turn the seller&rsquo;s know&#8209;how into repeatable workflows.</h1>
-        <p class="lede">We&rsquo;re building RolledCo to help new owners capture how the business runs before the seller steps away. We&rsquo;re in development and talking to buyers about what breaks after close.</p>
-        <div class="cta">
-          <a class="button" href="https://calendly.com/mitch-w-jones-4/30min">Book a 15-minute conversation</a>
-        </div>
+  <section class="hero on-crimson" aria-labelledby="hero-title">
+    <div class="wrap">
+      <p class="eyebrow">For service-business buyers</p>
+      <h1 id="hero-title">Turn the seller&rsquo;s know&#8209;how into repeatable workflows.</h1>
+      <p class="lede">We&rsquo;re building RolledCo to help new owners capture how the business runs before the seller steps away. In development, and talking to buyers about what breaks after close.</p>
+      <div class="cta">
+        <a class="button" href="https://calendly.com/mitch-w-jones-4/30min">Book a 15-minute conversation</a>
       </div>
-      <figure class="hero-media">
-        <img src="/hero-1100.jpg" srcset="/hero-800.jpg 800w, /hero-1100.jpg 1100w, /hero-1400.jpg 1400w" sizes="(min-width: 960px) 520px, 100vw" width="1100" height="687" alt="An owner reviewing paperwork at a desk in a service business, with technicians loading a van in the background." loading="eager" fetchpriority="high">
+      <p class="founder">Mickey Jones, founder &middot; Previously J.P.&nbsp;Morgan and Harvest&nbsp;Partners</p>
+      <figure class="hero-photo">
+        <img class="wide" src="/hero-wide-1120.jpg" srcset="/hero-wide-1120.jpg 1120w, /hero-wide-2240.jpg 2240w" sizes="(min-width: 1200px) 1120px, 100vw" width="1120" height="420" alt="A retiring owner walking a new owner through the parts shelves of the supply business he is handing over." loading="eager" fetchpriority="high">
+        <img class="tall" src="/hero-mobile-900.jpg" width="900" height="675" alt="A retiring owner walking a new owner through the parts shelves of the supply business he is handing over." loading="eager">
       </figure>
     </div>
   </section>
 
-  <section class="building" aria-labelledby="building-title">
+  <section class="steps on-warm" aria-labelledby="steps-title">
     <div class="wrap">
-      <h2 class="label" id="building-title">What we&rsquo;re building</h2>
-      <ol class="items">
+      <h2 class="label" id="steps-title">What we&rsquo;re building</h2>
+      <ol>
         <li>
-          <div class="pic"><img src="/card-capture.jpg" width="900" height="450" alt="A retiring owner walking a new owner through the parts shelves of a supply business." loading="lazy"></div>
           <span class="num" aria-hidden="true"></span>
-          <p class="text">Turn the seller&rsquo;s files and explanations into documented steps your team can&nbsp;follow.</p>
+          <h3>Capture the process</h3>
+          <p>Turn the seller&rsquo;s files and explanations into steps your team can&nbsp;follow.</p>
         </li>
         <li>
-          <div class="pic"><img src="/card-intake.jpg" width="900" height="450" alt="Two people going through folders and a laptop at a desk in a small office." loading="lazy"></div>
           <span class="num" aria-hidden="true"></span>
-          <p class="text">Collect intake details, flag what&rsquo;s missing, and prepare&nbsp;follow&#8209;ups.</p>
+          <h3>Find what&rsquo;s missing</h3>
+          <p>Collect intake details and prepare follow&#8209;ups for missing&nbsp;information.</p>
         </li>
         <li>
-          <div class="pic"><img src="/card-draft.jpg" width="900" height="450" alt="Three people reviewing printed documents together at a conference table." loading="lazy"></div>
           <span class="num" aria-hidden="true"></span>
-          <p class="text">Draft work products &amp; professional assets leveraging historical context. Your team approves every output before it goes out.</p>
+          <h3>Prepare work for review</h3>
+          <p>Draft customer communications using the business&rsquo;s existing&nbsp;records.</p>
         </li>
       </ol>
+      <div class="approval"><p>Your team reviews and approves every output before it goes&nbsp;out.</p></div>
     </div>
   </section>
 
-  <section class="bottom" aria-label="Who it's for and how to get in touch">
-    <div class="wrap bottom-grid">
-      <div class="who">
-        <h2 class="label" id="who-title">Who it&rsquo;s for</h2>
+  <section class="audience on-warm" aria-labelledby="audience-title">
+    <div class="wrap audience-grid">
+      <div>
+        <h2 class="label" id="audience-title">Who it&rsquo;s for</h2>
         <p>Searchers preparing to take over a service business, recent buyers getting the back office in order, and HoldCos integrating their next acquisition.</p>
         <p class="focus">Initial focus: service businesses in the $500K to $5M&nbsp;range.</p>
       </div>
-      <div class="closing">
-        <h2 id="closing-title">What got messy after&nbsp;close?</h2>
-        <p class="lede">We&rsquo;d love to hear your firsthand challenges.</p>
-        <p class="fine">Teach or advise on acquisitions? We&rsquo;d value your perspectives too! <a href="https://calendly.com/mitch-w-jones-4/30min">Book&nbsp;15&nbsp;minutes</a></p>
+      <figure class="audience-photo">
+        <img src="/ops-800.jpg" srcset="/ops-800.jpg 800w, /ops-1200.jpg 1200w" sizes="(min-width: 960px) 528px, (min-width: 600px) 50vw, 100vw" width="1200" height="800" alt="An owner reviewing paperwork at a desk while technicians load a service van outside." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <section class="closing on-crimson" aria-labelledby="closing-title">
+    <div class="wrap">
+      <h2 id="closing-title">What got messy after&nbsp;close?</h2>
+      <p class="lede">We&rsquo;d love to hear your firsthand challenges.</p>
+      <div class="cta">
+        <a class="button" href="https://calendly.com/mitch-w-jones-4/30min">Book a 15-minute conversation</a>
       </div>
+      <p class="fine">Teach or advise on acquisitions? We&rsquo;d value your perspectives too. <a href="https://calendly.com/mitch-w-jones-4/30min">Book&nbsp;15&nbsp;minutes</a></p>
     </div>
   </section>
 </main>
 
-<footer class="site-footer">
+<footer class="site-footer on-crimson">
   <div class="wrap">Built for the work after close.</div>
 </footer>
 
