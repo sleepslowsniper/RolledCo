@@ -107,7 +107,7 @@ TRADES = ["HVAC", "plumbing", "pest control", "landscaping", "lawn care", "home 
 SIZE = {"type": "RANGE", "range": [{"start": 2, "end": 1000}]}
 
 EXCL_SBA = r"clos(ing|er)|processor|underwrit|analyst|assistant|coordinator|servic(ing|er)|documentation|compliance|operations|intern\b|packag|admin|paralegal|credit|marketing|recruit|talent|specialist|human resources|\bIT\b|engineer|product|customer experience|asset based|investment advisor|wine|beverage|middle market|emerging markets|counsel|legal|accountant|treasur|data"
-EXCL_SEARCH = r"job search|executive search|title search|talent|recruit|staffing|placement|headhunt|search engine|\bSEO\b|paid search|research|marketing|estimated|search consultant|retained search|analyst|intern\b|patent|medical|library|writer|associate\b|assistant|coordinator|student|title company|first american|abstract"
+EXCL_SEARCH = r"job search|executive search|title search|talent|recruit|staffing|placement|headhunt|search engine|\bSEO\b|paid search|research|marketing|estimated|search consultant|retained search|analyst|intern\b|patent|medical|library|writer|associate\b|assistant|coordinator|student|title company|first american|abstract|bibliograph|enthusiast|director of search|corporate services|account executive|software engineer|charles jones|signature information"
 EXCL_LEADER = r"regional|market area|market president|division|area president|broker|realtor|general manager|branch|vice president|\bvp\b|sales|marketing|assistant|associate|analyst|intern\b|payroll|\bhr\b|human resources|recruit|controller|specialist|coordinator|account executive|manager\b|product owner|counsel|legal|engineer|technician|homeowner|business owner\b.*(?:realtor|agent)"
 LEADER_RE = r"\b(founder|co-founder|ceo|chief executive|operating partner|managing partner|owner|principal|chairman|president)\b"
 TRADES_RE = r"home service|hvac|heating|air conditioning|plumb|pest|landscap|lawn|tree care|accounting|\bcpa\b|bookkeep|\btax\b|electrical|roofing|restoration|cleaning|garage door|irrigation|pool service"
@@ -122,7 +122,7 @@ def keep_search(p):
     t, h, ct = cur_title(p), headline(p), company_text(p)
     if re.search(EXCL_SEARCH, t + " " + h + " " + company_name(p), re.I):
         return False
-    if re.search(r"executive search|recruit|staffing|placement|headhunt|talent|retained search|search firm|title insurance|title search", ct, re.I):
+    if re.search(r"executive search|recruit|staffing|placement|headhunt|talent|retained search|search firm|title insurance|title search|public records|\bbank\b|microsoft", ct, re.I):
         return False
     eta = r"search fund|searcher|acquisition entrepreneur|entrepreneur(ship)? through acquisition|\bETA\b|self[- ]funded|search partner|search capital|acquisition partners"
     if re.search(eta, t + " " + h, re.I):
@@ -208,6 +208,29 @@ SEGMENTS = [
              "body": {"contact": {**title_any(LEADER_TITLES), **US},
                       "account": {"name": {"any": {"include": {"mode": "WORD", "content": ["Holdings", "Holdco", "Service Partners", "Home Services", "Services Group", "Service Group"]}}},
                                   "keyword": kw("DESCRIPTION", TRADES, "WORD"), "employeeSize": SIZE}}},
+            {"label": "holdco-desc-acquisitions",
+             "body": {"contact": {**title_any(LEADER_TITLES), **US},
+                      "account": {"keyword": {"all": {"include": {"sources": [{"mode": "WORD", "source": "DESCRIPTION"}], "content": ["acquisitions"]}},
+                                              "any": {"include": {"sources": [{"mode": "WORD", "source": "DESCRIPTION"}], "content": TRADES}}},
+                                  "employeeSize": SIZE}}},
+            {"label": "holdco-desc-acquired",
+             "body": {"contact": {**title_any(LEADER_TITLES), **US},
+                      "account": {"keyword": {"all": {"include": {"sources": [{"mode": "WORD", "source": "DESCRIPTION"}], "content": ["acquired"]}},
+                                              "any": {"include": {"sources": [{"mode": "WORD", "source": "DESCRIPTION"}], "content": TRADES}}},
+                                  "employeeSize": SIZE}}},
+            {"label": "holdco-desc-platform",
+             "body": {"contact": {**title_any(LEADER_TITLES), **US},
+                      "account": {"keyword": {"all": {"include": {"sources": [{"mode": "WORD", "source": "DESCRIPTION"}], "content": ["platform"]}},
+                                              "any": {"include": {"sources": [{"mode": "WORD", "source": "DESCRIPTION"}], "content": TRADES}}},
+                                  "employeeSize": SIZE}}},
+            {"label": "holdco-desc-holding-company",
+             "body": {"contact": {**title_any(LEADER_TITLES), **US},
+                      "account": {"keyword": {"all": {"include": {"sources": [{"mode": "WORD", "source": "DESCRIPTION"}], "content": ["holding company"]}},
+                                              "any": {"include": {"sources": [{"mode": "WORD", "source": "DESCRIPTION"}], "content": TRADES}}},
+                                  "employeeSize": SIZE}}},
+            {"label": "holdco-headline",
+             "body": {"contact": {**title_any(LEADER_TITLES + ["Operating Partner"]),
+                                  "keyword": kw("HEADLINE", ["holdco", "holding company", "roll-up", "rollup", "buy and build", "acquiring home services", "acquiring HVAC", "acquiring plumbing", "acquiring landscaping", "acquiring accounting firms"], "WORD"), **US}}},
             {"label": "holdco-accounting",
              "body": {"contact": {**title_any(LEADER_TITLES), **US},
                       "account": {"keyword": {"all": {"include": {"sources": [{"mode": "SMART", "source": "DESCRIPTION"}], "content": ["acquiring accounting firms"]}}},
