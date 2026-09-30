@@ -50,12 +50,16 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; background: var(--crimson); }
   body {
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
     background: var(--crimson);
     color: var(--ink);
     font-family: var(--body);
     font-weight: 400;
-    font-size: 17px;
-    line-height: 1.55;
+    font-size: 14px;
+    line-height: 1.38;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -75,15 +79,18 @@
   .on-warm { background: var(--warm); color: var(--ink); }
 
   /* Header */
-  .site-header .wrap { padding-top: 22px; padding-bottom: 6px; }
+  .site-header { flex: none; }
+  .site-header .wrap { padding-top: 10px; padding-bottom: 2px; }
   .logo { display: inline-block; line-height: 0; }
-  .logo img { height: 30px; width: auto; }
+  .logo img { height: 26px; width: auto; }
   .logo:focus-visible { outline: 2px solid var(--white); outline-offset: 6px; }
+
+  main { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
 
   /* Type */
   .eyebrow, .label {
     font-weight: 500;
-    font-size: 13px;
+    font-size: 11.5px;
     line-height: 1.3;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -92,25 +99,25 @@
   .on-warm .label { color: var(--slate); }
 
   h1, h2, h3 { font-family: var(--heading); font-weight: 700; letter-spacing: -0.02em; text-wrap: pretty; }
-  h1 { font-size: 37px; line-height: 1.08; margin-top: 14px; }
-  h2 { font-size: 32px; line-height: 1.12; }
-  h3 { font-size: 20px; line-height: 1.3; letter-spacing: -0.01em; }
-  .lede { margin-top: 18px; font-size: 17px; max-width: 34em; }
+  h1 { font-size: 28px; line-height: 1.08; }
+  h2 { font-size: 21px; line-height: 1.15; }
+  h3 { font-size: 14.5px; line-height: 1.3; letter-spacing: -0.01em; }
+  .lede { margin-top: 6px; font-size: 13.5px; max-width: 36em; }
   .on-crimson .lede { color: var(--on-crimson-muted); }
 
   /* Buttons */
   .button {
     display: block;
     width: 100%;
-    min-height: 52px;
-    padding: 15px 30px;
+    min-height: 48px;
+    padding: 13px 28px;
     border: 2px solid var(--white);
     border-radius: 6px;
     background: var(--white);
     color: var(--crimson);
     font-family: var(--body);
     font-weight: 500;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.2;
     text-align: center;
     text-decoration: none;
@@ -118,114 +125,132 @@
   }
   .button:hover { background: #F3ECE6; border-color: #F3ECE6; }
   .button:focus-visible { outline: 3px solid var(--white); outline-offset: 4px; }
-  .cta { margin-top: 26px; }
-  .founder { margin-top: 14px; font-size: 14px; line-height: 1.5; color: var(--on-crimson-muted); }
-  .fine { font-size: 14px; line-height: 1.5; color: var(--on-crimson-muted); }
+  .cta { margin-top: 10px; }
+  .fine { font-size: 12.5px; line-height: 1.4; color: var(--on-crimson-muted); }
   .fine a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
   .fine a:hover { text-decoration-thickness: 2px; }
   .fine a:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
 
-  /* Hero */
-  .hero { padding: 36px 0 56px; }
-  .hero-photo { margin-top: 40px; }
-  .hero-photo img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  .hero-photo .wide { display: none; }
+  /* Hero: takes the leftover height; the photo absorbs it */
+  .hero { flex: 1 0 auto; min-height: 0; display: flex; flex-direction: column; padding: 6px 0 14px; }
+  .hero > .wrap { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+  .hero-photo { flex: 1 1 auto; min-height: 0; margin-top: 12px; display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .hero-photo .ph { position: relative; min-height: 0; overflow: hidden; border-radius: 8px; }
+  .hero-photo .ph-ops { display: none; }
+  .hero-photo picture { display: contents; }
+  .hero-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
+  .hero-photo .ph-ops img { object-position: 45% 50%; }
+  @media (max-height: 799px) { .hero-photo { display: none; } }
+  @media (max-width: 599px) and (max-height: 999px) { .hero-photo { display: none; } }
 
-  /* Steps */
-  .steps { padding: 64px 0 56px; }
-  .steps ol {
-    list-style: none;
-    counter-reset: step;
-    margin-top: 28px;
-    display: grid;
-    gap: 28px;
-  }
-  .steps li { counter-increment: step; }
-  .steps .num {
-    display: block;
-    font-family: var(--heading);
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.06em;
-    color: var(--crimson);
-    margin-bottom: 10px;
-  }
+  /* Steps + audience on warm white */
+  .steps { flex: none; padding: 10px 0 10px; }
+  .steps-grid { display: grid; gap: 8px; margin-top: 6px; }
+  .steps .label { margin-bottom: 4px; }
+  .steps ol { list-style: none; counter-reset: step; display: grid; gap: 4px; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 26px 1fr; gap: 4px; align-items: baseline; }
+  .steps .num { font-family: var(--heading); font-weight: 700; font-size: 11.5px; letter-spacing: 0.06em; color: var(--crimson); }
   .steps .num::before { content: "0" counter(step); }
-  .steps h3 { color: var(--ink); }
-  .steps li p { margin-top: 8px; color: var(--slate); }
-  .approval {
-    margin-top: 32px;
-    padding-top: 22px;
-    border-top: 1px solid var(--stone);
-  }
-  .approval p { font-weight: 500; color: var(--ink); max-width: 40em; }
-
-  /* Audience */
-  .audience { padding: 8px 0 72px; }
-  .audience-grid { display: grid; gap: 28px; }
-  .audience p { margin-top: 12px; color: var(--ink); max-width: 34em; }
-  .audience .focus { margin-top: 10px; color: var(--slate); }
-  .audience-photo img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px; }
+  .steps li h3 { color: var(--ink); display: inline; }
+  .steps li p { color: var(--slate); font-size: 12.5px; line-height: 1.36; margin-top: 1px; }
+  .steps li .body { grid-column: 2; }
+  .approval { margin-top: 6px; padding-top: 5px; border-top: 1px solid var(--stone); font-weight: 500; font-size: 12.5px; color: var(--ink); }
+  .audience .label { margin-bottom: 3px; }
+  .audience p { font-size: 12.5px; line-height: 1.36; color: var(--ink); }
+  .audience .focus { margin-top: 3px; color: var(--slate); }
 
   /* Closing */
-  .closing { padding: 64px 0 56px; }
-  .closing h2 { max-width: 14em; }
-  .closing .lede { margin-top: 14px; }
-  .closing .fine { margin-top: 28px; max-width: 40em; }
+  .closing { flex: none; padding: 10px 0 10px; }
+  .closing-grid { display: grid; gap: 8px; }
+  .closing .cta { grid-column: 1; }
+  .closing .lede { margin-top: 2px; font-size: 13px; }
+  .closing .cta { margin-top: 7px; }
+  .closing .fine { margin-top: 6px; font-size: 12px; }
 
   /* Footer */
+  .site-footer { flex: none; }
   .site-footer .wrap {
-    padding-top: 22px;
-    padding-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     border-top: 1px solid rgba(221, 214, 206, 0.3);
-    font-size: 14px;
+    font-size: 11.5px;
     color: var(--on-crimson-muted);
   }
 
   /* Tablet */
   @media (min-width: 600px) {
     :root { --pad: 32px; }
-    .logo img { height: 36px; }
+    body { font-size: 15px; }
+    .logo img { height: 34px; }
     .button { display: inline-block; width: auto; }
-    h1 { font-size: 48px; }
-    .hero-photo img { aspect-ratio: 16 / 9; }
-    .steps ol { grid-template-columns: repeat(3, 1fr); gap: 36px; }
-    .audience-grid { grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    h1 { font-size: 40px; }
+    .lede { font-size: 15px; }
+    .steps-grid { grid-template-columns: 2fr 1fr; gap: 28px; }
+    .steps ol { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .steps li { display: block; }
+    .steps .num { display: block; margin-bottom: 4px; }
+    .steps li h3 { display: block; }
+    .closing-grid { grid-template-columns: 1fr auto; align-items: center; gap: 12px 32px; }
+    .closing .cta { margin-top: 0; grid-column: 2; grid-row: 1; }
+    .closing .fine { grid-column: 2; grid-row: 2; margin-top: 0; max-width: 22em; text-align: right; }
   }
 
   /* Desktop */
   @media (min-width: 960px) {
     :root { --pad: 40px; }
-    body { font-size: 18px; }
-    .site-header .wrap { padding-top: 32px; padding-bottom: 8px; }
-    .logo img { height: 48px; }
-    .eyebrow, .label { font-size: 13px; }
-    h1 { font-size: 60px; line-height: 1.04; margin-top: 18px; max-width: 12.5em; }
-    h2 { font-size: 44px; }
-    h3 { font-size: 22px; }
-    .lede { margin-top: 22px; font-size: 19px; }
-    .cta { margin-top: 30px; }
-    .founder { margin-top: 16px; }
-    .hero { padding: 48px 0 88px; }
-    .hero-photo { margin-top: 56px; }
-    .hero-photo img { aspect-ratio: 8 / 3; }
-    .hero-photo .wide { display: block; }
-    .hero-photo .tall { display: none; }
-    .steps { padding: 96px 0 80px; }
-    .steps ol { gap: 48px; margin-top: 36px; }
-    .steps .num { margin-bottom: 14px; }
-    .approval { margin-top: 48px; padding-top: 28px; }
-    .audience { padding: 8px 0 96px; }
-    .audience-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; }
-    .closing { padding: 96px 0 88px; }
-    .closing .lede { font-size: 20px; }
-    .closing .fine { margin-top: 36px; }
-    .site-footer .wrap { padding-top: 26px; padding-bottom: 40px; }
+    body { font-size: 16px; }
+    .site-header .wrap { padding-top: 16px; padding-bottom: 4px; }
+    .logo img { height: 44px; }
+    .eyebrow, .label { font-size: 12.5px; }
+    h1 { font-size: 46px; line-height: 1.05; max-width: 13em; }
+    h2 { font-size: 30px; }
+    h3 { font-size: 18px; }
+    .lede { margin-top: 10px; font-size: 17px; max-width: 40em; }
+    .cta { margin-top: 16px; }
+    .hero { padding: 6px 0 20px; }
+    .hero-photo { margin-top: 18px; min-height: 180px; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+    .hero-photo .ph-ops { display: block; }
+    .steps { padding: 14px 0 14px; }
+    .steps-grid { grid-template-columns: 2.6fr 1.4fr; gap: 40px; margin-top: 10px; }
+    .steps .label { margin-bottom: 10px; }
+    .audience .label { margin-bottom: 10px; }
+    .steps ol { gap: 28px; }
+    .steps .num { font-size: 12.5px; margin-bottom: 8px; }
+    .steps li p { font-size: 14.5px; margin-top: 4px; }
+    .approval { margin-top: 14px; padding-top: 12px; font-size: 15px; }
+    .audience .label { margin-bottom: 8px; }
+    .audience p { font-size: 14.5px; }
+    .audience .focus { margin-top: 6px; }
+    .closing { padding: 14px 0 14px; }
+    .closing .lede { font-size: 16px; margin-top: 6px; }
+    .closing .fine { font-size: 13px; }
+    .site-footer .wrap { padding-top: 8px; padding-bottom: 10px; font-size: 13px; }
+  }
+
+  /* Tall desktop screens: more air, bigger type */
+  @media (min-width: 960px) and (min-height: 1000px) {
+    .site-header .wrap { padding-top: 22px; }
+    .logo img { height: 52px; }
+    h1 { font-size: 50px; }
+    .lede { font-size: 18px; margin-top: 12px; }
+    .cta { margin-top: 18px; }
+    .hero { padding: 10px 0 26px; }
+    .hero-photo { margin-top: 24px; }
+    .steps { padding: 22px 0 22px; }
+    .steps li p, .audience p, .approval { font-size: 16px; }
+    .closing { padding: 22px 0 22px; }
+    .site-footer .wrap { padding-top: 10px; padding-bottom: 14px; }
+  }
+  @media (min-width: 960px) and (min-height: 1140px) {
+    .logo img { height: 60px; }
+    h1 { font-size: 58px; }
+    .lede { font-size: 19px; }
+    h2 { font-size: 36px; }
+    h3 { font-size: 20px; }
+    .steps li p, .audience p, .approval { font-size: 17px; }
+    .steps { padding: 28px 0 28px; }
+    .closing { padding: 28px 0 28px; }
+    .hero { padding: 14px 0 32px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -246,61 +271,65 @@
 <main>
   <section class="hero on-crimson" aria-labelledby="hero-title">
     <div class="wrap">
-      <p class="eyebrow">For service-business buyers</p>
       <h1 id="hero-title">Turn the seller&rsquo;s know&#8209;how into repeatable workflows.</h1>
-      <p class="lede">We&rsquo;re building RolledCo to help new owners capture how the business runs before the seller steps away. In development, and talking to buyers about what breaks after close.</p>
+      <p class="lede">We&rsquo;re building RolledCo to help new owners capture how the business runs before the seller steps away.</p>
       <div class="cta">
         <a class="button" href="https://calendly.com/mitch-w-jones-4/30min">Book a 15-minute conversation</a>
       </div>
-      <p class="founder">Mickey Jones, founder &middot; Previously J.P.&nbsp;Morgan and Harvest&nbsp;Partners</p>
-      <figure class="hero-photo">
-        <img class="wide" src="/hero-wide-1120.jpg" srcset="/hero-wide-1120.jpg 1120w, /hero-wide-2240.jpg 2240w" sizes="(min-width: 1200px) 1120px, 100vw" width="1120" height="420" alt="A retiring owner walking a new owner through the parts shelves of the supply business he is handing over." loading="eager" fetchpriority="high">
-        <img class="tall" src="/hero-mobile-900.jpg" width="900" height="675" alt="A retiring owner walking a new owner through the parts shelves of the supply business he is handing over." loading="eager">
-      </figure>
+      <div class="hero-photo">
+        <figure class="ph ph-handover">
+          <picture>
+            <source media="(max-width: 599px)" srcset="/hero-mobile-900.jpg">
+            <source media="(min-height: 1000px)" srcset="/hero-wide-1120.jpg 1120w, /hero-wide-2240.jpg 2240w" sizes="(min-width: 1200px) 680px, 60vw">
+            <img src="/hero-strip-1120.jpg" srcset="/hero-strip-1120.jpg 1120w, /hero-strip-2240.jpg 2240w" sizes="(min-width: 1200px) 680px, 60vw" width="1120" height="249" alt="A retiring owner walking a new owner through the parts shelves of the supply business he is handing over." loading="eager" fetchpriority="high">
+          </picture>
+        </figure>
+        <figure class="ph ph-ops">
+          <img src="/ops-sq-600.jpg" srcset="/ops-sq-600.jpg 600w, /ops-sq-1000.jpg 1000w" sizes="(min-width: 1200px) 424px, 40vw" width="1000" height="870" alt="An owner reviewing paperwork at a desk while technicians load a service van outside." loading="eager">
+        </figure>
+      </div>
     </div>
   </section>
 
   <section class="steps on-warm" aria-labelledby="steps-title">
     <div class="wrap">
-      <h2 class="label" id="steps-title">What we&rsquo;re building</h2>
-      <ol>
-        <li>
-          <span class="num" aria-hidden="true"></span>
-          <h3>Capture the process</h3>
-          <p>Turn the seller&rsquo;s files and explanations into steps your team can&nbsp;follow.</p>
-        </li>
-        <li>
-          <span class="num" aria-hidden="true"></span>
-          <h3>Find what&rsquo;s missing</h3>
-          <p>Collect intake details and prepare follow&#8209;ups for missing&nbsp;information.</p>
-        </li>
-        <li>
-          <span class="num" aria-hidden="true"></span>
-          <h3>Prepare work for review</h3>
-          <p>Draft customer communications using the business&rsquo;s existing&nbsp;records.</p>
-        </li>
-      </ol>
-      <div class="approval"><p>Your team reviews and approves every output before it goes&nbsp;out.</p></div>
-    </div>
-  </section>
-
-  <section class="audience on-warm" aria-labelledby="audience-title">
-    <div class="wrap audience-grid">
-      <div>
-        <h2 class="label" id="audience-title">Who it&rsquo;s for</h2>
-        <p>Searchers preparing to take over a service business, recent buyers getting the back office in order, and HoldCos integrating their next acquisition.</p>
-        <p class="focus">Initial focus: service businesses in the $500K to $5M&nbsp;range.</p>
+      <div class="steps-grid">
+        <div>
+          <h2 class="label" id="steps-title">What we&rsquo;re building</h2>
+          <ol>
+            <li>
+              <span class="num" aria-hidden="true"></span>
+              <h3>Capture the&nbsp;process</h3>
+              <p class="body">Turn the seller&rsquo;s files and explanations into steps your team can&nbsp;follow.</p>
+            </li>
+            <li>
+              <span class="num" aria-hidden="true"></span>
+              <h3>Find what&rsquo;s&nbsp;missing</h3>
+              <p class="body">Collect intake details and prepare follow&#8209;ups for missing&nbsp;information.</p>
+            </li>
+            <li>
+              <span class="num" aria-hidden="true"></span>
+              <h3>Prepare work for&nbsp;review</h3>
+              <p class="body">Draft customer communications using the business&rsquo;s existing&nbsp;records.</p>
+            </li>
+          </ol>
+          <p class="approval">Your team reviews and approves every output before it goes&nbsp;out.</p>
+        </div>
+        <div class="audience">
+          <h2 class="label" id="audience-title">Who it&rsquo;s for</h2>
+          <p>Searchers preparing to take over a service business, recent buyers getting the back office in order, and HoldCos integrating their next acquisition.</p>
+          <p class="focus">Initial focus: service businesses in the $500K to $5M&nbsp;range.</p>
+        </div>
       </div>
-      <figure class="audience-photo">
-        <img src="/ops-800.jpg" srcset="/ops-800.jpg 800w, /ops-1200.jpg 1200w" sizes="(min-width: 960px) 528px, (min-width: 600px) 50vw, 100vw" width="1200" height="800" alt="An owner reviewing paperwork at a desk while technicians load a service van outside." loading="lazy">
-      </figure>
     </div>
   </section>
 
   <section class="closing on-crimson" aria-labelledby="closing-title">
-    <div class="wrap">
-      <h2 id="closing-title">What got messy after&nbsp;close?</h2>
-      <p class="lede">We&rsquo;d love to hear your firsthand challenges.</p>
+    <div class="wrap closing-grid">
+      <div>
+        <h2 id="closing-title">What got messy after&nbsp;close?</h2>
+        <p class="lede">We&rsquo;d love to hear your firsthand challenges.</p>
+      </div>
       <div class="cta">
         <a class="button" href="https://calendly.com/mitch-w-jones-4/30min">Book a 15-minute conversation</a>
       </div>
