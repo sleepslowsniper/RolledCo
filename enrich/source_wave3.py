@@ -137,7 +137,7 @@ SEGMENTS = [
     {
         "name": "SBA acquisition lenders",
         "queries": [
-            {"label": "sba-live-oak",
+            {"label": "sba-live-oak", "max": 20,
              "body": {"contact": {**title_any(["SBA", "Business Development", "Lending", "Acquisition", "Loan Officer"]), **US},
                       "account": {"name": {"any": {"include": {"mode": "WORD", "content": ["Live Oak Bank"]}}}}}},
             {"label": "sba-titles",
@@ -283,6 +283,13 @@ def short(s, n=150):
     return s if len(s) <= n else s[: n - 1].rsplit(" ", 1)[0] + "…"
 
 
+def year_note(ay):
+    m = re.match(r"\d{4}-\d{2}", ay)
+    if not m:
+        return ""
+    return f" ({m.group(0)} board" + ("; recent alum)" if "alum" in ay.lower() else ")")
+
+
 def role_at(title, comp, since=""):
     title = re.sub(r"\s+", " ", title or "").strip(" |-")
     if comp and comp.lower() in title.lower():
@@ -333,6 +340,7 @@ def main():
     ap.add_argument("--out", default=str(OUT))
     ap.add_argument("--segments", default="1,2,3,4", help="comma list of segment numbers to run")
     ap.add_argument("--append", action="store_true", help="keep rows already in --out and add to them")
+    ap.add_argument("--cache", default=str(CACHE), help="response cache file (use one per parallel process)")
     ap.add_argument("--leaders-csv", default="", help="web-sourced club leaders (name,role,club,school,linkedin_url,...) to enrich for segment 4")
     args = ap.parse_args()
     if not API_KEY:
@@ -341,7 +349,7 @@ def main():
     names, links, emails, sources = load_already_contacted()
     print("Dedupe sources:\n  " + "\n  ".join(sources) + f"\n  => {len(names)} names, {len(links)} linkedin urls, {len(emails)} emails\n")
 
-    api = AIArk(API_KEY, cache_file=CACHE)
+    api = AIArk(API_KEY, cache_file=Path(args.cache))
     rows, seen_ids, seen_names = [], set(), set()
     if args.append and Path(args.out).exists():
         with open(args.out, newline="", encoding="utf-8") as fh:
@@ -359,8 +367,9 @@ def main():
         for q in seg["queries"]:
             if st["kept"] >= args.per_segment:
                 break
+            q_kept, q_cap = 0, q.get("max", args.per_segment)
             for page in range(args.max_pages):
-                if st["kept"] >= args.per_segment:
+                if st["kept"] >= args.per_segment or q_kept >= q_cap:
                     break
                 body = {**q["body"], "page": page, "size": PAGE_SIZE}
                 status, data = api.post("/v1/people", body)
@@ -405,6 +414,7 @@ def main():
                         continue
                     seen_names.add(fn)
                     st["kept"] += 1
+                    q_kept += 1
                     rows.append({
                         "Name": full,
                         "Title": cur_title(p),
@@ -418,7 +428,7 @@ def main():
                         "Segment": sname,
                         "Hook": build_hook(sname, p),
                     })
-                    if st["kept"] >= args.per_segment:
+                    if st["kept"] >= args.per_segment or q_kept >= q_cap:
                         break
                 if data.get("last") or len(hits) < PAGE_SIZE:
                     break
@@ -489,7 +499,7 @@ def main():
                 "Phone": "",
                 "Enrichment Status": "email_only (aiark_lookup)",
                 "Segment": sname,
-                "Hook": short(f"{L.get('role', '').strip()} of {L.get('club', '').strip()} at {school}" + (f" ({L.get('academic_year')})" if L.get("academic_year") else "")),
+                "Hook": short(f"{L.get('role', '').strip()} of {L.get('club', '').strip()} at {school}" + year_note(L.get("academic_year") or "")),
             })
 
     with open(args.out, "w", newline="", encoding="utf-8") as fh:
