@@ -107,10 +107,10 @@ TRADES = ["HVAC", "plumbing", "pest control", "landscaping", "lawn care", "home 
 SIZE = {"type": "RANGE", "range": [{"start": 2, "end": 1000}]}
 
 EXCL_SBA = r"clos(ing|er)|processor|underwrit|analyst|assistant|coordinator|servic(ing|er)|documentation|compliance|operations|intern\b|packag|admin|paralegal|credit|marketing|recruit|talent|specialist|human resources|\bIT\b|engineer|product|customer experience|asset based|investment advisor|wine|beverage|middle market|emerging markets|counsel|legal|accountant|treasur|data"
-EXCL_SEARCH = r"job search|executive search|title search|talent|recruit|search engine|\bSEO\b|paid search|research|marketing|estimated|search consultant|retained search|analyst|intern\b|patent|medical|library|writer|associate\b|assistant|coordinator|student"
-EXCL_LEADER = r"vice president|\bvp\b|sales|marketing|assistant|associate|analyst|intern\b|payroll|\bhr\b|human resources|recruit|controller|specialist|coordinator|account executive|manager\b|product owner|counsel|legal|engineer|technician|homeowner|business owner\b.*(?:realtor|agent)"
+EXCL_SEARCH = r"job search|executive search|title search|talent|recruit|staffing|placement|headhunt|search engine|\bSEO\b|paid search|research|marketing|estimated|search consultant|retained search|analyst|intern\b|patent|medical|library|writer|associate\b|assistant|coordinator|student|title company|first american|abstract"
+EXCL_LEADER = r"regional|market area|division|area president|general manager|branch|vice president|\bvp\b|sales|marketing|assistant|associate|analyst|intern\b|payroll|\bhr\b|human resources|recruit|controller|specialist|coordinator|account executive|manager\b|product owner|counsel|legal|engineer|technician|homeowner|business owner\b.*(?:realtor|agent)"
 LEADER_RE = r"\b(founder|co-founder|ceo|chief executive|operating partner|managing partner|owner|principal|chairman|president)\b"
-TRADES_RE = r"acqui|roll[- ]?up|holding|holdco|home service|hvac|plumb|pest|landscap|lawn|accounting|\bcpa\b|bookkeep|\btax\b|electrical|roofing|restoration|cleaning|consolidat"
+TRADES_RE = r"home service|hvac|heating|air conditioning|plumb|pest|landscap|lawn|tree care|accounting|\bcpa\b|bookkeep|\btax\b|electrical|roofing|restoration|cleaning|garage door|irrigation|pool service"
 
 
 def keep_sba(p):
@@ -122,14 +122,32 @@ def keep_search(p):
     t, h, ct = cur_title(p), headline(p), company_text(p)
     if re.search(EXCL_SEARCH, t + " " + h + " " + company_name(p), re.I):
         return False
+    if re.search(r"executive search|recruit|staffing|placement|headhunt|talent|retained search|search firm|title insurance|title search", ct, re.I):
+        return False
     eta = r"search fund|searcher|acquisition entrepreneur|entrepreneur(ship)? through acquisition|\bETA\b|self[- ]funded|search partner|search capital|acquisition partners"
     if re.search(eta, t + " " + h, re.I):
         return True
     return bool(re.search(r"\b(ceo|chief executive|president|founder)\b", t, re.I) and re.search(r"search fund|entrepreneurship through acquisition", ct, re.I))
 
 
+def employees(p):
+    fin = (p.get("company") or {}).get("financial") or {}
+    n = fin.get("employees") if isinstance(fin, dict) else None
+    if isinstance(n, dict):
+        n = n.get("end") or n.get("start")
+    for g in p.get("position_groups") or []:
+        if (g.get("date") or {}).get("end") is None:
+            e = (g.get("company") or {}).get("employees") or {}
+            if isinstance(e, dict) and e.get("start"):
+                n = n or e.get("start")
+            break
+    return n if isinstance(n, int) else 0
+
+
 def keep_holdco(p):
     t = cur_title(p)
+    if employees(p) > 1000:
+        return False
     return bool(re.search(LEADER_RE, t, re.I) and not re.search(EXCL_LEADER, t, re.I) and re.search(TRADES_RE, company_text(p), re.I))
 
 
@@ -154,7 +172,7 @@ SEGMENTS = [
                                               "Search Fund Principal", "Search Fund Entrepreneur", "Self-Funded Searcher", "Searcher"]), **US}}},
             {"label": "searchfund-company",
              "body": {"contact": {**title_any(LEADER_TITLES + ["Searcher"]), **US},
-                      "account": {"keyword": kw("NAME", ["search fund", "search partners", "search capital", "acquisition partners"], "WORD")}}},
+                      "account": {"keyword": kw("NAME", ["search fund", "search capital", "acquisition partners", "succession partners", "legacy partners"], "WORD")}}},
             {"label": "ceo-of-searchfund-acquired",
              "body": {"contact": {**title_any(["CEO", "President", "Chief Executive Officer"]), **US},
                       "account": {"keyword": kw("DESCRIPTION", ["search fund", "entrepreneurship through acquisition"], "WORD"), "employeeSize": SIZE}}},
@@ -351,6 +369,7 @@ def main():
 
     api = AIArk(API_KEY, cache_file=Path(args.cache))
     rows, seen_ids, seen_names = [], set(), set()
+    per_company = {}
     if args.append and Path(args.out).exists():
         with open(args.out, newline="", encoding="utf-8") as fh:
             rows = list(csv.DictReader(fh))
@@ -398,6 +417,10 @@ def main():
                     if pid in seen_ids or fn in seen_names:
                         st["dup_in_run"] += 1
                         continue
+                    ckey = fold_name(company_name(p))
+                    if ckey and per_company.get((sname, ckey), 0) >= (20 if "live oak" in ckey else 2):
+                        st["filtered_out"] += 1
+                        continue
                     seen_ids.add(pid)
                     st["exported"] += 1
                     es, ed = api.export_by_id(pid)
@@ -413,6 +436,7 @@ def main():
                         st["no_email"] += 0 if email else 1
                         continue
                     seen_names.add(fn)
+                    per_company[(sname, ckey)] = per_company.get((sname, ckey), 0) + 1
                     st["kept"] += 1
                     q_kept += 1
                     rows.append({
