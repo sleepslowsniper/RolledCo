@@ -145,19 +145,19 @@
 
   /* Steps */
   .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .steps { flex: none; padding: 14px 0 14px; }
-  .steps ol { list-style: none; display: grid; gap: 8px; }
-  .steps li { background: var(--white); color: var(--crimson); border-radius: 8px; padding: 12px 14px 13px; }
-  .steps li h3 { color: var(--crimson); }
-  .steps li p { color: var(--crimson); opacity: 0.82; font-size: 13px; line-height: 1.4; margin-top: 5px; }
+  .steps { flex: none; padding: 10px 0 10px; }
+  .steps ol { list-style: none; display: grid; gap: 0; background: var(--white); color: var(--crimson); border-radius: 8px; padding: 2px 16px; }
+  .steps li { padding: 12px 0 13px; border-bottom: 1px solid var(--stone); }
+  .steps li:last-child { border-bottom: 0; }
+  .steps li h3 { color: var(--crimson); font-size: 18px; }
+  .steps li p { color: var(--crimson); opacity: 0.82; font-size: 13px; line-height: 1.4; margin-top: 4px; }
 
   /* Closing */
-  .closing { flex: none; padding: 10px 0 10px; }
+  .closing { flex: none; padding: 12px 0 16px; }
   .closing-grid { display: grid; gap: 8px; }
-  .closing .cta { grid-column: 1; }
-  .closing .lede { margin-top: 2px; font-size: 13px; }
-  .closing .cta { margin-top: 7px; }
-  .closing .fine { margin-top: 6px; font-size: 12px; }
+  .closing .cta { display: none; }
+  .closing .lede { margin-top: 4px; font-size: 14px; }
+  .closing .fine { margin-top: 10px; font-size: 12.5px; }
 
 
   /* Tablet */
@@ -168,11 +168,12 @@
     .button { display: inline-block; width: auto; }
     h1 { font-size: 44px; }
     .lede { font-size: 15px; }
-    .steps { padding: 20px 0 20px; }
-    .steps ol { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .steps li { padding: 18px 20px 20px; }
+    .steps { padding: 12px 0 16px; }
+    .steps ol { grid-template-columns: repeat(3, 1fr); gap: 16px; background: none; padding: 0; }
+    .steps li { background: var(--white); border-radius: 8px; padding: 18px 20px 20px; border-bottom: 0; }
+    .steps li h3 { font-size: 20px; }
     .closing-grid { grid-template-columns: 1fr auto; align-items: center; gap: 12px 32px; }
-    .closing .cta { margin-top: 0; grid-column: 2; grid-row: 1; }
+    .closing .cta { display: block; margin-top: 0; grid-column: 2; grid-row: 1; }
     .closing .fine { grid-column: 2; grid-row: 2; margin-top: 0; max-width: 22em; text-align: right; }
   }
 
@@ -188,13 +189,13 @@
     h3 { font-size: 18px; }
     .lede { margin-top: 10px; font-size: 17px; max-width: 40em; }
     .cta { margin-top: 16px; }
-    .hero { padding: 6px 0 20px; }
+    .hero { padding: 6px 0 10px; }
     .hero-photo { margin-top: 18px; min-height: 180px; grid-template-columns: 1.6fr 1fr; gap: 16px; }
     .hero-photo .ph-ops { display: block; }
-    .steps { padding: 26px 0 26px; }
+    .steps { padding: 12px 0 18px; }
     .steps ol { gap: 24px; }
     .steps li { padding: 24px 26px 26px; }
-    h3 { font-size: 24px; }
+    .steps li h3 { font-size: 24px; }
     .steps li p { font-size: 15px; margin-top: 8px; }
     .closing { padding: 22px 0 22px; }
     .closing .lede { font-size: 16px; margin-top: 6px; }
@@ -208,11 +209,11 @@
     h1 { font-size: 56px; }
     .lede { font-size: 18px; margin-top: 12px; }
     .cta { margin-top: 18px; }
-    .hero { padding: 10px 0 26px; }
+    .hero { padding: 10px 0 14px; }
     .hero-photo { margin-top: 24px; }
-    .steps { padding: 32px 0 32px; }
+    .steps { padding: 14px 0 22px; }
     .steps li { padding: 28px 30px 30px; }
-    h3 { font-size: 26px; }
+    .steps li h3 { font-size: 26px; }
     .steps li p { font-size: 16px; }
     .closing { padding: 30px 0 30px; }
   }
@@ -223,10 +224,10 @@
     h2 { font-size: 40px; }
     h3 { font-size: 20px; }
     .steps li p { font-size: 17px; }
-    h3 { font-size: 28px; }
-    .steps { padding: 40px 0 40px; }
+    .steps li h3 { font-size: 28px; }
+    .steps { padding: 16px 0 28px; }
     .closing { padding: 28px 0 28px; }
-    .hero { padding: 14px 0 32px; }
+    .hero { padding: 14px 0 18px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
