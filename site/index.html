@@ -43,6 +43,7 @@
     --on-crimson-muted: rgba(255, 255, 255, 0.86);
     --col: 1120px;
     --pad: 24px;
+    --gap: 12px;
     --heading: "Newsreader", Georgia, "Times New Roman", serif;
     --body: "Libre Franklin", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
@@ -85,7 +86,7 @@
   .logo img { height: 26px; width: auto; }
   .logo:focus-visible { outline: 2px solid var(--white); outline-offset: 6px; }
 
-  main { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+  main { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: var(--gap); }
 
   /* Type */
   .eyebrow, .label {
@@ -132,9 +133,9 @@
   .fine a:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
 
   /* Hero: takes the leftover height; the photo absorbs it */
-  .hero { flex: 1 0 auto; min-height: 0; display: flex; flex-direction: column; padding: 6px 0 14px; }
+  .hero { flex: 1 0 auto; min-height: 0; display: flex; flex-direction: column; padding: 6px 0 0; }
   .hero > .wrap { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
-  .hero-photo { flex: 1 1 auto; min-height: 0; margin-top: 12px; display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .hero-photo { flex: 1 1 auto; min-height: 0; margin-top: var(--gap); display: grid; grid-template-columns: 1fr; gap: var(--gap); }
   .hero-photo .ph { position: relative; min-height: 0; overflow: hidden; border-radius: 8px; }
   .hero-photo .ph-ops { display: none; }
   .hero-photo picture { display: contents; }
@@ -145,15 +146,15 @@
 
   /* Steps */
   .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .steps { flex: none; padding: 10px 0 10px; }
-  .steps ol { list-style: none; display: grid; gap: 0; background: var(--white); color: var(--crimson); border-radius: 8px; padding: 2px 16px; }
+  .steps { flex: none; padding: 0; }
+  .steps ol { list-style: none; display: grid; gap: 0; background: var(--white); color: var(--crimson); border-radius: 8px; padding: 0 16px; }
   .steps li { padding: 12px 0 13px; border-bottom: 1px solid var(--stone); }
   .steps li:last-child { border-bottom: 0; }
   .steps li h3 { color: var(--crimson); font-size: 18px; }
   .steps li p { color: var(--crimson); opacity: 0.82; font-size: 13px; line-height: 1.4; margin-top: 4px; }
 
   /* Closing */
-  .closing { flex: none; padding: 12px 0 16px; }
+  .closing { flex: none; padding: 0 0 16px; }
   .closing-grid { display: grid; gap: 8px; }
   .closing .cta { display: none; }
   .closing .lede { margin-top: 4px; font-size: 14px; }
@@ -162,14 +163,14 @@
 
   /* Tablet */
   @media (min-width: 600px) {
-    :root { --pad: 32px; }
+    :root { --pad: 32px; --gap: 16px; }
     body { font-size: 15px; }
     .logo img { height: 34px; }
     .button { display: inline-block; width: auto; }
     h1 { font-size: 44px; }
     .lede { font-size: 15px; }
-    .steps { padding: 12px 0 16px; }
-    .steps ol { grid-template-columns: repeat(3, 1fr); gap: 16px; background: none; padding: 0; }
+    .steps { padding: 0; }
+    .steps ol { grid-template-columns: repeat(3, 1fr); gap: var(--gap); background: none; padding: 0; }
     .steps li { background: var(--white); border-radius: 8px; padding: 18px 20px 20px; border-bottom: 0; }
     .steps li h3 { font-size: 20px; }
     .closing-grid { grid-template-columns: 1fr auto; align-items: center; gap: 12px 32px; }
@@ -179,7 +180,7 @@
 
   /* Desktop */
   @media (min-width: 960px) {
-    :root { --pad: 40px; }
+    :root { --pad: 40px; --gap: 20px; }
     body { font-size: 16px; }
     .site-header .wrap { padding-top: 16px; padding-bottom: 4px; }
     .logo img { height: 44px; }
@@ -189,15 +190,15 @@
     h3 { font-size: 18px; }
     .lede { margin-top: 10px; font-size: 17px; max-width: 46em; }
     .cta { margin-top: 16px; }
-    .hero { padding: 6px 0 10px; }
-    .hero-photo { margin-top: 18px; min-height: 180px; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+    .hero { padding: 6px 0 0; }
+    .hero-photo { margin-top: var(--gap); min-height: 180px; grid-template-columns: 1.6fr 1fr; gap: var(--gap); }
     .hero-photo .ph-ops { display: block; }
-    .steps { padding: 12px 0 18px; }
-    .steps ol { gap: 24px; }
+    .steps { padding: 0; }
+    .steps ol { gap: var(--gap); }
     .steps li { padding: 24px 26px 26px; }
     .steps li h3 { font-size: 24px; }
     .steps li p { font-size: 15px; margin-top: 8px; }
-    .closing { padding: 22px 0 22px; }
+    .closing { padding: 0 0 22px; }
     .closing .lede { font-size: 16px; margin-top: 6px; }
     .closing .fine { font-size: 13px; }
   }
@@ -209,13 +210,14 @@
     h1 { font-size: 56px; }
     .lede { font-size: 18px; margin-top: 12px; }
     .cta { margin-top: 18px; }
-    .hero { padding: 10px 0 14px; }
-    .hero-photo { margin-top: 24px; }
-    .steps { padding: 14px 0 22px; }
+    :root { --gap: 24px; }
+    .hero { padding: 10px 0 0; }
+    .hero-photo { margin-top: var(--gap); }
+    .steps { padding: 0; }
     .steps li { padding: 28px 30px 30px; }
     .steps li h3 { font-size: 26px; }
     .steps li p { font-size: 16px; }
-    .closing { padding: 30px 0 30px; }
+    .closing { padding: 0 0 30px; }
   }
   @media (min-width: 960px) and (min-height: 1140px) {
     .logo img { height: 60px; }
@@ -225,9 +227,10 @@
     h3 { font-size: 20px; }
     .steps li p { font-size: 17px; }
     .steps li h3 { font-size: 28px; }
-    .steps { padding: 16px 0 28px; }
-    .closing { padding: 28px 0 28px; }
-    .hero { padding: 14px 0 18px; }
+    :root { --gap: 28px; }
+    .steps { padding: 0; }
+    .closing { padding: 0 0 28px; }
+    .hero { padding: 14px 0 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
