@@ -1,0 +1,24 @@
+"# Brightline Heating & Air, monthly profit and loss",2026-07
+"# SAMPLE, SYNTHETIC DATA. Stand-in for an accounting system export."
+Line,Amount
+"Revenue, service",171200
+"Revenue, installation",68400
+"Revenue, maintenance plans",22800
+Total revenue,262400
+"Cost of sales, technician labor",81344
+"Cost of sales, parts and equipment",44608
+Gross profit,136448
+Officer compensation,9500
+Office salaries and benefits,24800
+Rent,7200
+Vehicle fuel and maintenance,6822
+Insurance,4150
+Advertising,4723
+Software and phones,1680
+"Consulting fee, R. Kowalski",0
+Depreciation,5900
+Other operating expenses,3149
+Total operating expenses,67924
+Operating income,68524
+"Interest expense, SBA loan",0
+Net income,68524
