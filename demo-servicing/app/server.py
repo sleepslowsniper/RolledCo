@@ -18,7 +18,7 @@ from pathlib import Path
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -29,7 +29,8 @@ from app import ledger  # noqa: E402
 DATA = ROOT / "data"
 OBLIGATIONS = DATA / "obligations.json"
 CACHED = DATA / "obligations.cached.json"
-STATE = DATA / "state.json"
+# Vercel and other read-only hosts: STATE_DIR=/tmp keeps decisions for the life of the instance.
+STATE = Path(os.environ.get("STATE_DIR", str(DATA))) / "state.json"
 STATIC = ROOT / "app" / "static"
 BINDER = ROOT / "seed" / "binder"
 TODAY = date.fromisoformat(os.environ.get("DEMO_TODAY", "2027-01-15"))
@@ -57,6 +58,7 @@ def load_state():
 
 
 def save_state(state):
+    STATE.parent.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps(state, indent=2))
 
 
@@ -256,9 +258,55 @@ def seller_view(data, state):
 
 
 # ---------------------------------------------------------------- api
-@app.get("/")
+def text_summary():
+    """Plain text view of the whole demo, for readers that do not run JavaScript."""
+    data = load_data()
+    state = load_state()
+    drafts, led = build_drafts(data, state)
+    T = led["totals"]
+    deal = data["deal"]
+    out = [f"RolledCo servicing demo. Demo with synthetic data. RolledCo does not hold or move funds.",
+           f"As of {long_date(TODAY.isoformat())}. {deal['buyer']} ({deal['buyer_owner']}) acquired {deal['seller_entity']} "
+           f"from {deal['seller']} for {money(deal['purchase_price'])} on {long_date(deal['close_date'])}. Lender: {deal['lender']}.",
+           "", f"CLOSING BINDER ({len(data['documents'])} documents)"]
+    out += [f"  {d['title']} ({d['file']}, {d['pages']} pages)" for d in data["documents"]]
+    out += ["", "REVIEW (extracted obligations)"]
+    for o in data["obligations"]:
+        amt = money(o["amount"]) if o.get("amount") is not None else "non-monetary"
+        out.append(f"  {o['instrument']} | {o['counterparty']} | {amt} | next {long_date(o['next_date']) if o.get('next_date') else 'contingent'} | confidence {o['confidence']:.0%}")
+        out.append(f"    Source: {o['source']['document']} page {o['source']['page']}, {o['source']['section']}: \"{o['source']['quote']}\"")
+        for c in o.get("conflicts", []):
+            out.append(f"    FLAG ({c['kind']}): {c['title']}. {c['description']} Cited: {c['with_document']} page {c['page']}: \"{c['quote']}\"")
+    out += ["", "LEDGER",
+            f"  Due this month: {money(T['this_month']['total'])} (" + "; ".join(f"{e['instrument']} {long_date(e['date'])} {money(e['amount'])}" for e in T['this_month']['items']) + ")",
+            f"  Due next 12 months: {money(T['next_12']['total'])} across {T['next_12']['count']} payments",
+            "  Outstanding by counterparty: " + "; ".join(f"{c['counterparty']} {money(c['total'])}" for c in T["by_counterparty"])]
+    for r in led["rows"]:
+        standby = f", standby {long_date(r['standby'][0])} to {long_date(r['standby'][1])}" if r.get("standby") else ""
+        first = r["events"][0] if r["events"] else None
+        out.append(f"  {r['instrument']}: {len(r['events'])} events{standby}" + (f", first {long_date(first['date'])}" + (f" {money(first['amount'])}" if first.get("amount") is not None else "") if first else ""))
+    me = ledger.month_end(data, TODAY)
+    out += ["", f"MONITOR: Seller Note A payment check: {ledger.schedule_check(data, 'note-a', TODAY)['headline']}",
+            f"  Month-end run ({me['status']}):"]
+    out += [f"    {s['label']}: {money(s['value'])}" for s in me["steps"]]
+    out += ["  Lender reporting:"] + [f"    {r['period']}, {r['instrument']}, due {long_date(r['due'])}, {r['status']}" for r in reporting_items(data, state)]
+    out += ["", "OUTBOX"] + [f"  {d['kind']}: {d['title']} (to {d['to']}) status: {d['status']}" for d in drafts]
+    out += ["", "Routes: / (app), /summary (this text), /api/state (JSON), /binder/<file>.pdf (documents)."]
+    return "\n".join(out)
+
+
+@app.get("/", response_class=HTMLResponse)
 def index():
-    return FileResponse(str(STATIC / "index.html"))
+    html = (STATIC / "index.html").read_text()
+    # Readers without JavaScript (and link previews) get the full text summary inline.
+    import html as html_mod
+    block = f'<div id="prerender" hidden><pre>{html_mod.escape(text_summary())}</pre></div>\n<noscript><pre>{html_mod.escape(text_summary())}</pre></noscript>'
+    return html.replace("<script src=", block + "\n  <script src=", 1)
+
+
+@app.get("/summary", response_class=PlainTextResponse)
+def summary():
+    return text_summary()
 
 
 @app.get("/api/state")
@@ -381,7 +429,10 @@ def api_extract_status():
 @app.post("/api/reset")
 def api_reset():
     if CACHED.exists():
-        shutil.copy(CACHED, OBLIGATIONS)
+        try:
+            shutil.copy(CACHED, OBLIGATIONS)
+        except OSError:
+            pass  # read-only host; the cached copy is what load_data falls back to anyway
     if STATE.exists():
         STATE.unlink()
     return {"ok": True}
