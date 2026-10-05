@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RolledCo Servicing</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <nav class="nav" id="nav">
+      <div class="wordmark">RolledCo</div>
+      <div class="nav-deal">
+        <div class="nav-deal-name" id="nav-deal-name">Brightline Heating &amp; Air</div>
+        <div class="nav-deal-buyer" id="nav-deal-buyer">Northgate Acquisition LLC</div>
+      </div>
+      <ul class="nav-list">
+        <li><button class="nav-item" data-screen="binder"><span class="nav-num">1</span>Closing Binder</button></li>
+        <li><button class="nav-item" data-screen="review"><span class="nav-num">2</span>Review<span class="nav-badge" id="badge-review"></span></button></li>
+        <li><button class="nav-item" data-screen="ledger"><span class="nav-num">3</span>Ledger</button></li>
+        <li><button class="nav-item" data-screen="monitor"><span class="nav-num">4</span>Monitor</button></li>
+        <li><button class="nav-item" data-screen="outbox"><span class="nav-num">5</span>Outbox<span class="nav-badge" id="badge-outbox"></span></button></li>
+      </ul>
+      <div class="nav-foot">
+        <div class="clock" id="clock">As of January 15, 2027</div>
+        <button class="link-btn" id="reset-btn">Reset Demo</button>
+      </div>
+    </nav>
+
+    <div class="main">
+      <header class="topbar">
+        <div>
+          <h1 class="screen-title" id="screen-title">Closing Binder</h1>
+          <div class="screen-sub" id="screen-sub"></div>
+        </div>
+        <div class="topbar-right">
+          <div class="chip chip-quiet" id="model-chip"></div>
+          <label class="toggle">
+            <input type="checkbox" id="seller-toggle">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            <span class="toggle-label">Seller View</span>
+          </label>
+        </div>
+      </header>
+
+      <main class="content" id="content"></main>
+
+      <footer class="footer">Demo with synthetic data. RolledCo does not hold or move funds.</footer>
+    </div>
+  </div>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="drawer" id="drawer"></aside>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

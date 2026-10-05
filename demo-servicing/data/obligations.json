@@ -1,0 +1,480 @@
+{
+  "generated_at": "2027-01-15T08:00:00",
+  "model": "claude-opus-5-5",
+  "source": "cache",
+  "deal": {
+    "name": "Brightline Heating & Air",
+    "buyer": "Northgate Acquisition LLC",
+    "buyer_owner": "Dana Whitfield",
+    "seller": "Ray Kowalski",
+    "seller_entity": "Brightline Heating & Air LLC",
+    "lender": "Harbor Federal Bank",
+    "purchase_price": 2400000,
+    "close_date": "2026-07-15"
+  },
+  "documents": [
+    {"file": "01_letter_of_intent.pdf", "title": "Letter of Intent", "kind": "Letter", "dated": "2026-04-02", "pages": 2},
+    {"file": "02_asset_purchase_agreement_excerpt.pdf", "title": "Asset Purchase Agreement, Article II Excerpt", "kind": "Agreement", "dated": "2026-07-15", "pages": 3},
+    {"file": "03_seller_note_a.pdf", "title": "Seller Note A", "kind": "Promissory Note", "dated": "2026-07-15", "pages": 2},
+    {"file": "04_seller_note_b.pdf", "title": "Seller Note B", "kind": "Promissory Note", "dated": "2026-07-15", "pages": 2},
+    {"file": "05_standby_creditor_agreement.pdf", "title": "Standby Creditor's Agreement", "kind": "Agreement", "dated": "2026-07-15", "pages": 2},
+    {"file": "06_consulting_agreement.pdf", "title": "Consulting Agreement", "kind": "Agreement", "dated": "2026-07-15", "pages": 2},
+    {"file": "07a_retention_bonus_service_manager.pdf", "title": "Retention Bonus Letter, Service Manager", "kind": "Letter", "dated": "2026-07-15", "pages": 2},
+    {"file": "07b_retention_bonus_lead_technician.pdf", "title": "Retention Bonus Letter, Lead Technician", "kind": "Letter", "dated": "2026-07-15", "pages": 2},
+    {"file": "07c_retention_bonus_office_manager.pdf", "title": "Retention Bonus Letter, Office Manager", "kind": "Letter", "dated": "2026-07-15", "pages": 2},
+    {"file": "08_lender_commitment_letter_excerpt.pdf", "title": "Lender Commitment Letter Excerpt", "kind": "Letter", "dated": "2026-06-18", "pages": 2},
+    {"file": "09_closing_funds_flow.pdf", "title": "Closing Funds Flow", "kind": "Memorandum", "dated": "2026-07-15", "pages": 2}
+  ],
+  "obligations": [
+    {
+      "id": "sba-loan",
+      "instrument": "SBA 7(a) Loan",
+      "type": "sba_loan",
+      "counterparty": "Harbor Federal Bank",
+      "amount": 1920000,
+      "amount_text": "$25,639.49 per month, 120 payments",
+      "formula": "Level principal and interest on $1,920,000 over 120 months at Prime plus 2.75%, 10.25% at commitment, adjusted quarterly",
+      "rate": 0.1025,
+      "schedule": {
+        "frequency": "monthly",
+        "first_date": "2026-08-15",
+        "last_date": "2036-07-15",
+        "count": 120,
+        "day_rule": "15th of each month",
+        "amount_each": 25639.49,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": "2027-01-15",
+      "conditions": [
+        "Rate is variable and resets quarterly, so the payment amount will change with Prime"
+      ],
+      "compliance_rules": [
+        "Debt service coverage ratio of at least 1.25 to 1.00, measured annually from the fiscal year ending December 31, 2027",
+        "No payment on any seller note while in default under the loan"
+      ],
+      "source": {
+        "document": "08_lender_commitment_letter_excerpt.pdf",
+        "page": 1,
+        "section": "Section 1, Loan Terms",
+        "quote": "Estimated monthly payment: $25,639.49 principal and interest at the commitment rate, due on the 15th of each month beginning August 15, 2026"
+      },
+      "confidence": 0.92,
+      "conflicts": [],
+      "notes": "Payment amount is the lender's estimate at the commitment rate. Confirm against the executed note and the first billing statement."
+    },
+    {
+      "id": "note-a",
+      "instrument": "Seller Note A",
+      "type": "seller_note",
+      "counterparty": "Ray Kowalski",
+      "amount": 120000,
+      "amount_text": "$120,000 principal plus 6% simple interest, all due at maturity",
+      "formula": "Principal plus simple interest at 6% per annum on a 365 day year from July 15, 2026 until paid",
+      "rate": 0.06,
+      "schedule": {
+        "frequency": "at_maturity",
+        "first_date": "2036-08-14",
+        "last_date": "2036-08-14",
+        "count": 1,
+        "day_rule": "30 days after the SBA loan is paid in full, not earlier than July 15, 2036",
+        "amount_each": null,
+        "standby_start": "2026-07-15",
+        "standby_end": "2036-07-15"
+      },
+      "next_date": "2036-08-14",
+      "conditions": [
+        "Counted toward the buyer's equity injection for the SBA loan",
+        "No prepayment while the SBA loan is outstanding without lender consent"
+      ],
+      "compliance_rules": [
+        "No payment of principal or interest while any amount remains outstanding under the SBA loan",
+        "Full standby for the life of the SBA loan under the Standby Creditor's Agreement, Section 2(a)"
+      ],
+      "source": {
+        "document": "03_seller_note_a.pdf",
+        "page": 1,
+        "section": "Section 2, Standby; No Payments",
+        "quote": "No payment of principal or interest shall be made or accepted under this Note so long as any amount remains outstanding under the SBA Loan, unless Harbor Federal Bank and the SBA have given prior written consent. Interest shall continue to accrue during the standby period and shall be added to the amount due at maturity."
+      },
+      "confidence": 0.98,
+      "conflicts": [],
+      "notes": "Expected maturity August 14, 2036 based on the ten year SBA term. Accrued interest at maturity is about $72,600."
+    },
+    {
+      "id": "note-b",
+      "instrument": "Seller Note B",
+      "type": "seller_note",
+      "counterparty": "Ray Kowalski",
+      "amount": 120000,
+      "amount_text": "$120,000 principal, adjustable, 36 monthly installments after a 24 month standby",
+      "formula": "Adjusted principal plus 6% simple interest accrued during standby, amortized over 36 months at 6%. Adjusted principal equals $120,000 less any shortfall of trailing twelve month revenue below $3,100,000 at month 24, floor $60,000",
+      "rate": 0.06,
+      "schedule": {
+        "frequency": "monthly",
+        "first_date": "2028-08-15",
+        "last_date": "2031-07-15",
+        "count": 36,
+        "day_rule": "15th of each month after the standby period",
+        "amount_each": null,
+        "standby_start": "2026-07-15",
+        "standby_end": "2028-07-15"
+      },
+      "next_date": "2028-08-15",
+      "conditions": [
+        "Principal is reduced dollar for dollar if trailing twelve month revenue at the measurement date is below $3,100,000, floor $60,000",
+        "Buyer must deliver its revenue calculation within 30 days after the measurement date; seller has 30 days to object",
+        "Payments permitted only while no default exists under the SBA loan and trailing debt service coverage is at least 1.15 to 1.00"
+      ],
+      "compliance_rules": [
+        "No payment of principal or interest during the 24 months following July 15, 2026",
+        "After standby, scheduled installments only if no SBA loan default and debt service coverage ratio is at least 1.15 to 1.00, under the Standby Creditor's Agreement, Section 2(b)"
+      ],
+      "source": {
+        "document": "04_seller_note_b.pdf",
+        "page": 1,
+        "section": "Section 4, Repayment",
+        "quote": "The first installment shall be due on August 15, 2028, and subsequent installments shall be due on the fifteenth (15th) day of each calendar month thereafter, with the final installment due on July 15, 2031."
+      },
+      "confidence": 0.74,
+      "conflicts": [
+        {
+          "kind": "conflict",
+          "title": "First payment date differs between the note and the purchase agreement",
+          "description": "Seller Note B, Section 4, sets the first installment on August 15, 2028. The Asset Purchase Agreement, Section 2.4, sets it on September 15, 2028. The dates are one month apart. The ledger uses the note's date until the parties confirm which controls.",
+          "with_document": "02_asset_purchase_agreement_excerpt.pdf",
+          "page": 1,
+          "section": "Section 2.4, Seller Note B",
+          "quote": "the first such installment being due on September 15, 2028 and continuing on the fifteenth day of each month thereafter"
+        }
+      ],
+      "notes": "Measurement date for the revenue test is July 31, 2028, the last day of the 24th full calendar month after close."
+    },
+    {
+      "id": "consulting",
+      "instrument": "Consulting Agreement",
+      "type": "consulting",
+      "counterparty": "Ray Kowalski",
+      "amount": 72000,
+      "amount_text": "$6,000 per month for 12 months",
+      "formula": "$6,000 per month in arrears, last business day of each month, August 2026 through July 2027. Hours above 20 per month at $125 per hour with prior written approval",
+      "rate": null,
+      "schedule": {
+        "frequency": "monthly",
+        "first_date": "2026-08-31",
+        "last_date": "2027-07-30",
+        "count": 12,
+        "day_rule": "last business day of each month",
+        "amount_each": 6000,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": "2027-01-29",
+      "conditions": [
+        "Up to 20 hours per month; excess hours need written approval",
+        "Customer introductions due by the target dates in Section 5",
+        "Terminable for cause; only fees earned through termination are owed"
+      ],
+      "compliance_rules": [],
+      "source": {
+        "document": "06_consulting_agreement.pdf",
+        "page": 1,
+        "section": "Section 4, Compensation",
+        "quote": "The Company will pay Consultant a fee of Six Thousand Dollars ($6,000) per month for each month of the term, payable in arrears on the last business day of each calendar month, beginning with the month ending August 31, 2026 and ending with the month ending July 31, 2027."
+      },
+      "confidence": 0.97,
+      "conflicts": [],
+      "notes": "July 2026 partial month fee is waived."
+    },
+    {
+      "id": "bonus-herrera",
+      "instrument": "Retention Bonus, Luis Herrera",
+      "type": "retention_bonus",
+      "counterparty": "Luis Herrera, Service Manager",
+      "amount": 15000,
+      "amount_text": "$15,000 in three annual tranches of $5,000",
+      "formula": "Three equal tranches on July 15, 2027, 2028 and 2029, paid through payroll less withholdings",
+      "rate": null,
+      "schedule": {
+        "frequency": "annual",
+        "first_date": "2027-07-15",
+        "last_date": "2029-07-15",
+        "count": 3,
+        "day_rule": "anniversary of close",
+        "amount_each": 5000,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": "2027-07-15",
+      "conditions": [
+        "Earned only if continuously employed through the payment date; unpaid tranches are forfeited if employment ends for any reason"
+      ],
+      "compliance_rules": [
+        "Confirm active employment before releasing each tranche"
+      ],
+      "source": {
+        "document": "07a_retention_bonus_service_manager.pdf",
+        "page": 1,
+        "section": "Section 3, Condition of Continued Employment",
+        "quote": "Each tranche is earned only if you remain continuously employed by the Company through the applicable payment date. If your employment ends for any reason before a payment date, whether by resignation or termination, with or without cause, any unpaid tranche is forfeited and no pro-rated amount is owed."
+      },
+      "confidence": 0.98,
+      "conflicts": [],
+      "notes": ""
+    },
+    {
+      "id": "bonus-nguyen",
+      "instrument": "Retention Bonus, Tasha Nguyen",
+      "type": "retention_bonus",
+      "counterparty": "Tasha Nguyen, Lead Technician",
+      "amount": 10000,
+      "amount_text": "$10,000 in three annual tranches",
+      "formula": "$3,333.33 on July 15, 2027 and 2028, $3,333.34 on July 15, 2029, paid through payroll less withholdings",
+      "rate": null,
+      "schedule": {
+        "frequency": "annual",
+        "first_date": "2027-07-15",
+        "last_date": "2029-07-15",
+        "count": 3,
+        "day_rule": "anniversary of close",
+        "amount_each": 3333.33,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": "2027-07-15",
+      "conditions": [
+        "Earned only if continuously employed through the payment date; unpaid tranches are forfeited if employment ends for any reason"
+      ],
+      "compliance_rules": [
+        "Confirm active employment before releasing each tranche"
+      ],
+      "source": {
+        "document": "07b_retention_bonus_lead_technician.pdf",
+        "page": 1,
+        "section": "Section 3, Condition of Continued Employment",
+        "quote": "Each tranche is earned only if you remain continuously employed by the Company through the applicable payment date. If your employment ends for any reason before a payment date, whether by resignation or termination, with or without cause, any unpaid tranche is forfeited and no pro-rated amount is owed."
+      },
+      "confidence": 0.98,
+      "conflicts": [],
+      "notes": "Final tranche carries the rounding cent."
+    },
+    {
+      "id": "bonus-dempsey",
+      "instrument": "Retention Bonus, Carol Dempsey",
+      "type": "retention_bonus",
+      "counterparty": "Carol Dempsey, Office Manager",
+      "amount": 8000,
+      "amount_text": "$8,000 in three annual tranches",
+      "formula": "$2,666.67 on July 15, 2027 and 2028, $2,666.66 on July 15, 2029, paid through payroll less withholdings",
+      "rate": null,
+      "schedule": {
+        "frequency": "annual",
+        "first_date": "2027-07-15",
+        "last_date": "2029-07-15",
+        "count": 3,
+        "day_rule": "anniversary of close",
+        "amount_each": 2666.67,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": "2027-07-15",
+      "conditions": [],
+      "compliance_rules": [],
+      "source": {
+        "document": "07c_retention_bonus_office_manager.pdf",
+        "page": 1,
+        "section": "Section 1, Bonus Amount",
+        "quote": "You will be eligible for a total retention bonus of $8,000 (the \"Retention Bonus\"), paid in three tranches on the anniversaries of the closing"
+      },
+      "confidence": 0.61,
+      "conflicts": [
+        {
+          "kind": "missing_term",
+          "title": "No forfeiture or continued employment condition",
+          "description": "This letter has no clause conditioning the tranches on continued employment. The letters for Luis Herrera and Tasha Nguyen each carry a Section 3 that forfeits unpaid tranches when employment ends. As written, this bonus may be owed even if Carol Dempsey leaves before a payment date. Confirm the intended terms with counsel before the first tranche.",
+          "with_document": "07a_retention_bonus_service_manager.pdf",
+          "page": 1,
+          "section": "Section 3, Condition of Continued Employment",
+          "quote": "If your employment ends for any reason before a payment date, whether by resignation or termination, with or without cause, any unpaid tranche is forfeited and no pro-rated amount is owed."
+        }
+      ],
+      "notes": "Letter of Intent, Section 4, describes all three bonuses as conditioned on continued employment."
+    },
+    {
+      "id": "holdback",
+      "instrument": "Holdback",
+      "type": "holdback",
+      "counterparty": "Ray Kowalski, via Ashcroft Lowe LLP",
+      "amount": 50000,
+      "amount_text": "$50,000 held by buyer's counsel",
+      "formula": "$50,000 less any net working capital shortfall under Section 2.5 and any pending indemnification claim, released at month six once the true-up is settled",
+      "rate": null,
+      "schedule": {
+        "frequency": "one_time",
+        "first_date": "2027-01-15",
+        "last_date": "2027-01-15",
+        "count": 1,
+        "day_rule": "six months after the closing date, or five business days after final settlement if later",
+        "amount_each": 50000,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": "2027-01-15",
+      "conditions": [
+        "Net working capital adjustment under Section 2.5 must be finally settled",
+        "Reduced by any amount applied to a working capital shortfall or a pending indemnification claim"
+      ],
+      "compliance_rules": [
+        "Release instruction goes to the holdback agent, Ashcroft Lowe LLP, not to the seller directly"
+      ],
+      "source": {
+        "document": "02_asset_purchase_agreement_excerpt.pdf",
+        "page": 2,
+        "section": "Section 2.6, Holdback",
+        "quote": "On the date that is six (6) months after the Closing Date, the holdback agent shall release the Holdback Amount, less any amount applied under Section 2.5 and less any pending indemnification claim under Article VIII, to Seller, provided that the net working capital adjustment under Section 2.5 has been finally settled."
+      },
+      "confidence": 0.95,
+      "conflicts": [],
+      "notes": "Funds sit in the holdback agent's client trust account. The buyer instructs release; RolledCo does not move the funds."
+    },
+    {
+      "id": "nwc-trueup",
+      "instrument": "Net Working Capital True-Up",
+      "type": "adjustment",
+      "counterparty": "Ray Kowalski",
+      "amount": null,
+      "amount_text": "Closing net working capital less $310,000 target, either direction",
+      "formula": "Purchase price increases or decreases dollar for dollar by the difference between closing net working capital and the $310,000 target. Closing statement due within 90 days of close; amounts owed to seller paid within 10 business days after it becomes final; amounts owed to buyer taken first from the holdback",
+      "rate": null,
+      "schedule": {
+        "frequency": "one_time",
+        "first_date": "2026-10-13",
+        "last_date": "2026-10-13",
+        "count": 1,
+        "day_rule": "closing statement within 90 days of close",
+        "amount_each": null,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": null,
+      "conditions": [
+        "Amount depends on the final closing statement"
+      ],
+      "compliance_rules": [],
+      "source": {
+        "document": "02_asset_purchase_agreement_excerpt.pdf",
+        "page": 1,
+        "section": "Section 2.5, Net Working Capital Adjustment",
+        "quote": "The Purchase Price shall be increased or decreased, dollar for dollar, by the amount by which Closing Net Working Capital exceeds or is less than the Target Net Working Capital of Three Hundred Ten Thousand Dollars ($310,000)."
+      },
+      "confidence": 0.9,
+      "conflicts": [],
+      "notes": "Contingent amount. Settlement status is tracked in servicing, not in the documents."
+    },
+    {
+      "id": "lender-quarterly",
+      "instrument": "Lender Reporting, Quarterly Financials",
+      "type": "lender_reporting",
+      "counterparty": "Harbor Federal Bank",
+      "amount": null,
+      "amount_text": "Non-monetary",
+      "formula": "Balance sheet, income statement and accounts receivable aging for the quarter and year to date, certified by the managing member, within 45 days of each fiscal quarter end",
+      "rate": null,
+      "schedule": {
+        "frequency": "quarterly",
+        "first_date": "2026-11-14",
+        "last_date": "2036-08-14",
+        "count": 40,
+        "day_rule": "45 days after each fiscal quarter end",
+        "amount_each": null,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": "2027-02-14",
+      "conditions": [
+        "Fiscal year ends December 31",
+        "First report covered closing through September 30, 2026 and was due November 14, 2026"
+      ],
+      "compliance_rules": [
+        "Deliver within 45 days of quarter end for as long as the loan is outstanding"
+      ],
+      "source": {
+        "document": "08_lender_commitment_letter_excerpt.pdf",
+        "page": 1,
+        "section": "Section 6(a), Reporting Covenants",
+        "quote": "within forty-five (45) days after the end of each fiscal quarter, internally prepared financial statements of Borrower for that quarter and year to date, including a balance sheet, income statement and accounts receivable aging, certified by Borrower's managing member"
+      },
+      "confidence": 0.96,
+      "conflicts": [],
+      "notes": ""
+    },
+    {
+      "id": "lender-annual-tax",
+      "instrument": "Lender Reporting, Annual Tax Returns",
+      "type": "lender_reporting",
+      "counterparty": "Harbor Federal Bank",
+      "amount": null,
+      "amount_text": "Non-monetary",
+      "formula": "Complete federal income tax returns with all schedules and a signed IRS Form 4506-C within 120 days of each fiscal year end",
+      "rate": null,
+      "schedule": {
+        "frequency": "annual",
+        "first_date": "2027-04-30",
+        "last_date": "2036-04-30",
+        "count": 10,
+        "day_rule": "120 days after fiscal year end",
+        "amount_each": null,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": "2027-04-30",
+      "conditions": [],
+      "compliance_rules": [
+        "Deliver within 120 days of year end for as long as the loan is outstanding"
+      ],
+      "source": {
+        "document": "08_lender_commitment_letter_excerpt.pdf",
+        "page": 1,
+        "section": "Section 6(b), Reporting Covenants",
+        "quote": "within one hundred twenty (120) days after the end of each fiscal year, complete copies of Borrower's federal income tax returns for that year, including all schedules, together with a signed IRS Form 4506-C"
+      },
+      "confidence": 0.96,
+      "conflicts": [],
+      "notes": ""
+    },
+    {
+      "id": "lender-guarantor-returns",
+      "instrument": "Lender Reporting, Guarantor Tax Returns",
+      "type": "lender_reporting",
+      "counterparty": "Harbor Federal Bank",
+      "amount": null,
+      "amount_text": "Non-monetary",
+      "formula": "Copies of each guarantor's personal federal income tax return within 30 days after filing",
+      "rate": null,
+      "schedule": {
+        "frequency": "annual",
+        "first_date": "2027-05-15",
+        "last_date": "2036-05-15",
+        "count": 10,
+        "day_rule": "30 days after filing, assumed April 15 filing",
+        "amount_each": null,
+        "standby_start": null,
+        "standby_end": null
+      },
+      "next_date": "2027-05-15",
+      "conditions": [
+        "Date depends on when Dana Whitfield files; an extension moves it"
+      ],
+      "compliance_rules": [],
+      "source": {
+        "document": "08_lender_commitment_letter_excerpt.pdf",
+        "page": 2,
+        "section": "Section 6(c), Reporting Covenants",
+        "quote": "within thirty (30) days after filing, copies of personal federal income tax returns of each guarantor"
+      },
+      "confidence": 0.82,
+      "conflicts": [],
+      "notes": "Filing date assumed. Lower confidence because the due date is not fixed in the document."
+    }
+  ]
+}
