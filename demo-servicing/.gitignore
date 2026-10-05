@@ -1,3 +1,4 @@
 data/state.json
 __pycache__/
 *.pyc
+dist/

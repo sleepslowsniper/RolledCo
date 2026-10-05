@@ -93,3 +93,15 @@ No email is sent. No funds are held or moved.
 White background, ink #1A1A1A text, crimson #8B1A1A as the single accent,
 off-white #F6F2EE panels. Barlow Condensed Bold for headings, Inter for body.
 Laid out for 1440 by 900.
+
+## Hosted Copy
+
+`python build_static.py` writes `dist/index.html`, a server-free copy with
+the ledger, month-end math, drafts and compliance verdicts precomputed and
+embedded. It is what the shared Claude Artifact link serves. Review
+decisions and Outbox approvals in that copy live in the viewer's browser
+only, and Re-run Extraction is local-only. The page also embeds a plain
+text summary so readers that do not run JavaScript still get the content.
+
+`api/index.py` and `vercel.json` are a ready Vercel entry point for the full
+server version, if a Vercel project with permission to deploy is available.
