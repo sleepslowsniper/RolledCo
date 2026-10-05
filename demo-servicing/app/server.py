@@ -20,6 +20,8 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
+from typing import Optional
+
 from pydantic import BaseModel
 
 ROOT = Path(__file__).parent.parent
@@ -338,8 +340,8 @@ def api_state():
 
 
 class ReviewBody(BaseModel):
-    decision: str | None = None
-    edits: dict | None = None
+    decision: Optional[str] = None
+    edits: Optional[dict] = None
 
 
 @app.post("/api/review/{ob_id}")
@@ -356,7 +358,7 @@ def api_review(ob_id: str, body: ReviewBody):
 
 class OutboxBody(BaseModel):
     action: str
-    body: str | None = None
+    body: Optional[str] = None
 
 
 @app.post("/api/outbox/{draft_id}")
